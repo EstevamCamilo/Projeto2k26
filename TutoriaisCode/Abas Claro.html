@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Navegação em Abas White</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <style>
+            * {
+                font-family: sans-serif;
+            }
+            html {
+                height: -webkit-fill-available;
+                /* ajusta a altura datela quando */
+                max-height: -webkit-fill-available;
+                /* o teclado virtual está sobre a página */
+            }
+            body {
+                -webkit-touch-callout: none;
+                /* prevent callout to copy image, etc when tap to hold */
+               -webkit-text-size-adjust: none;
+                /* prevent webkit from resizing text to fit */
+                -webkit-user-select: none;
+                /* prevent copy paste, to allow, change 'none' to 'text' */    
+                margin: 0;
+                background-color: white;
+                color: black;
+            }
+            td {
+                padding-left: 0.5rem;
+                padding-right: 0.5rem;
+            }
+            #abas {
+                padding-top: 0.5rem;
+                padding-left: 0.25rem;
+                background-color: rgb(52, 103, 134);
+                color: black;
+            }
+            #conteudo {
+                padding: 0.5rem;
+            }
+            #inicio {
+                background-image: url(cta.png);
+                background-size: 100%;
+                color: white;
+            }
+            #nome {
+                color: white;
+            }
+            .aba {
+                background-color: rgb(59, 118, 155);
+                display: inline-block;
+                padding: 0.5rem;
+                border: 1px solid rgb(0, 0, 0);
+                border-top-left-radius: 0.25rem;
+                border-top-right-radius: 0.25rem;
+                color: white;
+            }
+            .aba:hover {
+                background-color: rgb(255, 255, 255);
+                cursor: pointer;
+                color: black;
+            }
+            .abaSel {
+                background-color: white;
+                display: inline-block;
+                padding: 0.5rem;
+                border: 1px solid #202020;
+                border-top-left-radius: 0.25rem;
+                border-top-right-radius: 0.25rem;
+                color: black;
+            }
+            .codigo {
+                font-family: monospace;
+                width: 90vw;
+            }
+            .cod {
+                font-family: monospace;
+                background-color: rgb(200, 200, 200);
+                color: black;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="abas">
+            <span class='abaSel' onclick="abaOnClick(event, 0)">Início</span>
+            <span class='aba' onclick="abaOnClick(event, 1)">HTML</span>
+            <span class='aba' onclick="abaOnClick(event, 2)">Javascript</span>
+            <span class='aba' onclick="abaOnClick(event, 3)">CSS</span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b id="nome">Instruções Códigos</b>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <b id="nome">Unesp 2021</b>
+        </div>
+        <div id="conteudo">
+            <div id="inicio">
+                <h1><u>Início</u></h1>
+                <div style="text-align: center; font-size: 2rem;"><h1>Unesp</h1></div>
+                <div style="text-align: center;"><img src="https://www2.unesp.br/Home/unesp40anos/cta.jpg"></div><br/><br/>
+                <div style="text-align: center;">
+                    UNIVERSIDADE ESTADUAL PAULISTA "JÚLIO DE MESQUITA FILHO"<br/>
+                    Faculdade de Ciências Agrárias e Veterinárias - Câmpus de Jaboticabal<br/>
+                    Colégio Técnico Agrícola "José Bonifácio"<br/>
+                </div>
+                
+            </div>
+            <div id="html" style="display:none;">
+                <h1>HTML</h1>
+                <br/><hr/>
+                <div id="html1">
+                    <h2>Estrutura básica de um documento HTML</h2>
+                    <textarea rows="10" class="codigo" readonly>
+    <!DOCTYPE html>
+    <html>
+        <head>
+            <title></title>
+            <meta charset="utf-8"/>
+        </head>
+        <body>
+        </body>
+    </html>
+                    </textarea>
+                </div>
+                <hr/>
+                <div id="html2">
+                    <h2>Marcadores de Título</h2>
+
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                        <tr><td>Marcador Título 1
+                            <td class="cod">&lt;h1&gt; &lt;/h1&gt;
+                            <td class="cod">&lt;h1&gt;Título 1&lt;/h1&gt;
+                            <td><h1>Título 1</h1></td>
+                        </tr>
+                        <tr><td>Marcador Título 2
+                            <td class="cod">&lt;h2&gt; &lt;/h2&gt;
+                            <td class="cod">&lt;h2&gt;Título 2&lt;/h2&gt;
+                            <td><h2>Título 2</h2></td>
+                        </tr>
+                        <tr><td>Marcador Título 3
+                            <td class="cod">&lt;h3&gt; &lt;/h3&gt;
+                            <td class="cod">&lt;h3&gt;Título 3&lt;/h3&gt;
+                            <td><h2>Título 3</h2></td>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div id="html3">
+                    <h2>Formatação de texto</h2>
+
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                        <tr><td>Parágrafo
+                            <td class="cod">&lt;p&gt; &lt;/p&gt;<td class="cod"> <td> </tr>
+                        <tr><td>Quebra de linha
+                            <td class="cod">&lt;br/&gt;<td class="cod"> <td> </tr>
+                        <tr><td>Linha na horizontal
+                            <td class="cod">&lt;hr/&gt;
+                            <td class="cod"> 
+                            <td><hr/>
+                        </tr>
+                        <tr><td>Texto em negrito
+                            <td class="cod" class="cod">&lt;b&gt; &lt;/b&gt;
+                            <td class="cod">&lt;b&gt;Negrito&lt;/b&gt;
+                            <td><b>Negrito</b>
+                        </tr>
+                        <tr><td>Texto itálico
+                            <td class="cod">&lt;i&gt; &lt;/i&gt;
+                            <td class="cod">&lt;i&gt;Itálico&lt;/i&gt;
+                            <td><i>Itálico</i>
+                        </tr>
+                        <tr><td>Texto sublinhado
+                            <td class="cod">&lt;u&gt; &lt;/u&gt;
+                            <td class="cod">&lt;u&gt;Sublinhado&lt;/u&gt;
+                            <td><u>Sublinhado</u>
+                        </tr>
+                        <tr><td>Texto tachado
+                            <td class="cod">&lt;s&gt; &lt;/s&gt;
+                            <td class="cod">&lt;s&gt;Tachado&lt;/s&gt;
+                            <td><s>Tachado</s>
+                        </tr>
+                        <tr><td>Texto sobrescrito
+                            <td class="cod">&lt;sup&gt; &lt;/sup&gt;
+                            <td class="cod">&lt;sup&gt;Sobrescrito&lt;/sup&gt;
+                            <td><sup>Sobrescrito</sup>
+                        </tr>
+                        <tr><td>Texto subscrito
+                            <td class="cod">&lt;sub&gt; &lt;/sub&gt;
+                            <td class="cod">&lt;sub&gt;Subscrito&lt;/sub&gt;
+                            <td><sub>Subscrito</sub>
+                        </tr>
+
+                    </table>
+
+                    <!--
+                    &lt;p&gt; &lt;/p&gt; - Parágrafo<br/><br/>
+                    &lt;br/&gt; - Pula uma linha<br/><br/>
+                    &lt;hr/&gt; - Linha na horizontal<br/><br/>
+                    &lt;b&gt; &lt;/b&gt; - <b>Texto em negrito</b><br/><br/>
+                    &lt;i&gt; &lt;/i&gt; - <i>Texto itálico</i><br/><br/>
+                    &lt;u&gt; &lt;/u&gt; - <u>Texto sublinhado</u><br/><br/>
+                    &lt;s&gt; &lt;/s&gt; - <s>Texto tachado</s><br/><br/>
+                    &lt;sup&gt; &lt;/sup&gt; - Texto <sup>sobrescrito</sup><br/><br/>
+                    &lt;sub&gt; &lt;/sub&gt; - Texto <sub>subscrito</sub><br/><br/>
+                    -->
+                </div>
+                <hr/>
+                <div id="html4">
+                    <h2>Imagem e Hiperlink</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Parâmetros<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                        <tr><td>Imagem
+                            <td class="cod">&lt;img /&gt;
+                            <td>src='arquivo' - URL do arquivo da imagem<br/>
+                                alt='' - Texto alternativo caso a imagem não seja exibida<br/>
+                                width='' - Largura em pixels<br/>
+                                height='' - Altura em pixels<br/>
+                            <td class="cod">&lt;img src='https://www2.unesp.br/images/unesp-full-center.svg' alt='' width='70' height='35'/&gt;
+                            <td><img src='https://www2.unesp.br/images/unesp-full-center.svg' alt='' width='70' height='35'/>
+                        </tr>
+                        <tr><td>Hiperlink
+                            <td class="cod">&lt;a&gt; &lt;/a&gt;
+                            <td>href='localização da referência do link'<br/>
+                                target='_self' | '_blank'
+                            <td class="cod">&lt;a href='https://www.unesp.br' target='_blank'&gt;Unesp&lt;/a&gt;
+                            <td><a href='https://www.unesp.br' target='_blank'>Unesp</a>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div id="html5">
+                    <h2>Tabela</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Parâmetros<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                        <tr><td>Tabela
+                            <td class="cod">&lt;table&gt; &lt;/table&gt;
+                            <td>border='largura'<br/>
+                                cellspacing='espaçamento entre as células'<br/>
+                                cellpadding='espaçamento interno das células'
+                            <td rowspan="5" class="cod">
+                                &lt;table border='1'&gt;<br/>
+                                &nbsp;&nbsp; &lt;caption&gt;Título da Tabela&lt;/caption&gt;<br/>
+                                &nbsp;&nbsp; &lt;tr&gt;&lt;th&gt;Cab1&lt;th&gt;Cab2&lt;th&gt;Cab3&lt;/tr&gt;<br/>
+                                &nbsp;&nbsp; &lt;tr&gt;&lt;td&gt;Col1Lin1&lt;td&gt;Col2Lin1&lt;td rowspan='3'&gt;&lt;/tr&gt;<br/>
+                                &nbsp;&nbsp; &lt;tr&gt;&lt;td&gt;Col1Lin2&lt;td&gt;Col2Lin2&lt;/tr&gt;<br/>
+                                &nbsp;&nbsp; &lt;tr&gt;&lt;td&gt;Col1Lin3&lt;td&gt;Col2Lin3&lt;/tr&gt;<br/>
+                                &lt;/table&gt;                                
+                            <td rowspan="5">
+                                <table border='1'>
+                                    <caption>Título da Tabela</caption>
+                                    <tr><th>Cab1<th>Cab2<th>Cab3</tr>
+                                    <tr><td>Col1Lin1<td>Col2Lin1<td rowspan='3'></tr>
+                                    <tr><td>Col1Lin2<td>Col2Lin2</tr>
+                                    <tr><td>Col1Lin3<td>Col2Lin3</tr>
+                                </table>
+                        </tr>
+
+                        <tr><td>Título da tabela
+                            <td class="cod">&lt;caption&gt; &lt;/caption&gt;
+                            <td>
+                        </tr>
+                        <tr><td>Linha
+                            <td class="cod">&lt;tr&gt; &lt;/tr&gt;
+                            <td>
+                        </tr>
+                        <tr><td>Coluna de cabeçalho
+                            <td class="cod">&lt;th&gt; &lt;/th&gt;
+                            <td>
+                        </tr>
+                        <tr><td>Coluna
+                            <td class="cod">&lt;td&gt; &lt;/td&gt;
+                            <td>rowspan='Qtd de linhas mescladas'<br/>
+                                colspan='Qtd de colunas mescladas'<br/>
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div id="html6">
+                    <h2>Lista não ordenada</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Parâmetros<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                            <tr><th>Lista<td class="cod">&lt;ul&gt;<br/>&lt;li&gt;<br/><th><td class="cod">
+                                &lt;ul&gt;<br/>
+                                &lt;li&gt;Exemplos&lt;/li&gt;<br/>
+                                &lt;li&gt;Texto 1&lt;/li&gt;<br/>
+                                &lt;li&gt;Texto 2&lt;/li&gt;<br/>
+                                &lt;li&gt;Texto 3&lt;/li&gt;<br/>
+                                &lt;/ul&gt;<br/>
+                                <th>
+                                    <ul>
+                                    <li>Exemplos</li>
+                                    <li>Texto 1</li>
+                                    <li>Texto 2</li>
+                                    <li>Texto 3</li>
+                                </ul>
+                                </th>
+                    </table>
+                </div>
+                <br/><hr/>
+                <div id="html7">
+                    <h2>Lista ordenada</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Parâmetros<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                        <tr><tr><th>Lista<td class="cod">&lt;ol&gt;<br/>&lt;li&gt;<br/><th><td class="cod">
+                            &lt;ol&gt;<br/>
+                            &lt;li&gt;Exemplos&lt;/li&gt;<br/>
+                            &lt;li&gt;Texto 1&lt;/li&gt;<br/>
+                            &lt;li&gt;Texto 2&lt;/li&gt;<br/>
+                            &lt;li&gt;Texto 3&lt;/li&gt;<br/>
+                            &lt;/ol&gt;<br/>
+                            <th>
+                                <ol>
+                                <li>Exemplos</li>
+                                <li>Texto 1</li>
+                                <li>Texto 2</li>
+                                <li>Texto 3</li>
+                            </ol>
+                            </th></tr>
+                    </table>
+                </div>
+                <br/><hr/>              
+                <div id="html8">
+                    <h2>Formulário</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Marcador<br/>HTML<th>Parâmetros<th>Exemplo<br/>HTML<th>Exemplo<br/>Exibição</tr>
+                        <tr><th>Input<td class="cod">&lt;input&gt;<th>type<br/>name<br/>checked<br/>readonly<br/><td class="cod">
+                            &lt;input type="text" name="input" value="Digite aqui"&gt;
+                        </td><th><input type="text" name="input" value="Digite aqui"></th></tr>
+                        <tr><th>TextArea<td class="cod">&lt;textarea&gt;<th>Name<br/>Rows<br/>Cols<td class="cod">
+                            &lt;textarea name="textarea" rows="10" cols="50"&gt;Exemplo de Texto&lt;/textarea&gt;
+                        </td><th><textarea name="textarea" rows="3" cols="10">Exemplo de Texto</textarea></th></tr>
+                        <tr><th>Select<td class="cod">&lt;select&gt;<th>Option<br/>Name<br/>Value<br/>Selected<td class="cod">
+                            &lt;select name="select"&gt;<br/>&nbsp;&nbsp;&lt;option value="valor1" selected&gt;Valor 1&lt;/option&gt;<br/>&nbsp;&nbsp;&lt;option value="valor2"&gt;Valor 2&lt;/option&gt;&nbsp;&nbsp;&lt;option value="valor2"&gt;Valor 3&lt;/option&gt;<br/>&lt;/select&gt;
+                        </td><th><select name="select">
+                            <option value="valor1">Valor 1</option>
+                            <option value="valor2" selected>Valor 2</option>
+                            <option value="valor3">Valor 3</option>
+                          </select></th></tr>
+                        <tr><th>Option<td class="cod">&lt;Option&gt;<th>Select<br/>Value<br/>Selected<td class="cod">
+                            &lt;select name="select"&gt;<br/>&nbsp;&nbsp;&lt;option value="valor1" selected&gt;Valor 1&lt;/option&gt;<br/>&nbsp;&nbsp;&lt;option value="valor2"&gt;Valor 2&lt;/option&gt;&nbsp;&nbsp;&lt;option value="valor2"&gt;Valor 3&lt;/option&gt;<br/>&lt;/select&gt;
+                            </td><th><select name="select">
+                                <option value="valor1">Valor 1</option>
+                                <option value="valor2" selected>Valor 2</option>
+                                <option value="valor3">Valor 3</option>
+                              </select></th></tr>
+                    </table>
+                </div>
+                    
+                <br/><br/><br/><br/>
+                    
+            </div>   
+            <div id="js" style="display:none;">
+                <h1>Javascript</h1>
+                <hr/>
+                <div id="js1">
+                    <h2>Utilização do Javascript no arquivo HTML</h2>
+                    <p>
+                        Para utilizar o Javascript é necessário importar os códigos fonte para
+                        o arquivo HTML.<br/><br/>
+                        Isso pode ser feito de duas formas:
+                    </p>
+                    <ul>
+                        <li>Por importação de arquivo externo
+                        <li>Escrevendo o código diretamente no arquivo HTML
+                    </ul>
+                    <h3>Importação de arquivo externo</h3>
+                    <textarea rows="7" class="codigo" readonly>
+<html>
+    <head>..</head>
+    <body>
+        <script src='arquivo.js'></script>
+    </body>
+</html>
+                    </textarea>
+                    <h3>Escrita do código diretamente no arquivo HTML</h3>
+                    <textarea rows="9" class="codigo" readonly>
+<html>
+    <head>..</head>
+    <body>
+        <script>
+            //Declarações e Comandos Javascript
+        </script>
+    </body>
+</html>
+                    </textarea>
+                    
+                    
+                </div>
+                <hr/>                
+                <div id="js2">
+                    <h2>Variáveis e Constantes</h2>
+                    <p>
+                        Variáveis e constantes em programação servem para guardar os 
+                        dados que são processados durante a execução do programa.<br/><br/>
+                        A diferença entre variáveis e constantes é que a constante depois de 
+                        atribuído seu valor ela não pode ser mais alterada e a variável permite
+                        a alteração do seu valor em qualquer parte do programa.<br/><br/>
+                        O conteúdo das variáveis e constantes de um programa é perdido
+                        depois do seu encerramento.
+                    </p>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Tipo<th>Descrição<th>Exemplo de atribuição</tr>
+                        <tr><td>String<td>Alfanumérico<td class="cod">let s = "Valor123";</tr>
+                        <tr><td>Integer<td>Numérico inteiro<td class="cod">let i = 123;</tr>
+                        <tr><td>Float<td>Numérico real<td class="cod">let f = 123.123;</tr>
+                        <tr><td>Boolean<td>Booleano<td class="cod">let b1 = true;<br/>let b2=false;</tr>
+                        <tr><td>[]<td>Array(Matriz)<td class="cod">let a = [];</tr>
+                        
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js3">
+                    <h2>Conversão de Variáveis</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Conversão para o Tipo<th>Exemplo de conversão</tr>
+                        <tr><td>String<td class="cod">let s = v + "";</tr>
+                        <tr><td>String p/ Boolean<td class="cod">let b = Boolean("true");</tr>
+                        <tr><td>String p/ Número<td class="cod">let n = Number("100");</tr>
+                        <tr><td>String p/ Integer<td class="cod">let n = parseInt("100");</tr>
+                        <tr><td>String p/ Float<td class="cod">let n = parseFloat("100.11");</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js4">
+                <h2>Operadores Lógicos</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>&&<td>Retorna expr1 caso possa ser convertido para falso; senão, retorna expr2
+                            <td class="cod">var a1 =  true && true;<br/>var a2 =  true && false;<br/>var a3 = false && true;</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js5">
+                <h2>Operadores Relacionais</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>In<td>retorna verdadeiro se a propriedade especificada estiver no objeto especificado
+                            <td class="cod">var minhaString = new String("coral");<br/>"length" in minhaString;</tr>
+                        <tr><td>instanceof<td>retorna verdadeiro se o objeto especificado for do tipo de objeto especificado
+                            <td class="cod">var dia = new Date(1995, 12, 17); <br/>if (dia instanceof Date) {<br/>// declarações a serem executadas<br/>}</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js6">
+                <h2>Operadores Aritméticos</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>var<td>Variável<td class="cod">var var1 = 1;<br/>var2 = 2;<br/>var3 = var1 + var 2;</tr>
+                        <tr><td>for<td>Multiplas Variáveis<td class="cod">for (var i = 0; i < 9; i++) {<br/>console.log(i);<br/>}</tr>
+                        <tr><td>console.log<td>String<td class="cod">console.log(1 + 2);</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js7">
+                    <h2>Comandos de entrada e saída</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>alert<td>Exibe uma caixa de diálogo com uma mensagem.<td class="cod">alert("Mensagem");</tr>
+                        <tr><td>confirm<td>Exibe uma caixa de diálogo com uma confirmação. Retorna true ou false.<td class="cod">confirm("Mensagem");</tr>
+                        <tr><td>prompt<td>Exibe uma caixa de diálogo com um campo de entrada. Retorna uma String.<td class="cod">prompt("Mensagem");</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js8">
+                    <h2>Comandos condicionais</h2>
+                    <h3>if</h3>
+                    <textarea rows="4" class="codigo" readonly>
+if(condiçãoVerdadeira){
+    //Instruções se verdadeiro
+}
+                    </textarea>
+                    <h3>if else</h3>
+                    <textarea rows="6" class="codigo" readonly>
+if(condiçãoVerdadeira){
+    //Instruções se verdadeiro
+} else {
+    //Instruções se falso
+}
+                    </textarea>
+                    <h3>switch case</h3>
+                    <textarea rows="12" class="codigo" readonly>
+switch(variavel){
+    case(valor1):
+        //Instruções se variável === valor1
+        break;
+    case(valor2):
+        //Instruções se variável === valor2
+        break;
+    default:
+        //Instruções se variável !== de qualquer caso
+        break;
+}
+                    </textarea>
+                </div>
+                <hr/>                
+                <div id="js9">
+                <h2>Função</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>Function<td>A função consiste em uma instrução que indica para retornar o argumento da função multiplicado por si mesmo
+                            <td class="cod">function square(numero) {<br/>return numero * numero;<br/>}</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js10">
+                <h2>Comandos de repetição</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>For<td>é repetido até que a condição especificada seja falsa
+                            <td class="cod">for (var i = 0; i < selectObject.options.length; i++) {<br/>if (selectObject.options[i].selected) {<br/>numeroSelecionadas++;<br/>}<br/>}</tr>
+                        <tr><td>While<td>repetirá até que a condição especificada seja falsa
+                            <td class="cod">n = 0;<br/>x = 0;<br/>while (n < 3) {<br/>n++;<br/>x += n;<br/>}</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js11">
+                    <h2>Eventos</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>button<td>botão
+                            <td class="cod"><button>Nome do Botão</button></tr>
+                        <tr><td>onClick<td>é a propriedade do manipulador de eventos
+                            <td class="cod">var btn = document.querySelector('button');<br/>btn.onclick = function() {<br/>var rndCol = 'rgb(' + random(255) + ',' + random(255) + ',' + random(255) + ')';<br/>document.body.style.backgroundColor = rndCol;<br/>}</tr>
+                    </table>
+                </div>
+                <hr/>                
+                <div id="js12">
+                    <h2>Interação do Javascript com o HTML</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Comando<th>Descrição<th>Exemplo de uso</tr>
+                        <tr><td>querrySelector<td>Retorna o primeiro elemento dentro do documento que corresponde ao grupo especificado de seletores</td></tr>
+                        <tr><td class="cod">var a = document.querySelector("minha classe");</td></tr>
+                    </table>
+            </div>
+                </div>
+            <div id="css" style="display:none;">
+                <h1>CSS</h1>
+                <hr/>
+                <div id="css1">
+                    <h2>Utilização do CSS no arquivo HTML</h2>
+                    <p>
+                        Para utilizar o CSS é necessário importar os estilos para
+                        o arquivo HTML.<br/><br/>
+                        Isso pode ser feito de três formas:
+                    </p>
+                    <ul>
+                        <li>Por importação de arquivo externo
+                        <li>Escrevendo os estilos diretamente no arquivo HTML
+                        <li>Escrevendo os estilos diretamente no elemento HTML
+                    </ul>
+                    <h3>Importação de arquivo externo</h3>
+                    <textarea rows="8" class="codigo" readonly>
+<html>
+    <head>
+        ..
+        <link rel="stylesheet" type="text/css" href='css.js'/>
+    </head>
+    <body>..</body>
+</html>
+                    </textarea>
+                    <h3>Escrita dos estilos diretamente no arquivo HTML</h3>
+                    <textarea rows="10" class="codigo" readonly>
+<html>
+    <head>
+        ..
+        <style>
+        </style>
+    </head>
+    <body>..</body>
+</html>
+                    </textarea>
+                    
+                    <h3>Escrita dos estilos diretamente no elemento HTML</h3>
+                    <textarea rows="2" class="codigo" readonly>
+<span style="atributo: estilo;"></span>
+                    </textarea>
+                    
+                </div>
+                <hr/>
+                <div id="css0">
+                    <h2>Configurações inicial do CSS</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Descrição<th>Exemplo<br/>Código</tr>
+                        <tr><td>Ajusta a altura da tela quando o teclado virtual está sobre a página
+                            <td class="cod">
+                                html {<br/>
+                                &nbsp;&nbsp;height: -webkit-fill-available;<br/>
+                                &nbsp;&nbsp;max-height: -webkit-fill-available;<br/>
+                                }<br/>
+                        </tr>
+                        <tr><td><br/>
+                            Evita que as imagens seja selecionadas pelo touch, quando toca e mantém<br/>
+                            Evita que o texto altere de tamanho se fizer o movimento de pinça<br/>
+                            Evita que o texto seja selecionado e copiado<br/>
+                            <td class="cod">
+                                body {<br/>
+                                &nbsp;&nbsp;-webkit-touch-callout: none;<br/>
+                                &nbsp;&nbsp;-webkit-text-size-adjust: none;<br/>
+                                &nbsp;&nbsp;-webkit-user-select: none;<br/>
+                                }
+                        </tr>
+                    </table>
+                </div>
+                <hr/>
+                <div id="css2">
+                    <h2>Estilos de Elementos</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Estilo<th>Descrição<th>Exemplo<br/>Código</tr>
+                        <tr><td>margin<td>Tamanho da margem<td class="cod">margin: 5px;</tr>
+                        <tr><td>border<td>Tamanho, tipo e cor da borda<td class="cod">border: 3px solid red;</tr>
+                        <tr><td>padding<td>Tamanho da margem interna<td class="cod">padding: 5px;</tr>
+                        <tr><td>box-shadow<td>Sombra no elemento<td class="cod">box-shadow: 2px 2px 4px black;</tr>
+                        <tr><td>background-color<td>Cor do fundo<td class="cod">background-color: rgb(255,255,255);</tr>
+                        <tr><td>background-image<td>Image de fundo<td class="cod">background-image: url(image.jpg);</tr>
+                        <tr><td>background-position<td>Posição da image de fundo<td class="cod">background-position: left | right | center & top | bottom | center;</tr>
+                        <tr><td>background-repeat<td>Repetição da image de fundo<td class="cod">background-repeat: repeat | repeat-x | repeat-y | no-repeat;</tr>
+                        <tr><td>background-size<td>Tamanho da image de fundo<td class="cod">background-size: auto | length (w h) | cover;</tr>
+                    </table>
+                </div>
+                <hr/>
+                <div id="css3">
+                    <h2>Estilos de Texto</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Estilo<th>Descrição<th>Exemplo<br/>Código</tr>
+                        <tr><td>color<td>Cor do texto<td class="cod">color: rgb(255,255,255);</tr>
+                        <tr><td>text-align<td>Alinhamento<td class="cod">text-align: left | right | center | justify;</tr>
+                        <tr><td>text-shadow<td>Sombra no texto<td class="cod">text-shadow: 2px 2px 4px black;</tr>
+                        <tr><td>font-family<td>Altera a fonte<td class="cod">font-family: serif | sans-serif | monospaced;</tr>
+                        <tr><td>font-size<td>Altera o tamanho da fonte<td class="cod">font-size: medium|xx-small|x-small|small|large|x-large|xx-large|smaller|larger|length;</tr>
+                        <tr><td>font-style<td>Altera o estilo da fonte<td class="cod">font-style: normal|italic|oblique</tr>
+                        <tr><td>font-weight<td>Altera a largura da fonte<td class="cod">font-weight: normal|bold|bolder|lighter|number;</tr>
+                    </table>
+                </div>
+                <hr/>
+                <div id="css4">
+                    <h2>Exibição e posicionamento de elementos</h2>
+                    <table border="1" cellspacing="0">
+                        <tr><th>Estilo<th>Descrição<th>Exemplo<br/>Código</tr>
+                        <tr><td>Display<td>tipo de caixa usada por um elemento<td class="cod">display = block inline run-in</tr>
+                        <tr><td>Position<td>posicão de um elemento<td class="cod">position: absolute;</tr>
+                        <tr><td>Float<td>posicionamento e formatação de um elemento<td class="cod">float: right;</tr>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <script>
+            const abaOnClick = function(event, divIdx) {
+                let abas = document.querySelectorAll("#abas span");
+
+                //Define as abas como não selecionadas
+                for(let aba of abas){
+                    aba.className = "aba";
+                }
+                //Define a aba selecionada
+                event.target.className = "abaSel";
+
+                //let conteudos = document.querySelectorAll("#conteudo div");
+                let conteudos = [];
+                conteudos.push(document.querySelector("#inicio"));
+                conteudos.push(document.querySelector("#html"));
+                conteudos.push(document.querySelector("#js"));
+                conteudos.push(document.querySelector("#css"));
+                //Esconde todas as divs de conteúdo
+                for(let conteudo of conteudos){
+                    conteudo.style.display = "none";
+                }
+                //Exibe a div selecionada
+                conteudos[divIdx].style.display = "block";
+            };
+        </script>
+    </body>
+</html>

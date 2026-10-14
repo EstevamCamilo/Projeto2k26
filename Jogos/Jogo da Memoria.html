@@ -1,0 +1,419 @@
+<!DOCTYPE html>
+<!--
+JOGO DA MEMÓRIA
+    CARACTERÍSTICAS
+    - Contar Tempo Progressivo ou Regressivo
+    - Recordes Top 10
+    - Mudar dificuldade
+ 
+    ETAPAS DO DESENVOLVIMENTO
+ 
+    1ª Etapa
+  * - Definir as cartas 
+  * - Criar função para distribuir as cartas
+  * - Criar evento ao clicar na carta
+  *     - Verificar se já tem uma carta selecionada
+  *          - Se verdadeiro virar a carta e verificar se as cartas são iguais
+  *          - Senão virar as cartas
+  * - Verificar se todas as cartas estão viradas para finalizar o jogo
+ 
+    2ª Etapa
+  * - Implementar sistema de pontuação
+  * - Implementar o temporizador
+    
+    3ª Etapa 
+  * - Criar o sistema de controle de recordes
+ 
+    4ª Etapa
+  * - Criar modos de dificuldade
+    - Fazer as modificações visuais
+ 
+-->
+<html>
+    <head>
+        <title>Jogo da Memória</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <script src="../app.js"></script>
+        <style>
+            body {
+    margin: 0px;
+    .no-select {
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+    }
+}
+            .botao {
+                font-size: 2rem;
+                margin: 0.25rem;
+                padding: 1rem;
+                width: 4rem;
+                height: 4rem;
+                border-radius: 0.5rem;
+            }
+            #cabecalho {
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(52, 103, 134);
+    display: flex;
+}
+#inicio {
+    display: flex;
+}
+        </style>
+    </head>
+    <body>
+        <div id="cabecalho">
+        <header>
+            <a href="../index.html"><button id="vb"><img src="../volta.png"/></button></a>
+        </header>
+        <div id="inicio">
+            <select id="mode">
+                <option value="baby">Super Facil</option>
+                <option value="facil">Facil</option>
+                <option value="médio">Médio</option>
+                <option value="hard">dificil</option>
+            </select>
+            <button onclick="app.exibeJogo();">Jogar</button>
+            <h1>Jogo da Memória</h1>
+            <br/>
+            <button onclick="app.exibeRecordesTop10()">Recordes</button>
+            <dialog id="modal1"><button
+                id="dclose"
+                onclick="document.querySelector('#modal1').close()"><img src="Caça-Palavras/cross.png" /></button><br/>
+                <h1>Top 10</h1>
+                <p id="ExibeRecordTop10"></p>
+            </dialog>
+            <button id="b" onclick="sobre()">
+                <img src="../Caça-Palavras/info.png">
+                </img>
+            </button>
+        </div>
+    </div>
+ 
+        <div id="jogo">
+            <button style="float:left;" onclick="memoria.pararTemporizador();">Voltar</button>
+            <h1>Jogo da Memória</h1>
+            <div id="pontos">0</div>
+            <div id="relogio"></div>
+            <div id="mesa"></div>
+            <br/><br/>
+            <div id="venceu">
+                <div>Parabéns!! Você venceu!!</div>
+                <button onclick="memoria.distribuirCartas(memoria.pontos);">Continuar</button>
+            </div>
+            <div id="perdeu">
+                <div>Tempo Esgotado!!</div>
+                <button onclick="memoria.pararTemporizador();">Voltar para a tela inicial</button>
+            </div>
+        </div>
+ 
+        <script>
+            var app = {
+                exibeInicio: () => {
+                    document.querySelector("#inicio").style.display = "block";
+                    document.querySelector("#jogo").style.display = "none";
+                },
+                exibeJogo: () => {
+                    document.querySelector("#inicio").style.display = "none";
+                    document.querySelector("#jogo").style.display = "block";
+                    memoria.distribuirCartas(0);
+                },
+                exibeRecordesTop10: () => {
+                    let html = "<table>";
+                    for(let i=0; i < recordes.lista.length; i++){
+                        let recorde = recordes.lista[i];
+                        html += "<tr><td>"+(i+1)+"º<td>"+recorde.nome + "<td>" + recorde.pts;
+                    }
+                    html += "</table>";
+                    document.getElementById("ExibeRecordTop10").innerHTML = html;
+                    document.querySelector('#modal1').showModal();
+                }
+ 
+            };
+            
+            
+            var memoria = {
+                cartasDistribuidas : [], //Cartas da mesa
+                cartasSelecionadas : [], //Cartas selecionadas, pode ter 0, 1 ou 2 cartas sel.
+                interval : null,         //Intervalo do Temporizador
+                pontos: 0,               //Guarda a pontuação do jogador
+                
+                //Retorna as cartas da memória ordenada
+                criarCartas : (qtd) => {
+                    let cartas = [
+                        "&#127817;","&#127817;","&#127827;","&#127827;",
+                        "&#127815;","&#127815;","&#127818;","&#127818;",
+                        "&#127820;","&#127820;","&#127826;","&#127826;",
+                        "&#127823;","&#127823;","&#127822;","&#127822;",
+                        "&#127805;","&#127805;","&#127812;","&#127812;",
+                        "&#127816;","&#127816;","&#127821;","&#127821;",
+                        "&#129381;","&#129381;","&#129373;","&#129373;",
+                        "&#127825;","&#127825;","&#129389;","&#129389;",
+                        "&#127824;","&#127824;","&#129746;","&#129746;"
+ 
+                    ];
+                    if(qtd < 2) {
+                        qtd = 2;
+                        
+                    }
+                    if(qtd > cartas.length) {
+                        qtd = cartas.length;
+                    }
+                    let cartasCriadas = [];
+                    for(let i = 0; i < (qtd*2); i++){
+                        cartasCriadas.push(cartas[i]);
+                    }
+                    return cartasCriadas;
+                },
+ 
+                //Distribui as cartas na mesa aleatóriamente
+                distribuirCartas : (dificuldade) => {
+                    //Esconde as mensagens do jogo
+                    document.querySelector("#venceu").style.display = "none";
+                    document.querySelector("#perdeu").style.display = "none";
+                    
+                    //Obtem as cartas
+                    let cartas = memoria.criarCartas(dificuldade);
+                    //Obtem a div para colocar as cartas
+                    let mesa = document.querySelector("#mesa");
+                    //Remove o conteúdo da div mesa
+                    mesa.innerHTML = "";
+                    //Zera a lista de cartas selecionadas
+                    memoria.cartasSelecionadas = [];
+                    //Remove os valores da lista de cartas
+                    memoria.cartasDistribuidas = [];
+                    //Distribui cartas em ordem aleatória
+                    while(cartas.length > 0) { //Enquanto o comprimento da lista for maior que Zero
+                        //Sorteia uma posição das cartas
+                        let pos = parseInt(Math.random() * cartas.length);
+                        //Acrescenta o valor da posição sorteada na lista de cartas distribuídas
+                        memoria.cartasDistribuidas.push(cartas[pos]);
+                        //Remove a carta sorteada
+                        cartas.splice(pos, 1);
+                        //Acrescenta o botão Referente à carta
+                        let botao = document.createElement("button");
+                        //Pega a posição da carta sorteada
+                        let posBotao = memoria.cartasDistribuidas.length-1;
+                        //Atribui o evento
+                        botao.onclick = (event) => memoria.botaoOnClick(event, posBotao);
+                        //Define a classe CSS
+                        botao.className = "botao";
+                        //Defino o verso da carta
+                        botao.innerHTML = "&nbsp;";
+                        //Acrescenta a carta à div mesa
+                        mesa.appendChild(botao);
+                    }
+                    var TMode = document.querySelector("#mode").value;
+                if(dificuldade < 2){
+                    if(dificuldade === "baby"){
+                    TMode
+                };
+                if(TMode === "facil"){
+                    TMode = 10
+                };
+                if(TMode === "médio"){
+                    TMode = 8
+                };
+                if(TMode === "hard"){
+                    TMode = 5
+            };
+                }else {
+                if(dificuldade === "baby"){
+                    TMode
+                };
+                if(TMode === "facil"){
+                    TMode = 10 + dificuldade
+                };
+                if(TMode === "médio"){
+                    TMode = 8 + dificuldade
+                };
+                if(TMode === "hard"){
+                    TMode = 5 + dificuldade}
+                };
+
+                    //Inicia a contagem regressiva
+                    memoria.iniciarTemporizador(TMode);
+                },
+                
+                //Evento ao clicar nas cartas
+                botaoOnClick : (event, pos) => {
+                    if(document.querySelector("#perdeu").style.display === "none") {
+                        //Obtem o botão acionado pelo evento
+                        let botao = event.target;
+                        //Se houver menos que 2 cartas selecionadas e a carta estiver desvirada
+                        if(memoria.cartasSelecionadas.length < 2 && botao.innerHTML==="&nbsp;"){
+                            //Define o conteúdo do botao com a carta referente ao botao
+                            botao.innerHTML = memoria.cartasDistribuidas[pos];
+                            //Acrescenta a carta seleciona da lista de cartas selecionadas
+                            memoria.cartasSelecionadas.push(botao);
+                            //Se tem 2 cartas selecionadas
+                            if(memoria.cartasSelecionadas.length === 2){
+                                if(memoria.verificarSeVenceu()) {
+                                    document.querySelector("#venceu").style.display = "block";
+                                    //remove o intervalo de execução do temporizador
+                                    clearInterval(memoria.interval);
+                                    memoria.pontos++;
+                                    document.querySelector("#pontos").innerHTML = memoria.pontos;
+                                } else {
+                                    setTimeout(() => {
+                                        //Se as cartas forem diferentes desvira as cartas
+                                        if(memoria.cartasSelecionadas[0].innerHTML !== memoria.cartasSelecionadas[1].innerHTML) {
+                                            //Faz o conteúdo desaparecer depois de 1 segundo
+                                            memoria.cartasSelecionadas[0].innerHTML = "&nbsp;";
+                                            memoria.cartasSelecionadas[1].innerHTML = "&nbsp;";
+                                        }
+                                        //Zera a lista de cartas selecionadas
+                                        memoria.cartasSelecionadas = [];
+                                        
+                                        //Adiciona 1 segundo ao tempo
+                                        let relogio = document.querySelector("#relogio");
+                                        let tempo = parseInt(relogio.innerHTML);
+                                        tempo++;
+                                        relogio.innerHTML = tempo;
+                                    },100);
+                                }
+                            }
+                        }
+                    }
+                },
+                
+                //Retorna true se venceu e false se não venceu
+                verificarSeVenceu : () => {
+                    //Obtem a div para verificar se as cartas estão todas viradas
+                    let mesa = document.querySelector("#mesa");
+                    //obtem os botoes da div mesa
+                    let botoes = mesa.querySelectorAll("button");
+                    //Variável que determina se ganhou ou se perdeu
+                    let venceu = true;
+                    //Verifica cada botão
+                    for(let botao of botoes) {
+                        //Se o conteúdo do botão for igual a espaço o jogo não terminou
+                        if(botao.innerHTML === "&nbsp;") {
+                            venceu = false;
+                        }
+                    }
+                    //Retorna se venceu ou não
+                    return venceu;
+                },
+            
+                //Inicia o temporizador
+                iniciarTemporizador : (tempo) => {
+                    //Obtem o elemento HTML relogio
+                    let relogio = document.querySelector("#relogio");
+                    //Atribui o tempo ao conteúdo do elemento
+                    relogio.innerHTML = tempo;
+                    //Cria o intervalo de execução do temporizador
+                    memoria.interval = setInterval(() => {
+                        //Atribui o tempo ao conteúdo do elemento
+                        if(tempo >= 0) {
+                            relogio.innerHTML = tempo;
+                        }
+                        //Subtrai 1 do tempo
+                        tempo--;
+                        //Se o tempo for menor que zero
+                        if(tempo === -2) {
+                            //Exibe a mensagem
+                            document.querySelector("#perdeu").style.display = "block";
+                            if(recordes.estaNoTop10(memoria.pontos)){
+                                let nome = prompt("Você está no Top 10!!\n\nDigite seu nome:");
+                                //Adiciona os pontos aos recordes
+                                //recordes.adicionaPts(memoria.pontos, nome);
+                                recordes.addRecorde(nome, memoria.pontos);
+                            }
+                        }
+                    },1000); //1 em 1 segundo
+                },
+ 
+                //Para a execução do temporizador
+                pararTemporizador : () => {
+                    //Esconde as mensagens do jogo
+                    document.querySelector("#venceu").style.display = "none";
+                    document.querySelector("#perdeu").style.display = "none";
+ 
+                    //remove o intervalo de execução do temporizador
+                    clearInterval(memoria.interval);
+                    memoria.pontos = 0;
+                    document.querySelector("#pontos").innerHTML = memoria.pontos;
+                    //Exibe tela de início
+                    app.exibeInicio();
+                }
+            };
+            
+            var recordes = {
+                //lista de pontos
+                //[{pts:10, nome:"Marcos"},{pts:9, nome:"Maria"}]
+                lista: [
+                    {pts:0, nome:"Marcos"},
+                    {pts:0, nome:"Maria"},
+                    {pts:0, nome:"Meg"},
+                    {pts:0, nome:"Mendonça"},
+                    {pts:0, nome:"Mumia"},
+                    {pts:0, nome:"Muka"},
+                    {pts:0, nome:"Morgana"},
+                    {pts:0, nome:"Mr. M"},
+                    {pts:0, nome:"Mario"},
+                    {pts:0, nome:"Merlin"}
+                ],
+                
+                //Adiciona um recorde e verifica a posição
+                addRecorde(nome, recorde) {
+                    this.lista.push({nome: nome, pts: recorde});
+                    this.lista.sort((a,b) => a.pts < b.pts ? 1 : -1);
+                    this.lista = this.lista.splice(0, 10);
+                    console.log(this.lista);
+                },
+
+                
+                //Verifica se os pontos estão na lista de recordes
+                estaNoTop10: (pts) => {
+                    let esta = false;
+                    //Está no top 10 se a lista for menor que 10
+                    if(recordes.lista.length < 10) {
+                        esta = true;  //Está na lista
+                    } else {
+                        let i = 0; //índice
+                        //Verifica todos os pontos da lista
+                        while(i < recordes.lista.length) { 
+                            //Se os pontos forem maiores que alguma pontuação da lista
+                            if(pts > recordes.lista[i].pts) {
+                                esta = true;  //Está na lista
+                            }
+                            i++; //Adiciona 1 à variável i
+                        }
+                    }
+                    return esta; //Retorna true se estiver na lista e false se não estiver
+                },
+                
+                //Adiciona ponto à lista
+                adicionaPts: (pts, nome) => {
+                    //índice para verificar cada elemento da lista
+                    let i = 0;
+                    //enquanto os pts forem menores que o valor da posição i da lista
+                    //e i for menor que o comprimento da lista
+                    while(pts < recordes.lista[i].pts && i < recordes.lista.length) {
+                        i++; //Adiciona 1 à variável i
+                    }
+                    //Fatia a lista na posição i (posição que será inserido o ponto)
+                    let listaFim = recordes.lista.slice(i, recordes.lista.length);
+                    //Remove elementos da lista a partir da posição i
+                    recordes.lista.splice(i, recordes.lista.length);
+                    //Adiciona os pts no fim da lista fatiada
+                    recordes.lista.push({pts:pts, nome:nome});
+                    //Contatena o fim da lista na lista
+                    recordes.lista = recordes.lista.concat(listaFim);
+ 
+                    //Se o comprimento da lista for maior que 10
+                    if(recordes.lista.length > 10) {
+                        //Remove os elementos posteriores à posição 10 da lista
+                        recordes.lista.splice(11, recordes.lista.length);
+                    }
+                }
+            };
+             
+            app.exibeInicio();
+            //app.exibeRecordesTop10();
+        </script>
+    </body>
+</html>

@@ -1,0 +1,145 @@
+body {
+  margin: 0px;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -o-user-select: none;
+  user-select: none;
+}
+#biblioteca {
+  overflow: hidden;
+}
+
+#calculos,
+#cacaPalavras,
+#separaSilabas {
+  margin-top: 10px;
+  margin-left: 13px;
+  border: 2px solid black;
+  float: left;
+  padding: 0px;
+  border-radius: 5px;
+}
+#cabecalho {
+  border: 1px solid rgb(0, 0, 0);
+  background-color: rgb(52, 103, 134);
+  display: flex;
+}
+#titulo {
+  color: white;
+  font-size: 2rem;
+  font-family: arial;
+  text-shadow: 1px 1px black;
+  float: right;
+  padding-left: 43.5vw;
+  padding-top: 0px;
+  padding-bottom: 0px;
+  display: inline-flex;
+  margin-bottom: 0.5rem;
+  margin-top: 0.5rem;
+}
+#b {
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
+  border: none;
+  margin-bottom: 0px;
+  padding: 0.1rem;
+  border: 1px solid rgb(100, 100, 100);
+  border-radius: 0.5rem;
+  background-color: rgb(255, 255, 255);
+  cursor: pointer;
+  text-align: center;
+}
+.btn {
+  position: relative;
+  top: 0.3rem;
+  bottom: 0.5rem;
+  padding: 0.2rem;
+  margin-left: 1rem;
+  margin-top: 0.5rem;
+  border: 1px solid rgb(100, 100, 100);
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  font-size: 2vh;
+  font-family: Arial;
+}
+.categorias {
+  position: absolute;
+  top: 0.5vh;
+  margin-bottom: 0px;
+}
+
+#rodape {
+  color: white;
+  font-size: 1.2rem;
+  font-family: sans-serif;
+  background-color: rgb(52, 103, 134);
+  left: 0px;
+  right: 0px;
+  bottom: 0px;
+  position: fixed;
+  max-height: 1.25rem;
+}
+.biblioteca {
+  display: flex;
+  flex-wrap: nowrap;
+}
+.container {
+  overflow: hidden;
+}
+
+.filterDiv {
+  display: none;
+}
+.show {
+  display: flex;
+}
+#sobre {
+  border-radius: 1rem;
+  border: 1px solid black;
+}
+#dclose {
+  position: relative;
+  float: right;
+  border: none;
+  background: none;
+  font-size: 30px;
+  display: flex;
+  cursor: pointer;
+}
+#cp {
+  text-align: center;
+}
+#dimg {
+  margin-top: 0px;
+  margin-left: 9.2vw;
+}
+#dnome {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 17px;
+}
+#dsite {
+  font-size: 17px;
+  font-family: sans-serif;
+}
+#lg {
+  margin-top: 0px;
+  margin-left: 14rem;
+  width: 33%;
+  font-family: sans-serif;
+}
+#l {
+  text-align: center;
+  font-family: sans-serif;
+}
+#n {
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 1rem;
+}
+.s {
+  font-size: 1.2rem;
+}

@@ -1,0 +1,582 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Separa - Sílabas
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/x-icon" href="../Caça-Palavras/logo.png" />
+        <script src="../modal.js"></script>
+        <style>
+            body {
+                margin: 0px;
+            }
+            #cabecalho {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1rem;
+                padding: 0.5rem;
+                border: 1px solid rgb(0, 0, 0);
+                border-radius: 0.25rem;
+                font-size: 1.7rem;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            #conteudo {
+                margin-top: 1rem;
+                text-align: center;
+                font-size: 1.5rem;
+                font-style: italic;
+                border-radius: 8px;
+                font-family: monospace;
+            }
+            #menu {
+                padding: 1rem;
+                font-size: 2vh;
+                color: white;
+            }
+            @media print {
+                #cabecalho {
+                    margin-top: 0px;
+                    display: flex;
+                }
+                #menu {
+                    display: none;
+                }
+                #mn {
+                    display: none;
+                }
+                #vb {
+                    display: none;
+                }
+                #b {
+                    display: none;
+                }
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #mn {
+                color: white;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                margin-left: 21%;
+                margin-right: auto;
+                text-shadow: 1px 1px black;
+                font-size: 2rem;
+            }
+            #z,
+            #c,
+            #b,
+            #vb {
+                padding: 0.1rem;
+                border: 1px solid rgb(100, 100, 100);
+                background-color: rgb(255, 255, 255);
+                border-radius: 0.5rem;
+                cursor: pointer;
+                top: 0.5rem;
+            }
+            #c {
+                position: absolute;
+                top: 0.5rem;
+                right: 3rem;
+            }
+            #b {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #ca {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 35px;
+                margin-bottom: 0px;
+            }
+            #dclose {
+                position: relative;
+                float: right;
+                border: none;
+                background: none;
+                font-size: 30px;
+                display: flex;
+                cursor: pointer;
+            }
+            #sobre {
+                border-radius: 1rem;
+                border: 1px solid black;
+            }
+            #vb {
+                position: absolute;
+                left: 0.5rem;
+            }
+            #linhas,
+            #maximo {
+                width: 2rem;
+            }
+            #vt {
+                margin-right: 2rem;
+            }
+            #lg {
+                margin-top: 0px;
+                margin-left: 14rem;
+                width: 33%;
+                font-family: sans-serif;
+            }
+            #n {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 1rem;
+            }
+            .s {
+                font-size: 1.2rem;
+            }
+            #silabas {
+                border: 1px solid black;
+                border-radius: 0.25rem;
+                font-size: 1.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fundo">
+            <a id="vt" href="../index.html"
+               >
+                <button id="vb">
+                    <img src="../volta.png" />
+                </button
+                    >
+            </a>
+            <div id="menu">
+                N° de Linhas
+                <input id="linhas" type="number" min="2" value="5" max="16" />
+                <input id="maximo" type="number" min="2" value="2" max="20" />
+                <button id="z" onclick="exibeLicao()">Criar Atividade
+                </button>
+                <button id="c" onclick="window.print()">
+                    <img src="printer.png" />
+                </button>
+            </div>
+            <h1 id="mn">Separa - Sílabas
+            </h1>
+        </div>
+        <button id="b" onclick="sobre()">
+            <img src="info.png" />
+        </button>
+        <div id="conteudo">
+        </div>
+        <script>
+            const palavras = [
+                {
+                    imagem: '🎂',
+                    palavra: 'BOLO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🥑',
+                    palavra: 'ABACATE',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🍒',
+                    palavra: 'CEREJA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍑',
+                    palavra: 'PÊSSEGO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍌',
+                    palavra: 'BANANA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍐',
+                    palavra: 'PERA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🍇',
+                    palavra: 'UVA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🍊',
+                    palavra: 'LARANJA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🥭',
+                    palavra: 'MANGA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🍓',
+                    palavra: 'MORANGO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍋',
+                    palavra: 'LIMÃO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🥝',
+                    palavra: 'KIWI',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🍍',
+                    palavra: 'ABACAXI',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🍎',
+                    palavra: 'MAÇÃ',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🍉',
+                    palavra: 'MELANCIA',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🫐',
+                    palavra: 'MIRTILO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍔',
+                    palavra: 'HAMBÚRGUER',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍕',
+                    palavra: 'PIZZA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🍿',
+                    palavra: 'PIPOCA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🍫',
+                    palavra: 'CHOCOLATE',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🍭',
+                    palavra: 'PIRULITO',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🚓',
+                    palavra: 'POLÍCIA',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '✈',
+                    palavra: 'AVIÃO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🚢',
+                    palavra: 'NAVIO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐴',
+                    palavra: 'CAVALO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐶',
+                    palavra: 'CACHORRO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐈',
+                    palavra: 'GATO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐓',
+                    palavra: 'GALINHA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐒',
+                    palavra: 'MACACO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🦊',
+                    palavra: 'RAPOSA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐟',
+                    palavra: 'PEIXE',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐦',
+                    palavra: 'PÁSSARO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐘',
+                    palavra: 'ELEFANTE',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🦒',
+                    palavra: 'GIRAFA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐄',
+                    palavra: 'VACA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🦋',
+                    palavra: 'BORBOLETA',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🐳',
+                    palavra: 'BALEIA',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '🦭',
+                    palavra: 'FOCA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐯',
+                    palavra: 'TIGRE',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🦓',
+                    palavra: 'ZEBRA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🦆',
+                    palavra: 'PATO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐧',
+                    palavra: 'PINGUIM',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🦉',
+                    palavra: 'CORUJA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🦚',
+                    palavra: 'PAVÃO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐻',
+                    palavra: 'URSO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🦩',
+                    palavra: 'FLAMINGO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🦇',
+                    palavra: 'MORCEGO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🐼',
+                    palavra: 'PANDA',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐝',
+                    palavra: 'ABELHA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🦃',
+                    palavra: 'PERU',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐸',
+                    palavra: 'SAPO',
+                    silabas: 2,
+                }
+                ,
+                {
+                    imagem: '🐜',
+                    palavra: 'FORMIGA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🌶️',
+                    palavra: 'PIMENTA',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '👕',
+                    palavra: 'CAMISETA',
+                    silabas: 4,
+                }
+                ,
+                {
+                    imagem: '👗',
+                    palavra: 'VESTIDO',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '👙',
+                    palavra: 'BIQUÍNI',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '👓',
+                    palavra: 'ÓCULOS',
+                    silabas: 3,
+                }
+                ,
+                {
+                    imagem: '🛏️',
+                    palavra: 'CAMA',
+                    silabas: 2,
+                }
+                ,
+            ];
+            const exibeLicao = function () {
+                //Entrada de dados
+                let linhas = parseInt(document.querySelector('#linhas').value);
+                let maximo = parseInt(document.querySelector('#maximo').value);
+                if (linhas >= palavras.length) {
+                    linhas = palavras.length;
+                }
+                //Saída de dados
+                let conteudo = document.querySelector('#conteudo');
+                //Sorteia as palavras da lição
+                let sorteadas = [];
+                for (let i = 0; i < linhas; i++) {
+                    let n;
+                    do {
+                        n = parseInt(Math.random() * palavras.length);
+                    }
+                    while (
+                        sorteadas.indexOf(n) > -1 ||
+                        palavras[n].silabas > maximo
+                    );
+                    sorteadas.push(n);
+                }
+                //Cria cabeçalho
+                let cabe = '';
+                let ti = '';
+                cabe += "<br/> <table id='cabecalho' align='center'>";
+                cabe += '<tr>';
+                cabe += '<td> Escola:';
+                cabe += '<td>__________________________';
+                cabe += '<td>&nbsp;Data:__/__/____';
+                cabe += '</tr>';
+                cabe += '<tr>';
+                cabe += '<td>Nome:';
+                cabe += '<td>___________________________';
+                cabe += '<td>&nbsp;Série:_________';
+                cabe += '</tr>';
+                cabe += '</table>';
+                //cria o conteúdo
+                let html = "<h1 id='ca'>Separe as Sílabas</h1><br>";
+                html += "<table id='silabas' cellspacing='50' align='center'>";
+                html += '<tr>';
+                for (let i = 0; i < linhas; i++) {
+                    let palavra = palavras[sorteadas[i]];
+                    html += "<td style='text-align:left'>";
+                    html += palavra.imagem + ' ';
+                    html += palavra.palavra + ' ';
+                    for (let j = 0; j < palavra.silabas; j++) {
+                        html += '____&nbsp;&nbsp;';
+                    }
+                    if (i % 2 === 1) {
+                        html += '<tr>';
+                    }
+                }
+                html += '</table>';
+                conteudo.innerHTML = cabe;
+                conteudo.innerHTML += html;
+            };
+        </script>
+    </body>
+</html>

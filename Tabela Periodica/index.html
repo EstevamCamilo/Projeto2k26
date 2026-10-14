@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset='utf-8'>
+    <meta http-equiv='X-UA-Compatible' content='IE=edge'>
+    <title>Tabela Periódica</title>
+    <meta name='viewport' content='width=device-width, initial-scale=1'>
+    <link rel='stylesheet' type='text/css' media='screen' href='main.css'>
+    <script src='main.js'></script>
+    <script src="../modal.js"></script>
+</head>
+<body>
+    <div id="cabecalho">
+        <a id="vt" href="../index.html"
+               >
+                <button id="vb">
+                    <img src="../volta.png" />
+                </button
+                    >
+            </a>
+        <h1 id="mn">Tabela Periódica</h1>
+        <button id="b" onclick="sobre()">
+            <img src="../Separa Silabas/info.png" />
+        </button>
+    </div>
+        <table cellspacing="5" align="center">
+            <tr>
+                <th onclick="elementoClick(1)" class="naometais">1<h2>H</h2><small>Hidrogênio<br>1,008</small></th>
+                <td colspan="16"></td>
+                <th onclick="elementoClick(2)" class="gasesnobres">2<h2>He</h2><small>Hélio<br>4,0023</small></th>
+            </tr>
+            <tr>
+                <th onclick="elementoClick(3)" class="metaisalcalinos">3<h2>Li</h2><small>litio<br>6,94</small></th>
+                <th onclick="elementoClick(4)" class="metaisalcalinosterrosos">4<h2>Be</h2><small>Berilio<br>9,0122</small></th>
+                <td colspan="10"></td>
+                <th onclick="elementoClick(5)" class="semimetais">5<h2>B</h2><small>Boro<br>10,81</small></th>
+                <th onclick="elementoClick(6)" class="naometais">6<h2>C</h2><small>Carbono<br>12,011</small></th>
+                <th onclick="elementoClick(7)" class="naometais">7<h2>N</h2><small>Nitrogênio<br>14,007</small></th>
+                <th onclick="elementoClick(8)" class="naometais">8<h2>O</h2><small>Oxigênio<br>15,999</small></th>
+                <th onclick="elementoClick(9)" class="halogenios">9<h2>F</h2><small>Flúor<br>18,998</small></th>
+                <th onclick="elementoClick(10)" class="gasesnobres">10<h2>Ne</h2><small>Neônio<br>20,180</small></th>
+            </tr>
+            <tr>
+                <th onclick="elementoClick(11)" class="metaisalcalinos">11<h2>Na</h2><small>Sódio<br>22,99</small></th>
+                <th onclick="elementoClick(12)" class="metaisalcalinosterrosos">12<h2>Mg</h2><small>Magnésio<br>24,305</small></th>
+                <td colspan="10"></td>
+                <th onclick="elementoClick(13)" class="outrosmetais">13<h2>Al</h2><small>Alumínio<br>23,982</small></th>
+                <th onclick="elementoClick(14)" class="semimetais">14<h2>Si</h2><small>Silício<br>28,086</small></th>
+                <th onclick="elementoClick(15)" class="naometais">15<h2>P</h2><small>Fósforo<br>30,974</small></th>
+                <th onclick="elementoClick(16)" class="naometais">16<h2>S</h2><small>Enxofre<br>32,06</small></th>
+                <th onclick="elementoClick(17)" class="halogenios">17<h2>Cl</h2><small>Cloro<br>35,45</small></th>
+                <th onclick="elementoClick(18)" class="gasesnobres">18<h2>Ar</h2><small>Agônio<br>39,948</small></th>
+            </tr>
+            <tr>    
+                <th onclick="elementoClick(19)" class="metaisalcalinos">19<h2>K</h2><small>Potássio<br>39,098</small></th>
+                <th onclick="elementoClick(20)" class="metaisalcalinosterrosos">20<h2>Ca</h2><small>Cálcio<br>40,078(4)</small></th>
+                <th onclick="elementoClick(21)" class="metaisdetransicao">21<h2>Sc</h2><small>Escândio<br>44,956</small></th>
+                <th onclick="elementoClick(22)" class="metaisdetransicao">22<h2>Ti</h2><small>Titânio <br>47,867</small></th>
+                <th onclick="elementoClick(23)" class="metaisdetransicao">23<h2>V</h2><small>Vanâdio<br>50,942</small></th>
+                <th onclick="elementoClick(24)" class="metaisdetransicao">24<h2>Cr</h2><small>Crômio<br>51,996</small></th>
+                <th onclick="elementoClick(25)" class="metaisdetransicao">25<h2>Mn</h2><small>Mangânes<br>54,938</small></th>
+                <th onclick="elementoClick(26)" class="metaisdetransicao">26<h2>Fe</h2><small>Ferro<br>55,845</small></th>
+                <th onclick="elementoClick(27)" class="metaisdetransicao">27<h2>Co</h2><small>Colbato<br>58,933</small></th>
+                <th onclick="elementoClick(28)" class="metaisdetransicao">28<h2>Ni</h2><small>Níquel<br>58,693</small></th>
+                <th onclick="elementoClick(29)" class="metaisdetransicao">29<h2>Cu</h2><small>Cobre<br>63,546</small></th>
+                <th onclick="elementoClick(30)" class="metaisdetransicao">30<h2>Zn</h2><small>Zinco<br>65,409</small></th>
+                <th onclick="elementoClick(31)" class="outrosmetais">31<h2>Ga</h2><small>Gálio<br>69,723</small></td>
+                <th onclick="elementoClick(32)" class="semimetais">32<h2>Ge</h2><small>Germânio<br>72,630</small></td>
+                <th onclick="elementoClick(33)" class="semimetais">33<h2>As</h2><small>Arsênio<br>74,922</small></td>
+                <th onclick="elementoClick(34)" class="naometais">34<h2>Se</h2><small>Selênio<br>79,971</small></td>
+                <th onclick="elementoClick(35)" class="halogenios">35<h2>Br</h2><small>Bromo<br>79,904</small></td>
+                <th onclick="elementoClick(36)" class="gasesnobres">36<h2>Kr</h2><small>Criptônio<br>83,798</small></th>
+            </th>
+            <tr>    
+                <th onclick="elementoClick(37)" class="metaisalcalinos">37<h2>Rb</h2><small>Rubídio<br>85,468</small></th>
+                <th onclick="elementoClick(38)" class="metaisalcalinosterrosos">38<h2>Sr</h2><small>Estrôncio<br>87,62</small></th>
+                <th onclick="elementoClick(39)" class="metaisdetransicao">39<h2>Y</h2><small>Ítrio<br>88,906</small></th>
+                <th onclick="elementoClick(40)" class="metaisdetransicao">40<h2>Zr</h2><small>Zircônio<br>91,224</small></th>
+                <th onclick="elementoClick(41)" class="metaisdetransicao">41<h2>Nb</h2><small>níobio<br>92,906</small></td>
+                <th onclick="elementoClick(42)" class="metaisdetransicao">42<h2>Mo</h2><small>Molibdênio<br>95,95</small></td>
+                <th onclick="elementoClick(43)" class="metaisdetransicao">43<h2>Tc</h2><small>Tecnécio<br>98</small></td>
+                <th onclick="elementoClick(44)" class="metaisdetransicao">44<h2>Ru</h2><small>Rutênio<br>101,072</small></td>
+                <th onclick="elementoClick(45)" class="metaisdetransicao">45<h2>Rh</h2><small>Ródio<br>102,91</small></td>
+                <th onclick="elementoClick(46)" class="metaisdetransicao"> 46<h2> Pd </h2><small>Paladío<br>106,42</small></th>
+                <th onclick="elementoClick(47)" class="metaisdetransicao"> 47<h2> Ag </h2><small>Prata<br>107,87</small></th>
+                <th onclick="elementoClick(48)" class="metaisdetransicao"> 48<h2> Cd </h2><small>Cádmio<br>112,41</small></th>
+                <th onclick="elementoClick(49)" class="outrosmetais"> 49<h2> In </h2><small>Índio<br>114,82</small></th>
+                <th onclick="elementoClick(50)" class="outrosmetais"> 50<h2> SN </h2><small>EStanho<br>118,71</small></th>
+                <th onclick="elementoClick(51)" class="semimetais">51<h2>Sb</h2><small>Antimônio<br>121,73</small></th>
+                <th onclick="elementoClick(52)" class="semimetais">52<h2>Te</h2><small>Telúrio<br>127,60(3)</small></th>
+                <th onclick="elementoClick(53)" class="halogenios">53<h2>I</h2><small>Iodo<br>126,90</small></th>
+                <th onclick="elementoClick(54)" class="gasesnobres">54<h2>Xe</h2><small>Xenônio<br>131,29</small></th>
+            </th>
+            <tr>
+                <th onclick="elementoClick(55)" class="metaisalcalinos">55<h2>Cs</h2><small>Césio<br>132,91</small></th>
+                <th onclick="elementoClick(56)" class="metaisalcalinosterrosos">56<h2>Ba</h2><small>Bário<br>137,33</small></th>
+                <th onclick="elementoClick(57)" class="lantanideos">57<h2>La</h2><small>Lantânio<br>138,91</small></th>
+                <th onclick="elementoClick(72)" class="metaisdetransicao">72<h2>Hf</h2><small>Háfnio<br>178,49</small></th>
+                <th onclick="elementoClick(73)" class="metaisdetransicao">73<h2>Ta</h2><small>Tântalo<br>180,95</small></th>
+                <th onclick="elementoClick(74)" class="metaisdetransicao">74<h2>W</h2><small>Tungstênio<br>183,84</small></th>
+                <th onclick="elementoClick(75)" class="metaisdetransicao">75<h2>Re</h2><small>Rênio<br>186,21</small></th>
+                <th onclick="elementoClick(76)" class="metaisdetransicao">76<h2>Os</h2><small>Ósmio<br>190,23</small></th>
+                <th onclick="elementoClick(77)" class="metaisdetransicao">77<h2>Ir</h2><small>Irídio<br>192,22</small></th>
+                <th onclick="elementoClick(78)" class="metaisdetransicao">78<h2>Pt</h2><small>Platina<br>195,08</small></th>
+                <th onclick="elementoClick(79)" class="metaisdetransicao">79<h2>Au</h2><small>Ouro<br>196,97</small></th>
+                <th onclick="elementoClick(80)" class="metaisdetransicao">80<h2>Hg</h2><small>Mercúrio<br>200,59</small></th>
+                <th onclick="elementoClick(81)" class="outrosmetais">81<h2>Tl</h2>Talio<br>204,38</th>
+                <th onclick="elementoClick(82)" class="outrosmetais">82<h2>Pb</h2>Chumbo<br>207,2</th>
+                <th onclick="elementoClick(83)" class="outrosmetais">83<h2>Bi</h2>Bismuto<br>208,98</th>
+                <th onclick="elementoClick(84)" class="semimetais">84<h2>Po</h2>Polônio<br>[209]</th>
+                <th onclick="elementoClick(85)" class="halogenios">85<h2>At</h2>Astato<br>[210]</th>
+                <th onclick="elementoClick(86)" class="gasesnobres">86 <h2> Rn </h2> <small> Radônio <br> [222]</small></th>
+            </tr>
+            <tr>
+                <th onclick="elementoClick(87)" class="metaisalcalinos">87 <h2> Fr </h2> <small> Frâncio <br> [223]</small></th>
+                <th onclick="elementoClick(88)" class="metaisalcalinosterrosos">88 <h2> Ra </h2> <small> Rádio <br> [226]</small></th>
+                <th onclick="elementoClick(89)" class="actinidios">89 <h2> Ac </h2> <small> Actínio <br> [227]</small></th>  
+                <th onclick="elementoClick(104)" class="metaisdetransicao">104 <h2> Rf </h2> <small> Rutherfórdio <br> [261]</small></th>  
+                <th onclick="elementoClick(105)" class="metaisdetransicao">105<h2> Db </h2> <small> Dúbnio <br> [262]</small></th>  
+                <th onclick="elementoClick(106)" class="metaisdetransicao">106<h2> Sg </h2> <small> Seabórgio <br> [266]</small></th>  
+                <th onclick="elementoClick(107)" class="metaisdetransicao">107<h2> Bh </h2> <small> Bóhrio <br> [264]</small></th>  
+                <th onclick="elementoClick(108)" class="metaisdetransicao">108<h2> Hs </h2> <small> Hássio <br> [277]</small></th>  
+                <th onclick="elementoClick(109)" class="metaisdetransicao">109<h2> Mt </h2> <small> Meitnério <br> [268]</small></th>  
+                <th onclick="elementoClick(110)" class="metaisdetransicao">110<h2> Ds </h2> <small> Darmstádio <br> [271]</small></th>  
+                <th onclick="elementoClick(111)" class="metaisdetransicao">111<h2> Rg </h2> <small> Roentgênio <br> [272]</small></th>  
+                <th onclick="elementoClick(112)" class="metaisdetransicao">112<h2> Cn </h2> <small> Copernício <br> [277]</small></th>  
+                <th onclick="elementoClick(113)" class="outrosmetais">113<h2> Nh </h2> <small> Nihônio <br> [286]</small></th>  
+                <th onclick="elementoClick(114)" class="outrosmetais">114 <h2> Fl </h2> <small> Fleróvio <br> [289]</small></th>  
+                <th onclick="elementoClick(115)" class="outrosmetais">115<h2> Mc </h2> <small> Moscóvio <br> [288]</small></th>  
+                <th onclick="elementoClick(116)" class="outrosmetais">116<h2> Lv </h2> <small> Livermório <br> [293]</small></th>  
+                <th onclick="elementoClick(117)" class="halogenios">117<h2> Ts </h2> <small> Tenessino <br> [294]</small></th>  
+                <th onclick="elementoClick(118)" class="gasesnobres">118<h2> Og </h2> <small> Oganessônio <br> [294]</small></th>  
+            </tr>
+            <tr>
+                <td colspan="18">
+                    <br>
+                    <br>
+                    <br>
+                </td>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <th onclick="elementoClick(58)" class="lantanideos">58<h2>Ce</h2><small>Cério<br>140,12</small></th>
+                <th onclick="elementoClick(59)" class="lantanideos">59<h2>Pr</h2><small>Praseodímio<br>140,91</small></th>
+                <th onclick="elementoClick(60)" class="lantanideos">60<h2>Nd</h2><small>Neodímio<br>144,24</small></th>
+                <th onclick="elementoClick(61)" class="lantanideos">61<h2> Pm </h2><small>Promécio<br>145</small></th>
+                <th onclick="elementoClick(62)" class="lantanideos">62<h2> Sm </h2><small>Samário<br>150,36(2)</small></th>
+                <th onclick="elementoClick(63)" class="lantanideos">63<h2> Eu </h2><small>Európio<br>151,96</small></th>
+                <th onclick="elementoClick(64)" class="lantanideos">64<h2> Gd </h2><small>Gadolinio<br>157,25(3)</small></th>
+                <th onclick="elementoClick(65)" class="lantanideos">65<h2> Tb </h2><small>Térbio<br>158,93</small></th>
+                <th onclick="elementoClick(66)" class="lantanideos">66<h2>Dy</h2><small>disprósio<br>162,50</small></th>
+                <th onclick="elementoClick(67)" class="lantanideos">67<h2>Ho</h2><small>hólmio<br>164,93</small></th>
+                <th onclick="elementoClick(68)" class="lantanideos">68<h2>Er</h2><small>érbio<br>167,26</small></th>
+                <th onclick="elementoClick(69)" class="lantanideos">69<h2>Tm</h2><small>túlio<br>168,93</small></th>
+                <th onclick="elementoClick(70)" class="lantanideos">70<h2>Yb</h2><small>itérbio<br>173,05</small></th>
+                <th onclick="elementoClick(71)" class="lantanideos">71<h2>Lu</h2><small>Lutécio<br>174,97</small></th>
+            </tr>
+            <tr>
+                <td colspan="2"></td>
+                <th onclick="elementoClick(90)" class="actinidios">90 <h2> Th </h2> <small>Tório <br> 232,04</small></th>
+                <th onclick="elementoClick(91)" class="actinidios">91<h2>Pa</h2><small>Protactínio<br>231,04</small></th>
+                <th onclick="elementoClick(92)" class="actinidios">92<h2>U</h2><small>Urânio<br>238,03</small></th>
+                <th onclick="elementoClick(93)" class="actinidios">93<h2>Np</h2><small>Netúnio<br>[237]</small></th>
+                <th onclick="elementoClick(94)" class="actinidios">94<h2>Pu</h2><small>Plutônio<br>[244]</small></th>
+                <th onclick="elementoClick(95)" class="actinidios">95<h2>Am</h2><small>Amerício<br>[243]</small></th> 
+                <th onclick="elementoClick(96)" class="actinidios">96<h2>Cm</h2><small>Cúrio<br>[247]</small></th>
+                <th onclick="elementoClick(97)" class="actinidios">97<h2>Bk</h2><small>Berquélio<br>[247]</small></th>
+                <th onclick="elementoClick(98)" class="actinidios">98<h2>Cf</h2><small>Califórnio<br>[251]</small></th>
+                <th onclick="elementoClick(99)" class="actinidios">99<h2>Es</h2><small>Einstênio<br>[252]</small></th>
+                <th onclick="elementoClick(100)" class="actinidios">100<h2>Fm</h2><small>Férmio<br>[257]</small></th>
+                <th onclick="elementoClick(101)" class="actinidios">101<h2>Md</h2><small>Mendelévio<br>[258]</small></th>
+                <th onclick="elementoClick(102)" class="actinidios">102<h2>No</h2><small>Nobélio<br>[259]</small></th>
+                <th onclick="elementoClick(103)" class="actinidios">103<h2>Lr</h2><small>Laurêncio<br>[262]</small></th>
+            </tr>
+        </table>
+        <br><br><br>
+        <table align="center">
+            <caption><h3>Legendas</h3></caption>
+            <tr>
+                <th class="naometais">&nbsp;&nbsp</th>
+                <td>Não metais</td>
+                <th class="metaisalcalinos">&nbsp;&nbsp;</th>
+                <td>Metais alcalinos</td>
+                <th class="semimetais">&nbsp;&nbsp;</th>
+                <td>Semi metais</td>
+                <th class="outrosmetais">&nbsp;&nbsp;</th>
+                <td>Outros metais</td>
+                <th class="lantanideos">&nbsp;&nbsp;</th>
+                <td>Lantanideos</td>
+            </tr>
+            <tr>
+                <th class="gasesnobres">&nbsp;&nbsp;</th>
+                <td>Gases Nobres</td>
+                <th class="metaisalcalinosterrosos">&nbsp;&nbsp;</th>
+                <td>Metais Alcalinos Terrosos</td>
+                <th class="halogenios">&nbsp;&nbsp;</th>
+                <td>Halogenios</td>
+                <th class="metaisdetransicao">&nbsp;&nbsp;</th>
+                <td>Metais de Transicao</td>
+                <th class="actinidios">&nbsp;&nbsp;</th>
+                <td>Actinídios</td>
+            </tr>
+        </table>
+        <dialog id="janela">
+            <button onclick="document.querySelector('#janela').close()">X</button>
+            <iframe id="frame"></iframe>
+        </dialog>
+</body>
+</html>

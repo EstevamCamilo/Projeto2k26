@@ -1,0 +1,11 @@
+{
+  "name": "calchub-pro",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Central estática de cálculos matemáticos, financeiros, científicos e escolares",
+  "scripts": {
+    "dev": "python -m http.server 8000",
+    "test": "node --test tests/*.test.mjs"
+  }
+}

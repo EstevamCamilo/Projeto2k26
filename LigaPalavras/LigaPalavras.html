@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Liga Palavras
+        </title>
+        <link rel="icon" type="image/x-icon" href="../Caça-Palavras/logo.png" />
+        <script src="../modal.js"></script>
+        <style>
+            body {
+                margin: 0px;
+            }
+            #cabecalho {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1rem;
+                padding: 0.5rem;
+                border: 1px solid rgb(0, 0, 0);
+                border-radius: 0.25rem;
+                font-size: 1.7rem;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            #conteudo {
+                margin-top: 1rem;
+                text-align: center;
+                font-size: 1.5rem;
+                font-style: italic;
+                border-radius: 8px;
+                font-family: monospace;
+                padding: 0px;
+            }
+            #menu {
+                padding: 1rem;
+                font-size: 2vh;
+                color: white;
+            }
+            @media print {
+                #cabecalho {
+                    margin-top: -30px;
+                    display: flex;
+                }
+                #menu {
+                    display: none;
+                }
+                #mn {
+                    display: none;
+                }
+                #vb {
+                    display: none;
+                }
+                #b {
+                    display: none;
+                }
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #mn {
+                color: white;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                margin-left: 25%;
+                margin-right: auto;
+                text-shadow: 1px 1px black;
+                font-size: 2rem;
+            }
+            #z,
+            #c,
+            #b,
+            #vb {
+                padding: 0.1rem;
+                border: 1px solid rgb(100, 100, 100);
+                background-color: rgb(255, 255, 255);
+                border-radius: 0.5rem;
+                cursor: pointer;
+                top: 0.5rem;
+            }
+            #c {
+                position: absolute;
+                top: 0.5rem;
+                right: 3rem;
+            }
+            #b {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #ca {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 35px;
+                margin-bottom: 0px;
+            }
+            #dclose {
+                position: relative;
+                float: right;
+                border: none;
+                background: none;
+                font-size: 30px;
+                display: flex;
+                cursor: pointer;
+            }
+            #sobre {
+                border-radius: 1rem;
+                border: 1px solid black;
+            }
+            #vb {
+                position: absolute;
+                left: 0.5rem;
+            }
+            #linhas,
+            #maximo {
+                width: 2rem;
+            }
+            #vt {
+                margin-right: 2rem;
+            }
+            #lg {
+                margin-top: 0px;
+                margin-left: 14rem;
+                width: 33%;
+                font-family: sans-serif;
+            }
+            #n {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 1rem;
+            }
+            .s {
+                font-size: 1.2rem;
+            }
+            #silabas {
+                border: 1px solid black;
+                border-radius: 0.25rem;
+                font-size: 1.5rem;
+                padding-left: 8rem;
+                padding-right: 8rem;
+            }
+            #pal {
+                padding-right: 20rem;
+            }
+            #pimg {
+                font-size: 3rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fundo">
+            <a id="vt" href="../index.html"
+               >
+                <button id="vb">
+                    <img src="../volta.png" />
+                </button
+                    >
+            </a>
+            <div id="menu">
+                N° de Palavras
+                <input id="linhas" type="number" min="2" value="10" max="10" />
+                <button id="z" onclick="exibeLicao()">Criar Atividade
+                </button>
+                <button id="c" onclick="window.print()">
+                    <img src="../Caça-Palavras/printer.png" />
+                </button>
+            </div>
+            <h1 id="mn">Liga Palavras
+            </h1>
+        </div>
+        <button id="b" onclick="sobre()">
+            <img src="../Caça-Palavras/info.png" />
+        </button>
+        <div id="conteudo">
+        </div>
+    </body>
+    <script>
+        const palavras = [
+            {
+                imagem: '🎂',
+                palavra: 'BOLO',
+            }
+            ,
+            {
+                imagem: '🥑',
+                palavra: 'ABACATE',
+            }
+            ,
+            {
+                imagem: '🍒',
+                palavra: 'CEREJA',
+            }
+            ,
+            {
+                imagem: '🍑',
+                palavra: 'PÊSSEGO',
+            }
+            ,
+            {
+                imagem: '🍌',
+                palavra: 'BANANA',
+            }
+            ,
+            {
+                imagem: '🍐',
+                palavra: 'PERA',
+            }
+            ,
+            {
+                imagem: '🍇',
+                palavra: 'UVA',
+            }
+            ,
+            {
+                imagem: '🍊',
+                palavra: 'LARANJA',
+            }
+            ,
+            {
+                imagem: '🥭',
+                palavra: 'MANGA',
+            }
+            ,
+            {
+                imagem: '🍓',
+                palavra: 'MORANGO',
+            }
+            ,
+            {
+                imagem: '🍋',
+                palavra: 'LIMÃO',
+            }
+            ,
+            {
+                imagem: '🥝',
+                palavra: 'KIWI',
+            }
+            ,
+            {
+                imagem: '🍍',
+                palavra: 'ABACAXI',
+            }
+            ,
+            {
+                imagem: '🍎',
+                palavra: 'MAÇÃ',
+            }
+            ,
+            {
+                imagem: '🍉',
+                palavra: 'MELANCIA',
+            }
+            ,
+            {
+                imagem: '🫐',
+                palavra: 'MIRTILO',
+            }
+            ,
+            {
+                imagem: '🍔',
+                palavra: 'HAMBÚRGUER',
+            }
+            ,
+            {
+                imagem: '🍕',
+                palavra: 'PIZZA',
+            }
+            ,
+            {
+                imagem: '🍿',
+                palavra: 'PIPOCA',
+            }
+            ,
+            {
+                imagem: '🍫',
+                palavra: 'CHOCOLATE',
+            }
+            ,
+            {
+                imagem: '🍭',
+                palavra: 'PIRULITO',
+            }
+            ,
+            {
+                imagem: '🚓',
+                palavra: 'POLÍCIA',
+            }
+            ,
+            {
+                imagem: '✈',
+                palavra: 'AVIÃO',
+            }
+            ,
+            {
+                imagem: '🚢',
+                palavra: 'NAVIO',
+            }
+            ,
+            {
+                imagem: '🐴',
+                palavra: 'CAVALO',
+            }
+            ,
+            {
+                imagem: '🐶',
+                palavra: 'CACHORRO',
+            }
+            ,
+            {
+                imagem: '🐈',
+                palavra: 'GATO',
+            }
+            ,
+            {
+                imagem: '🐓',
+                palavra: 'GALINHA',
+            }
+            ,
+            {
+                imagem: '🐒',
+                palavra: 'MACACO',
+            }
+            ,
+            {
+                imagem: '🦊',
+                palavra: 'RAPOSA',
+            }
+            ,
+            {
+                imagem: '🐟',
+                palavra: 'PEIXE',
+            }
+            ,
+            {
+                imagem: '🐦',
+                palavra: 'PÁSSARO',
+            }
+            ,
+            {
+                imagem: '🐘',
+                palavra: 'ELEFANTE',
+            }
+            ,
+            {
+                imagem: '🦒',
+                palavra: 'GIRAFA',
+            }
+            ,
+            {
+                imagem: '🐄',
+                palavra: 'VACA',
+            }
+            ,
+            {
+                imagem: '🦋',
+                palavra: 'BORBOLETA',
+            }
+            ,
+            {
+                imagem: '🐳',
+                palavra: 'BALEIA',
+            }
+            ,
+            {
+                imagem: '🦭',
+                palavra: 'FOCA',
+            }
+            ,
+            {
+                imagem: '🐯',
+                palavra: 'TIGRE',
+            }
+            ,
+            {
+                imagem: '🦓',
+                palavra: 'ZEBRA',
+            }
+            ,
+            {
+                imagem: '🦆',
+                palavra: 'PATO',
+            }
+            ,
+            {
+                imagem: '🐧',
+                palavra: 'PINGUIM',
+            }
+            ,
+            {
+                imagem: '🦉',
+                palavra: 'CORUJA',
+            }
+            ,
+            {
+                imagem: '🦚',
+                palavra: 'PAVÃO',
+            }
+            ,
+            {
+                imagem: '🐻',
+                palavra: 'URSO',
+            }
+            ,
+            {
+                imagem: '🦩',
+                palavra: 'FLAMINGO',
+            }
+            ,
+            {
+                imagem: '🦇',
+                palavra: 'MORCEGO',
+            }
+            ,
+            {
+                imagem: '🐼',
+                palavra: 'PANDA',
+            }
+            ,
+            {
+                imagem: '🐝',
+                palavra: 'ABELHA',
+            }
+            ,
+            {
+                imagem: '🦃',
+                palavra: 'PERU',
+            }
+            ,
+            {
+                imagem: '🐸',
+                palavra: 'SAPO',
+            }
+            ,
+            {
+                imagem: '🐜',
+                palavra: 'FORMIGA',
+            }
+            ,
+            {
+                imagem: '🌶️',
+                palavra: 'PIMENTA',
+            }
+            ,
+            {
+                imagem: '👕',
+                palavra: 'CAMISETA',
+            }
+            ,
+            {
+                imagem: '👗',
+                palavra: 'VESTIDO',
+            }
+            ,
+            {
+                imagem: '👙',
+                palavra: 'BIQUÍNI',
+            }
+            ,
+            {
+                imagem: '👓',
+                palavra: 'ÓCULOS',
+            }
+            ,
+            {
+                imagem: '🛏️',
+                palavra: 'CAMA',
+            }
+            ,
+        ];
+        const exibeLicao = function () {
+            //Entrada de dados
+            let linhas = parseInt(document.querySelector('#linhas').value);
+            if (linhas >= palavras.length) {
+                linhas = palavras.length;
+            }
+            //Saída de dados
+            let conteudo = document.querySelector('#conteudo');
+            //Sorteia as palavras da lição
+            let sorteadas = [];
+            let pa = [];
+            let im = [];
+            for (let i = 0; i < linhas; i++) {
+                let n;
+                do {
+                    n = parseInt(Math.random() * palavras.length);
+                }
+                while (
+                    sorteadas.indexOf(n) > -1
+                );
+                sorteadas.push(n);
+                pa.push(palavras[n].palavra);
+                im.push(palavras[n].imagem);
+            }
+            pa.sort(() => (Math.random() > .5) ? 1 : -1);
+            im.sort(() => (Math.random() > .5) ? 1 : -1);
+            //Cria cabeçalho
+            let cabe = '';
+            let ti = '';
+            cabe += "<br/> <table id='cabecalho' align='center'>";
+            cabe += '<tr>';
+            cabe += '<td> Escola:';
+            cabe += '<td>__________________________';
+            cabe += '<td>&nbsp;Data:__/__/____';
+            cabe += '</tr>';
+            cabe += '<tr>';
+            cabe += '<td>Nome:';
+            cabe += '<td>___________________________';
+            cabe += '<td>&nbsp;Série:_________';
+            cabe += '</tr>';
+            cabe += '</table>';
+            //cria o conteúdo
+            let html = "<h1 id='ca'>Liga Palavras</h1><br>";
+            html += "<table id='silabas' cellspacing='50' align='center'>";
+            html += '<tr>';
+            for (let i = 0; i < linhas; i++) {
+                html += "<td id='pal' style='text-align:left'>";
+                html += pa[i] + ' ';
+                html += "<td id='pimg' style='text-align:right'>";
+                html += im[i] + ' ';
+                html += '</tr>';
+            }
+            html += '</table>';
+            conteudo.innerHTML = cabe;
+            conteudo.innerHTML += html;
+        };
+    </script>
+</html>

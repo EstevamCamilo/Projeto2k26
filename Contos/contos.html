@@ -1,0 +1,397 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="icon" type="image/x-icon" href="../Caça-Palavras/logo.png" />
+        <script src="../modal.js"></script>
+        <title>Contos-QVC
+        </title>
+        <style>
+            body {
+                margin: 0px;
+            }
+            #biblioteca{
+                overflow:hidden;
+            }
+            #calculos, #cacaPalavras, #separaSilabas{
+                margin-top: 10px;
+                margin-left: 13px;
+                border: 1px solid black;
+                display:block;
+                float: left;
+                padding: 0px;
+                border-radius: 2px;
+            }
+            #cabecalho {
+                border: 1px solid rgb(0, 0, 0);
+                background-color: rgb(52, 103, 134);
+                display: flex;
+            }
+            #titulo {
+                color: white;
+                font-size: 2rem;
+                font-family: arial;
+                text-shadow: 1px 1px black;
+                float: right;
+                padding-left: 46vw;
+                padding-top: 0px;
+                padding-bottom: 0px;
+                display: inline-flex;
+                margin-bottom: 0.5rem;
+                margin-top: 0.5rem;
+            }
+            #b {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+                border: none;
+                margin-bottom: 0px;
+                padding: 0.1rem;
+                border: 1px solid rgb(100, 100, 100);
+                border-radius: 0.5rem;
+                background-color: rgb(255, 255, 255);
+                cursor: pointer;
+                text-align: center;
+            }
+            #vb {
+                position: absolute;
+                top: 0.5rem;
+                left: 0.5rem;
+                padding: 0.1rem;
+                border-radius: 0.5rem;
+                border: 1px solid rgb(100, 100, 100);
+                background-color: white;
+                cursor: pointer;
+            }
+            .btn {
+                position: relative;
+                top: 0.3rem;
+                left: 0.5rem;
+                bottom: 0.5rem;
+                padding: 0.1rem;
+                margin-top: 0.5rem;
+                border: 1px solid rgb(100, 100, 100);
+                background-color: rgb(255, 255, 255);
+                border-radius: 0.5rem;
+                cursor: pointer;
+                font-size: 2vh;
+                font-family: Arial;
+            }
+            .categorias {
+                position: absolute;
+                top: 0.5vh;
+                margin-bottom: 0px;
+            }
+            #rodape {
+                color: white;
+                font-size: 1.2rem;
+                font-family: sans-serif;
+                background-color: rgb(52, 103, 134);
+                left: 0px;
+                right: 0px;
+                bottom: 0px;
+                position: fixed;
+                max-height: 1.25rem;
+            }
+            .biblioteca {
+                display: flex;
+                flex-wrap: nowrap;
+            }
+            .container {
+                overflow: hidden;
+            }
+            .filterDiv {
+                display: none;
+            }
+            .show {
+                display: flex;
+            }
+            #sobre {
+                border-radius: 1rem;
+                border: 1px solid black;
+            }
+            #dclose {
+                position: relative;
+                float: right;
+                border: none;
+                background: none;
+                font-size: 30px;
+                display: flex;
+                cursor: pointer;
+            }
+            #cp {
+                text-align: center;
+            }
+            #dimg {
+                margin-top: 0px;
+                margin-left: 9.2vw;
+            }
+            #dnome {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 17px;
+            }
+            #dsite {
+                font-size: 17px;
+                font-family: sans-serif;
+            }
+            #lg {
+                margin-top: 0px;
+                margin-left: 14rem;
+                width: 33%;
+                font-family: sans-serif;
+            }
+            #l {
+                text-align: center;
+                font-family: sans-serif;
+            }
+            #n {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 1rem;
+            }
+            .s {
+                font-size: 1.2rem;
+            }
+            #conto1, #conto2, #conto3, #conto4, #conto5, #conto6, #conto7, #conto8, #conto9, #conto10, #conto11, #conto12, #conto13, #conto14, #conto15 {
+                font-family: Arial;
+                font-size: 1rem;
+                margin-left: 23rem;
+                margin-right: 23rem;
+                text-align: justify;
+                border: 1px solid black;
+                box-shadow: 0 0 1rem black;
+            }
+            #tc {
+                font-size: 1.5rem;
+                text-align: center;
+                font-family: sans-serif;
+            }
+            p {
+                padding-left: 2.5rem;
+                padding-right: 2.5rem;
+            }
+            #cclose {
+                border: none;
+                padding: 1px;
+                background: none;
+            }
+            #cprinter {
+                border: none;
+                padding: 1px;
+                background: none;
+            }
+            #bdclose {
+                border: none;
+                padding: 0px;
+                background: none;
+                position: relative;
+                float: right;
+                font-size: 30px;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="cabecalho">
+            <a href="../index.html">
+                <button id="vb">
+                    <img src="../volta.png"/>
+                </button>
+            </a>
+            <heading>
+                <h1 id="titulo">Contos
+                </h1>
+                <button id="b" onclick="sobre()">
+                    <img src="../Caça-Palavras/info.png">
+                    </img>
+                </button>
+            </heading>
+        </div>
+    <div id="biblioteca" class="container">
+        <div id="cacaPalavras">
+            <a href="contos/TobiaseSammy.html">
+                <img    id="bimg"
+                     src="imgContos/tobiasesammy.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="separaSilabas">
+            <a href="contos/NoveCaudas.html">
+                <img
+                     id="bimg"
+                     src="imgContos/novecaudas.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/SofiaeJoao.html">
+                <img
+                     id="bimg"
+                     src="imgContos/A verdadeira beleza está no coração a história de amor de Sofia e João.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/pedroelucas.html">
+                <img
+                     id="bimg"
+                     src="imgContos/opoderdaempatia.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/As Aventuras de Tito, o Golfinho Curioso.html">
+                <img
+                     id="bimg"
+                     src="imgContos/titoogolfinho.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/Tico, o Amigável Triceratops.html">
+                <img
+                     id="bimg"
+                     src="imgContos/ticotriceratopis.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/A Aventura Curiosa de Lila, a Lontra Brincalhona.html">
+                <img
+                     id="bimg"
+                     src="imgContos/lilalontra.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/superLucas.html">
+                <img 
+                     id="bimg"
+                     src="imgContos/superlucas.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/olivergato.html">
+                <img
+                     id="bimg"
+                     src="imgContos/tudoepossivel.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/bellaebaleias.html">
+                <img
+                     id="bimg"
+                     src="imgContos/bella.png   "
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/desafiodeMatheus.html">
+                <img
+                     id="bimg"
+                     src="imgContos/pontedepalitos.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/ornitorrinco.html">
+                <img 
+                     id="bimg"
+                     src="imgContos/ornitorrinco.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/rexdog.html">
+                <img
+                     id="bimg"
+                     src="imgContos/Rex.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/dragaodidi.html">
+                <img 
+                     id="bimg"
+                     src="imgContos/dragaodidi.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+        <div id="calculos">
+            <a href="contos/tudopelafamilia.html">
+                <img
+                     id="bimg" 
+                     src="imgContos/tudopelafamilia.png"
+                     width="300vw"
+                     height="200vw"
+                     />
+            </a>
+        </div>
+    </div>
+    <div id="contos">
+        <dialog id="conto13">
+            <button id="bdclose" onclick="document.querySelector('#conto13').close()">
+                <img src="../Caça-Palavras/cross.png"/>
+            </button>
+            <br>
+            <H1 id="tc">"Aventuras de Rex: A história do cachorro que se perdeu e encontrou um novo lar"
+            </H1>
+            <p>Era uma vez um cachorro chamado Rex. Ele era um cachorro de porte médio, com pelos castanhos e um olhar atento que sempre cativava as pessoas ao seu redor.
+                Rex morava em uma casa grande com seu dono, um homem chamado Tomás. Tomás era um homem solitário que vivia apenas com Rex como companhia. O cachorro era sua vida e sua alegria, e os dois eram inseparáveis.
+                Um dia, enquanto Tomás estava no trabalho, Rex escapou da casa e saiu em uma aventura. Ele correu pela cidade, explorando cada rua e parque que encontrava. Rex estava tão empolgado que nem percebeu o tempo passando.
+                Quando o sol começou a se pôr, Rex percebeu que estava perdido. Ele não sabia como voltar para casa e ficou com medo. Rex começou a latir e uivar, esperando que alguém o ouvisse e o ajudasse.
+                Foi então que uma família o encontrou. Eles viram Rex em apuros e decidiram ajudá-lo. A família levou Rex para casa e cuidou dele, alimentando-o e dando-lhe água.
+                No dia seguinte, a família levou Rex a um veterinário para verificar se ele tinha um microchip que pudesse ajudá-los a localizar o proprietário. Eles descobriram que Rex pertencia a Tomás e imediatamente entraram em contato com ele.
+                Tomás ficou tão feliz quando recebeu a ligação informando que Rex havia sido encontrado. Ele correu para a casa da família e, quando viu Rex, correu até ele e o abraçou. Rex estava tão feliz em ver seu dono que abanou o rabo freneticamente.
+                Tomás agradeceu à família por ter cuidado tão bem de Rex e prometeu que nunca mais deixaria seu melhor amigo escapar novamente. A partir desse dia, Rex nunca mais saiu da vista de Tomás e os dois se tornaram ainda mais próximos. Rex sabia que, acontecesse o que acontecesse, ele sempre teria um lar amoroso ao lado de seu dono.
+            </p>
+        </dialog>
+    </div>
+    <div id="rodape">
+        <i>Brasil
+        </i>
+        <i>Politica de privacidade
+        </i>
+        <i>Termos de uso
+        </i>
+        <i
+           >© 2023 QVC. Todos os direitos reservados. Digital Aprendizagem
+            por uso de aplicativo moveis Ltda - CNPJ: xx.xxx.xxx/xxxx-xx,
+            Brasil-SP
+        </i
+            >
+    </div>
+    </body>
+</html>

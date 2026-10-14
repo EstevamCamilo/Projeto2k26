@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Jogo da Forca</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <style>
+            * {
+                font-family: sans-serif;
+            }
+            
+            body {
+                text-align: center;
+            }
+            button {
+                margin: 0.25rem;
+                font-size: 2rem;
+                min-width: 2.5rem;
+                min-height: 2.5rem;
+            }
+            #forca {
+                margin-right: 3rem;
+                display: inline-block;
+                font-family: monospace;
+                font-size: 3rem;
+                text-align: left;
+            }
+            #palavra {
+                font-size: 3rem;
+                display: inline-block;
+            }
+            #teclado{
+                margin-top: 3rem;
+                display: block;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="../index.html"><button id="vb"><img src="../volta.png"/></button></a>
+            <h1>Forca!!</h1>
+        </header>
+        <div id="forca"></div>
+        <div id="palavra"></div>
+        <div id="teclado"></div>
+        
+        <script>
+            const palavras          = ["LEÃO",   "ESCORPIÃO", "ONÇA",    "CACHORRO", "GATO",    "DINOSSAURO", "ARANHA","COMPUTADOR","MOSCA","GAFANHOTO","","","","","","","","","","","","","","","","","","","",""];
+            const palavrasSemAcento = ["LEAO",   "ESCORPIAO", "ONCA",    "CACHORRO", "GATO",    "DINOSSAURO", "ARANHA","COMPUTADOR","MOSCA","GAFANHOTO","","","","","","","","","","","","","","","","","","","",""];
+            const palavrasDicas     = ["MAMÍFERO","ARACNÍDEO","MAMÍFERO","MAMÍFERO", "MAMÍFERO","REPTIL", "ARACNÍDEO" ,"TECNOLOGIA","INSETO","INSETO","","","","","","","","","","","","","","","","","","","",""];
+            
+            var erros = 0;
+            var palavraSelecionada = -1; //guarda o índice da palavra selecionada 
+            var letrasSelecionadas = [];
+            
+            /* Sorteia a palavra e zera a jogada (erros, palavra e letras selecionadas) */
+            var sorteiaPalavra = () => {
+                //Zera a quantidade de erros
+                erros = 0;
+                //Zera a lista de letras selecionadas
+                letrasSelecionadas = [];
+                
+                //sorteia uma palavra da lista de palavras;
+                palavraSelecionada = parseInt(Math.random() * palavras.length);
+                
+                //Exibe as letras ocultas da palavra selecionada
+                desenhaPalavra();
+                
+                //Desenha a forca vazia
+                desenhaForca();
+                //Cria o teclado virtual novamente para habilitar as teclas
+                criaTecladoVirtual();
+            };
+            
+            /* cria o teclado virtual na div #teclado */
+            var criaTecladoVirtual = () => {
+                //Lista de letras do alfabeto
+                let letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]; 
+                //Obtem a div #teclado
+                let teclado = document.querySelector("#teclado");
+                //Apaga o conteúdo da div "#teclado"
+                teclado.innerHTML = "";
+                //Cria os botões do teclado
+                for(let letra of letras) { //Pega cada letra da lista de letras
+                    let botao = document.createElement("button"); //Cria um elemento HTML button
+                    botao.onclick = () => tecladoOnClick(letra, botao); //Atribui evento ao clicar
+                    botao.innerHTML = letra; //Define o HTML interno como a letra do alfabeto
+                    teclado.appendChild(botao); //Adiciona o botão à div #teclado
+                }
+            };
+            
+            /* Evento do botão do teclado virtual */
+            var tecladoOnClick = (letra, botao) => {
+                //Desabilita o botão
+                botao.disabled = true;
+                //Adiciona a letra na lista de letras selecionadas
+                letrasSelecionadas.push(letra);
+                //Desenha a palavra
+                desenhaPalavra();
+                
+                //Obtem a div #teclado
+                let teclado = document.querySelector("#teclado");
+                
+                //Verifica se ganhou
+                //Obtem a div #palavra
+                let palavra = document.querySelector("#palavra");
+                if(!palavra.innerHTML.includes("_")) {
+                    teclado.innerHTML="";
+                    teclado.innerHTML+="<h1>Você ganhou</h1>";
+                    teclado.innerHTML+="<button onclick='sorteiaPalavra()'>Reiniciar</button>";
+                }
+                
+                //Verifica se errou
+                let palavraSemAcento = palavrasSemAcento[palavraSelecionada];
+                if(!palavraSemAcento.includes(letra)){
+                    erros++; //Adiciona mais uma à variável erro
+                    desenhaForca(); //Desenha a forca
+
+                    if(erros===6) {
+                        teclado.innerHTML="";
+                        teclado.innerHTML+="<h1>Você perdeu</h1>";
+                        teclado.innerHTML+="<button onclick='sorteiaPalavra()'>Reiniciar</button>";
+                    }
+                }
+            };
+            
+            /* Desenha a forca conforme a quantidade de erros */
+            var desenhaForca = () => {
+                let forcas = [
+                    "┌───┐<br/>│<br/>│<br/>│<br/><br/>",                //0
+                    "┌───┐<br/>│   O<br/>│<br/>│<br/><br/>",            //1
+                    "┌───┐<br/>│   O<br/>│   │<br/>│<br/><br/>",        //2
+                    "┌───┐<br/>│   O<br/>│  /│<br/>│<br/><br/>",        //3
+                    "┌───┐<br/>│   O<br/>│  /│\\<br/>│<br/><br/>",      //4
+                    "┌───┐<br/>│   O<br/>│  /│\\<br/>│  /<br/><br/>",   //5
+                    "┌───┐<br/>│   O<br/>│  /│\\<br/>│  / \\<br/><br/>" //6
+                ];
+                //Obtem a div #forca
+                let forca = document.querySelector("#forca");
+                forca.innerHTML = forcas[erros].replaceAll(" ","&nbsp;"); //Define o HTML interno com o desenho da forca
+            };
+            
+            /* Desenha a palavra conforme as letras selecionadas*/
+            var desenhaPalavra = () => {
+                //Obtem a palavra selecionada (String) com base no índice da palavra
+                let palavraSel = palavras[palavraSelecionada];
+                let palavraSemAcento = palavrasSemAcento[palavraSelecionada];
+                let dica = palavrasDicas[palavraSelecionada];
+                
+                //Obtem a div #palavra
+                let palavra = document.querySelector("#palavra");
+                //Apaga o conteúdo da div "#palavra"
+                palavra.innerHTML = "<small>"+dica+"</small><br/><br/></br>";
+                //Desenha cada letra da palavra selecionada na div "#palavra"
+                for(let i = 0; i < palavraSel.length; i++) {
+                    let letra = palavraSel[i]; //Letra com acento
+                    let letraSemAcento = palavraSemAcento[i]; //Letra sem acento
+                    //Se a lista de letras selecionadas incluir a letra sem acento
+                    if(letrasSelecionadas.includes(letraSemAcento)){
+                        palavra.innerHTML += letra+" "; //Exibe a letra selecionada
+                    } else {
+                        palavra.innerHTML += "_ "; //Senão exibe o "_"
+                    }
+                }
+            }
+
+            /* executa ao carregar os elementos da janela */
+            //window.onload = () => {
+                //Exibe a palavra selecionada
+                sorteiaPalavra();
+            //};
+        </script>
+    </body>
+</html>

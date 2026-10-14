@@ -1,0 +1,682 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Caça - Palavras
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/x-icon" href="logo.png">
+        <script src="../app.js"></script>
+        <script src="../modal.js"></script>
+        <style>
+            body {
+                margin: 0px;
+            }
+            #cabecalho {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1rem;
+                padding: 0.5rem;
+                border: 1px solid rgb(0, 0, 0);
+                border-radius: 0.25rem;
+                font-size: 1.70rem;
+                font-family: sans-serif;
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #menu {
+                padding: 1rem;
+                font-size: 2vh;
+                color: white;
+            }
+            @media print {
+                #cabecalho {
+                    margin-top: 0px;
+                    display: flex;
+                }
+                #menu {
+                    display: none;
+                }
+                #mn {
+                    display: none;
+                }
+            }
+            #b, #c, #z, #vb {
+                padding: 0.1rem;
+                border: 1px solid rgb(100, 100, 100);
+                background-color: rgb(255, 255, 255);
+                border-radius: 0.5rem;
+                cursor: pointer;
+                top: 0.5rem;
+            }
+            #b {
+                position: absolute;
+                right: 0.5rem;
+            }
+            #c {
+                position: absolute;
+                right: 3rem;
+            }
+            #mn {
+                color: white;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                margin-left: 24%;
+                margin-right: auto;
+                text-shadow: 1px 1px black;
+                font-size: 2rem;
+            }
+            #npalavras {
+                width: 4vh;
+                margin-left: 2rem;
+            }
+            #tabela {
+                border: 1px solid black;
+                font-family: monospace;
+            }
+            td {
+                border: none;
+            }
+            #Id1 {
+                text-align: center;
+            }
+            .quad {
+                font-size: 25px;
+                width: 30px;
+                height: 30px;
+                text-align: center;
+            }
+            #ca {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 35px;
+                margin-bottom: 0px;
+            }
+            #l {
+                text-align: center;
+                font-family: sans-serif;
+            }
+            #lg {
+                margin-top: 0px;
+                margin-left: 13rem;
+                width: 30%;
+                font-family: sans-serif;
+            }
+            #n {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 1rem;
+            }
+            .s {
+                font-size: 1.2rem;
+            }
+            #listap {
+                text-transform: uppercase;
+                font-family: sans-serif;
+                padding-right: 20px;
+            }
+            #vb {
+                position: absolute;
+                left: 0.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fundo">
+            <div id="menu">
+                <a href="../index.html">
+                    <button id="vb">
+                        <img src="../volta.png"/>
+                    </button>
+                </a>
+                <input id="npalavras" type="number" min="5" max="25" value="25" />
+                <select id="categorias">
+                    <option value="frutas">Frutas
+                    </option>
+                    <option value="animais">Animais
+                    </option>
+                    <option value="aleatório">Aleatório
+                    </option>
+                </select>
+                <button id="z" onclick="crialicao()">
+                    Criar Caça Palavras
+                </button>
+                <button id="b" onclick="sobre()">
+                    <img src="info.png">
+                    </img>
+                </button>
+            <button id="c" onclick="window.print()">
+                <img src="printer.png" />
+            </button>
+        </div>
+        <h1 id="mn">Caça - Palavras
+        </h1>
+        </div>
+    <div id="tabelaB">
+        <div id="conteudo">
+        </div>
+        <div id="Id1">
+        </div>
+        <script>
+            const palavras = {
+                "frutas": [
+                    {
+                        imagem: "",
+                        palavra: "morango"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "banana"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "maça"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "laranja"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "manga"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "pessego"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "uva"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "pera"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "abacaxi"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "goiaba"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "acerola"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "ameixa"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "amora"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "caju"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "cereja"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "coco"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "kiwi"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "limao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "mamao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "melancia"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "melao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "roma"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "abacate"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "maracuja"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "jabuticaba"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "figo"
+                    }
+                ],
+                "animais": [
+                    {
+                        imagem: "",
+                        palavra: "galinha"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "vaca"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "cachorro"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "gato"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "leao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "peixe"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "porco"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "coelho"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "macaco"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "elefante"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "abelha"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "cavalo"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "falcao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "gorila"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "hipopotamo"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "jacare"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "onça"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "pantera"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "rato"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "urso"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "cobra"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "tatu"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "arara"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "tucano"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "golfinho"
+                    }
+                ],
+                "aleatório": [
+                    {
+                        imagem: "",
+                        palavra: "bolo"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "chocolate"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "pipa"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "flor"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "balao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "pirulito"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "anel"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "mao"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "bone"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "bola"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "cama"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "mato"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "mala"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "mola"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "carro"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "medico"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "dentista"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "artista"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "policial"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "professor"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "arvore"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "bandeira"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "bicicleta"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "relogio"
+                    }
+                    ,
+                    {
+                        imagem: "",
+                        palavra: "hospital"
+                    }
+                ]
+            };
+            const crialicao = function () {
+                let npalavras = parseInt(document.querySelector("#npalavras").value);
+                if (npalavras > 25) npalavras = 25;
+                let categoria = document.querySelector("#categorias").value;
+                let conteudo = document.querySelector("#conteudo");
+                //Torna CA e cabecalho visiveis quando faz a tabela
+                // let cabecalhoV = document.querySelector("#cabecalho").style.display = 'block';
+                //let caV = document.querySelector("#ca").style.display = 'block';
+                let randompalavras = [];
+                //Exibe palavras de cade categoria
+                let listaPalavras = "<table align='center'>";
+                /*if(categoria === "frutas"){
+                    document.querySelector("#Id1").innerHTML = "Jabuticaba, Maracuja, Morango, Abacate, Roma, Melao, Melancia, Mamão, limão, Kiwi, Coco, Cereja, Caju, Amora, Ameixa, Acerola, Abacaxi, Goiaba, Pera, Uva, Pessego, manga, Laranja, Maça, Banana";
+                } else if (categoria === "animais"){
+                    document.querySelector("#Id1").innerHTML = "galinha, vaca, cachorro,gato, leao, peixe, porco,coelho, macaco, elefante, abelha, cavalo, falcao, gorila, hipopota, jacare, onça, pantera, rato, urso, cobra, tatu, arara, tucano, golfinho"
+                } else {
+                    document.querySelector("#Id1").innerHTML = "bolo, chocolate, pipa, flor, balao, pirulito, anel, mao, bone, bola, cama, mato, mala, mola, carro, medico, dentista, artista, policial, professor, arvore, bandeira, bicicleta, relogio, hospital"
+                }*/
+                //Sorteia palavras sem repetir
+                for (let i = 0; i < npalavras; i++) {
+                    if (i % 5 === 0) listaPalavras += "<tr>";
+                    let p;
+                    do {
+                        let idx = parseInt(Math.random() * palavras[categoria].length);
+                        p = palavras[categoria][idx];
+                    }
+                    while (randompalavras.indexOf(p) > -1);
+                    randompalavras.push(p);
+                    listaPalavras +="<td id='listap'>" + p.palavra + " " + "</td>";
+                }
+                listaPalavras += "</table>";
+                //ordena a lista de palavras
+                randompalavras.sort((a, b) => {
+                    return (a.palavra.length < b.palavra.length);
+                }
+                                   );
+                //Gera a matriz vazia
+                let tabela = [];
+                for (let i = 0; i < 22; i++) {
+                    let linha = [];
+                    for (let j = 0; j < 22; j++) {
+                        linha.push("_");
+                    }
+                    tabela.push(linha);
+                }
+                //Coloca as palavras na matriz
+                for (let idx = 0; idx < randompalavras.length; idx++) {
+                    let p = randompalavras[idx];
+                    let x;
+                    let y;
+                    do {
+                        x = parseInt(Math.random() * 15);
+                        y = parseInt(Math.random() * 15);
+                    }
+                    while (!podePosicaoPalavra(idx, p, tabela, x, y));
+                    //Exibe cada letra na matriz
+                    for (let i = 0; i < p.palavra.length; i++) {
+                        tabela[y][x] = p.palavra.charAt(i).toUpperCase();
+                        if (idx % 2 === 0) {
+                            x++;
+                        }
+                        else if (idx % 3 === 0) {
+                            x++;
+                            y++;
+                        }
+                        else {
+                            y++;
+                        }
+                    }
+                }
+                //Exibe a lição
+                var letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
+                              "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
+                let cabe = "";
+                let ti = "";
+                var html = "";
+                cabe += "<br/> <table id='cabecalho' align='center'>";
+                cabe += "<tr>";
+                cabe += "<td> Escola:";
+                cabe += "<td>__________________________";
+                cabe += "<td>&nbsp;Data:__/__/____";
+                cabe += "</tr>";
+                cabe += "<tr>";
+                cabe += "<td>Nome:";
+                cabe += "<td>___________________________";
+                cabe += "<td>&nbsp;Série:_________";
+                cabe += "</tr>";
+                cabe += "</table>";
+                ti += "<h1 id='ca'>Caça Palavras";
+                ti += "</h1>";
+                html += "<br/> <table id='tabela' align='center' cellspacing='0'>";
+                for (let i = 0; i < tabela.length; i++) {
+                    html += "<tr>";
+                    for (let j = 0; j < tabela[i].length; j++) {
+                        if (tabela[i][j] === "_") {
+                            html += "<td class='quad'>" + letras[parseInt(Math.random() * letras.length)];
+                        }
+                        else {
+                            //html += "<td class='quad'>" + tabela[i][j];
+                            html += "<td class='quad'>" + tabela[i][j];
+                        }
+                    }
+                }
+                html += "</table>";
+                html += "<br/>";
+                document.querySelector("#Id1").innerHTML = listaPalavras;
+                conteudo.innerHTML = cabe;
+                conteudo.innerHTML += ti;
+                conteudo.innerHTML += html;
+                console.log(randompalavras);
+            };
+            const podePosicaoPalavra = function (idx, p, tabela, x, y) {
+                let pode = true;
+                for (let k = 0; k < p.palavra.length; k++) {
+                    if (tabela[y][x] !== "_" && tabela[y][x] !== p.palavra.charAt(k)) {
+                        pode = false;
+                    }
+                    if (idx % 2 === 0) {
+                        //horizontal
+                        x++;
+                    }
+                    else if (idx % 3 === 0) {
+                        x++;
+                        y++;
+                    }
+                    else {
+                        //vertical
+                        y++;
+                    }
+                }
+                return pode;
+            };
+        </script>
+        </body>
+</html>

@@ -1,0 +1,125 @@
+body {
+    margin: 0px;
+}
+#cabecalho {
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(52, 103, 134);
+    display: flex;
+}
+#lg {
+    margin-top: 0px;
+    margin-left: 14rem;
+    width: 33%;
+    font-family: sans-serif;
+}
+#n {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1rem;
+}
+.s {
+    font-size: 1.2rem;
+}
+#b {
+    padding: 0.1rem;
+    border: 1px solid rgb(100, 100, 100);
+    background-color: rgb(255, 255, 255);
+    border-radius: 0.5rem;
+    cursor: pointer;
+    top: 0.5rem;
+}
+#vb {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(100, 100, 100);
+    background-color: white;
+    cursor: pointer;
+}
+#vt {
+    margin-right: 2rem;
+}
+#b {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+}
+#mn {
+    color: white;
+    margin-top: 0.5rem;
+    margin-bottom: 0.5rem;
+    margin-left: 41%;
+    margin-right: auto;
+    text-shadow: 1px 1px black;
+    font-size: 2rem;
+}
+* {
+    font-family: sans-serif;
+}
+
+h2 {
+    margin:0;
+}
+
+th {
+    border: 1px solid black;
+    width: 80px;
+}
+th:hover {
+    cursor: pointer;
+}
+.naometais {
+    background-color: greenyellow;
+}
+
+.metaisalcalinos {
+    background-color: orange;
+}
+
+.semimetais {
+    background-color: cadetblue;
+}
+
+.outrosmetais {
+    background-color: cornflowerblue;
+}
+
+.gasesnobres {
+    background-color: royalblue;
+}
+
+.metaisalcalinosterrosos {
+    background-color: yellow;
+}
+
+.halogenios {
+    background-color: aqua;
+}
+
+.metaisdetransicao {
+    background-color: pink;
+}
+
+.lantanideos {
+    background-color: lightblue;
+}
+
+.actinidios {
+    background-color: mediumorchid;
+}
+#janela {
+    padding: 10px;
+    border: 0;
+    border-radius: 10px 10px;
+}
+#janela > button {
+    position: absolute;
+    float: left;
+}
+#frame {
+    width: 80vw;
+    height: 80vh;
+    border: 0;
+}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>disciplina.html</title>
+    </head>
+    <body>
+        <form id="form" onsubmit="disciplinaUI.save(event)">
+            <h2>Formulário de Disciplina</h2>
+            <input name="id" type="number" value="-1" readonly hidden/>
+            Ano<br/>
+            <input name="ano" type="number" step="1" required/><br/><br/>
+            Série<br/>
+            <input name="serie" type="text" required/><br/><br/>
+            Nome<br/>
+            <input name="nome" type="text" required/><br/><br/>
+            Abreviação do nome<br/>
+            <input name="abreviacao" type="text" required/><br/><br/>
+            Professor<br/>
+            <select name="professor"></select><br/><br/>
+            Quantidade de aulas semanais<br/>
+            <input name="nAulasSemanais" type="number" step="1" min="1"/><br/><br/>
+
+            <button type="button" onclick="disciplinaUI.list()">⬅️Voltar</button>
+            <button type="submit">💾 Salvar alterações</button>
+        </form>
+
+        <div id="table"></div>
+
+    </body>
+</html>

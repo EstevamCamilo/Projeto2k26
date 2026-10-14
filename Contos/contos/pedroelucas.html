@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" type="image/x-icon" href="../../Caça-Palavras/logo.png" />
+        <script src="../../modal.js"></script>
+        <title>O poder da empatia: a história de Pedro e Lucas</title>
+    </head>
+    <style>
+        body {
+    margin: 0px;
+}
+        #vb {
+    position: absolute;
+    top: 0.5rem;
+    left: 0.5rem;
+    padding: 0.1rem;
+    border-radius: 0.5rem;
+    border: 1px solid rgb(100, 100, 100);
+    background-color: white;
+    cursor: pointer;
+}
+#b {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    border: none;
+    margin-bottom: 0px;
+    padding: 0.1rem;
+    border: 1px solid rgb(100, 100, 100);
+    border-radius: 0.5rem;
+    background-color: rgb(255, 255, 255);
+    cursor: pointer;
+    text-align: center;
+}
+#cabecalho {
+    border: 1px solid rgb(0, 0, 0);
+    background-color: rgb(52, 103, 134);
+    display: flex;
+}
+#titulo {
+    color: white;
+    font-size: 2rem;
+    font-family: arial;
+    text-shadow: 1px 1px black;
+    float: right;
+    padding-left: 44vw;
+    padding-top: 0px;
+    padding-bottom: 0px;
+    display: inline-flex;
+    margin-bottom: 0.5rem;
+    margin-top: 0.5rem;
+}
+#c {
+            position: absolute;
+            right: 3rem;
+            padding: 0.1rem;
+            border: 1px solid rgb(100, 100, 100);
+            background-color: rgb(255, 255, 255);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            top: 0.5rem;
+        }
+        #lg {
+    margin-top: 0px;
+    margin-left: 14rem;
+    width: 33%;
+    font-family: sans-serif;
+}
+#n {
+    text-align: center;
+    font-family: sans-serif;
+    font-size: 1rem;
+}
+.s {
+    font-size: 1.2rem;
+}
+#tc {
+    text-align: center;
+    font-size: 2rem;
+}
+#txt {
+    font-size: 1.5rem;
+    text-align: justify;
+    margin-left: 20rem;
+    margin-right: 20rem;
+}
+@media print {
+    #txt {
+        margin-left: 1rem;
+        margin-right: 1rem;
+        font-size: 1.5rem;
+    }
+    #tc {
+        font-size: 2rem;
+    }
+    #cabecalho {
+        display: none;
+    }
+}
+    </style>
+    <body>
+        <div id="cabecalho">
+            <a href="../contos.html"><button id="vb"><img src="../../volta.png"/></button></a>
+            <heading>
+                <h1 id="titulo">Contos QVC</h1>
+                <button id="b" onclick="sobre()">
+                    <img src="../../Caça-Palavras/info.png">
+                    </img>
+                </button>
+                <button id="c" onclick="window.print()"> 
+                <img src="../../Caça-Palavras/printer.png"/>
+                </button>
+            </heading>
+        </div>
+        <div id="conto">
+            <H1 id="tc">"O poder da empatia: a história de Pedro e Lucas"</H1>
+            <p id="txt">
+                Era uma vez um garoto chamado Pedro. Pedro era muito tímido e quieto, e muitas vezes era tratado como um lixo pelos outros alunos em sua escola. Eles zombavam dele, o empurravam, o chamavam de nomes feios e riam dele.
+                Pedro se sentia muito triste e sozinho. Ele não tinha amigos e achava que nunca teria. Mas, mesmo assim, ele continuava indo para a escola todos os dias, na esperança de que as coisas mudassem.<br>
+                Um dia, durante o intervalo, um grupo de alunos mais velhos começou a provocar Pedro. Eles o cercaram, rindo e o empurrando. Pedro tentou se afastar, mas eles o impediram.
+                Foi então que um aluno chamado Lucas apareceu. Lucas era um dos alunos mais populares da escola, mas ele nunca havia falado com Pedro antes. Ele se aproximou dos outros alunos e pediu que eles deixassem Pedro em paz.<br>
+                Os alunos riram de Lucas e disseram que ele estava perdendo seu tempo com um garoto tão insignificante. Mas Lucas não desistiu. Ele disse que era importante que todos na escola fossem tratados com respeito e que ninguém merecia ser tratado como lixo.
+                
+            </p>
+        </div>
+    </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+    <title>Horário Escolar</title>
+        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css?family=Nanum%20Myeongjo" rel="stylesheet">
+        <link rel="stylesheet" href="style.css">
+    <body>
+        <script src="app.js"></script>
+        <script src="professor.js"></script>
+        <script src="disciplina.js"></script>
+        <script src="horario.js"></script>
+        <div id="b5">
+            <h1><u>Horário Escolar</u></h1>
+            <div id="b3">
+                <div id="b1">
+                    <button onclick="app.goHome();"><b>🏠 Inicio</b></button>
+                </div>
+                <div id="b2">
+                    <button onclick="professorUI.start('#content')"><b>👨‍🏫 Professores</b></button>
+                    <button onclick="disciplinaUI.start('#content')"><b>📚 Disciplinas</b></button>
+                    <button onclick="horarioUI.start('#content')"><b>🕐 Horário</b></button>
+                </div>
+            </div>
+        </div>
+        <div id="content">
+            <h2>Este aplicativo tem a função de criar horários para escolas</h2>
+            <input id="arquivo" type="file" onchange="app.loadFile()" hidden/>
+            <button onclick="document.querySelector('#arquivo').click()">📂 <b><u>Carregar dados do arquivo</u></b></button>
+            <button onclick="app.saveFile()">💾 <b><u>Salvar dados em arquivo</u></b></button>
+            <br/>
+            <span id="stats">
+            </span>
+        </div>
+        <div id="b4"></div>
+    </body>
+</html>

@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Racha Cuca</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+        <meta charset="utf-8"/>
+        <style>
+            body{
+                text-align: center;
+            }
+            button {
+                font-size: 2vh;
+                width: 4vh;
+                height: 4vh;
+            }
+        </style>
+    </head>
+    <body>
+        <header>
+            <a href="../index.html"><button id="vb"><img src="../volta.png"/></button></a>
+            <h1>Racha cuca!!</h1>
+        </header>
+        <h1>
+            Racha Cuca
+        </h1>
+        <div>
+            <button id="b00" onclick="b00onClick()">2</button>
+            <button id="b01" onclick="b01onClick()">10</button>
+            <button id="b02" onclick="b02onClick()">13</button>
+            <button id="b03" onclick="b03onClick()">9</button>
+            <br/>
+            <button id="b10" onclick="b10onClick()">&nbsp;</button>
+            <button id="b11" onclick="b11onClick()">15</button>
+            <button id="b12" onclick="b12onClick()">7</button>
+            <button id="b13" onclick="b13onClick()">8</button>
+            <br/>
+            <button id="b20" onclick="b20onClick()">14</button>
+            <button id="b21" onclick="b21onClick()">11</button>
+            <button id="b22" onclick="b22onClick()">5</button>
+            <button id="b23" onclick="b23onClick()">3</button>
+            <br/>
+            <button id="b30" onclick="b30onClick()">4</button>
+            <button id="b31" onclick="b31onClick()">12</button>
+            <button id="b32" onclick="b32onClick()">1</button>
+            <button id="b33" onclick="b33onClick()">6</button>
+        </div>
+        <script>
+            /* Marcos */
+            var b00onClick = () => {
+                var b00 = document.querySelector("#b00");//Botão clicado
+                var b01 = document.querySelector("#b01");
+                var b10 = document.querySelector("#b10");
+                if(b01.innerHTML === "&nbsp;") {
+                    b01.innerHTML = b00.innerHTML;
+                    b00.innerHTML = "&nbsp;";
+                }
+                if(b10.innerHTML === "&nbsp;") {
+                    b10.innerHTML = b00.innerHTML;
+                    b00.innerHTML = "&nbsp;";
+                }
+            };
+            /* João */
+            var b01onClick = () => {
+                let b01 = document.querySelector("#b01");
+                //botãp a ser clicado
+                let b00 = document.querySelector("#b00");
+                //botão a esquerda
+                let b02 = document.querySelector("#b02");
+                //botão a direita
+                let b11 = document.querySelector("#b11");
+                //botão em baixo
+                //botão a esquerda quando o conteudo é igual a "&nbsp;"
+                if(b00.innerHTML === "&nbsp;" ){
+                    b00.innerHTML = b01.innerHTML;
+                    b01.innerHTML = "&nbsp;";
+                }
+                //botão a direita quando o conteudo é igual a "&nbsp;"
+                if(b02.innerHTML === "&nbsp;" ){
+                    b02.innerHTML = b01.innerHTML;
+                    b01.innerHTML = "&nbsp;";
+                }
+                //botão em baixo quando o conteudo é igual a "&nbsp;"
+                if(b11.innerHTML === "&nbsp;" ){
+                    b11.innerHTML = b01.innerHTML;
+                    b01.innerHTML = "&nbsp;";
+                }
+            };
+            /* João */
+            var b02onClick = () => {
+                let b02 = document.querySelector("#b02");//botãp a ser clicado
+                let b01 = document.querySelector("#b01");//botão a esquerda
+                let b03 = document.querySelector("#b03");//botão a direita
+                let b12 = document.querySelector("#b12");//botão em baixo
+                //botão a esquerda quando o conteudo é igual a "&nbsp;"
+                if(b01.innerHTML === "&nbsp;" ){
+                    b01.innerHTML = b02.innerHTML;
+                    b02.innerHTML = "&nbsp;";
+                }
+                //botão a direita quando o conteudo é igual a "&nbsp;"
+                if(b03.innerHTML === "&nbsp;" ){
+                    b03.innerHTML = b02.innerHTML;
+                    b02.innerHTML = "&nbsp;";
+                }
+                //botão em baixo quando o conteudo é igual a "&nbsp;"
+                if(b12.innerHTML === "&nbsp;" ){
+                    b12.innerHTML = b02.innerHTML;
+                    b02.innerHTML = "&nbsp;";
+                }
+            };
+            /* Nalla */
+            var b03onClick = () => {
+                var b03 = document.querySelector("#b03");
+                var b13 = document.querySelector("#b13");
+                var b02 = document.querySelector("#b02");
+                if(b13.innerHTML === "&nbsp;" ){
+                    b13.innerHTML = b03.innerHTML;
+                    b03.innerHTML = "&nbsp;";
+                }
+                if(b02.innerHTML === "&nbsp;" ){
+                    b02.innerHTML = b03.innerHTML;
+                    b03.innerHTML = "&nbsp;";
+                }
+            };
+            /* Ana */
+            var b10onClick = () => {
+                var b10 = document.querySelector("#b10");
+                var b00 = document.querySelector("#b00");//cima
+                var b11 = document.querySelector("#b11");//dir
+                var b20 = document.querySelector("#b20");//baixo           
+                
+                if(b00.innerHTML === "&nbsp;") {
+                    b00.innerHTML = b10.innerHTML;
+                    b10.innerHTML = "&nbsp;";
+                }
+                if(b11.innerHTML === "&nbsp;") {
+                    b11.innerHTML = b10.innerHTML;
+                    b10.innerHTML = "&nbsp;";
+                }
+                if(b20.innerHTML === "&nbsp;") {
+                    b20.innerHTML = b10.innerHTML;
+                    b10.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b11onClick = () => {
+                var b11 = document.querySelector("#b11");
+                var b10 = document.querySelector("#b10");//esq
+                var b12 = document.querySelector("#b12");//dir
+                var b01 = document.querySelector("#b01");//cima
+                var b21 = document.querySelector("#b21");//baixo
+                if(b10.innerHTML === "&nbsp;") {
+                    b10.innerHTML = b11.innerHTML;
+                    b11.innerHTML = "&nbsp;";
+                }
+                if(b12.innerHTML === "&nbsp;") {
+                    b12.innerHTML = b11.innerHTML;
+                    b11.innerHTML = "&nbsp;";
+                }
+                if(b01.innerHTML === "&nbsp;") {
+                    b01.innerHTML = b11.innerHTML;
+                    b11.innerHTML = "&nbsp;";
+                }
+                if(b21.innerHTML === "&nbsp;") {
+                    b21.innerHTML = b11.innerHTML;
+                    b11.innerHTML = "&nbsp;";
+                }
+            };
+            /* Estevam */
+            var b12onClick = () => {
+                var b12 = document.querySelector("#b12");
+                var b02 = document.querySelector("#b02");
+                var b11 = document.querySelector("#b11");
+                var b13 = document.querySelector("#b13");
+                var b22 = document.querySelector("#b22");
+                if(b02.innerHTML === "&nbsp;") {
+                    b02.innerHTML = b12.innerHTML;
+                    b12.innerHTML = "&nbsp;";
+                }
+                if(b11.innerHTML === "&nbsp;") {
+                    b11.innerHTML = b12.innerHTML;
+                    b12.innerHTML = "&nbsp;";
+                }
+                if(b13.innerHTML === "&nbsp;") {
+                    b13.innerHTML = b12.innerHTML;
+                    b12.innerHTML = "&nbsp;";
+                }
+                if(b22.innerHTML === "&nbsp;") {
+                    b22.innerHTML = b12.innerHTML;
+                    b12.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b13onClick = () => {
+                var b13 = document.querySelector("#b13");//Botão clicado
+                var b03 = document.querySelector("#b03");
+                var b12 = document.querySelector("#b12");
+                var b23 = document.querySelector("#b23");
+                if(b03.innerHTML === "&nbsp;") {
+                    b03.innerHTML = b13.innerHTML;
+                    b13.innerHTML = "&nbsp;";
+                }
+                if(b12.innerHTML === "&nbsp;") {
+                    b12.innerHTML = b13.innerHTML;
+                    b13.innerHTML = "&nbsp;";
+                }
+                if(b23.innerHTML === "&nbsp;") {
+                    b23.innerHTML = b13.innerHTML;
+                    b13.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b20onClick = () => {
+                var b20 = document.querySelector("#b20");
+                var b10 = document.querySelector("#b10");//cima
+                var b21 = document.querySelector("#b21");//dir
+                var b30 = document.querySelector("#b30");//baixo
+                if(b10.innerHTML === "&nbsp;") {
+                    b10.innerHTML = b20.innerHTML;
+                    b20.innerHTML = "&nbsp;";
+                }
+                if(b21.innerHTML === "&nbsp;") {
+                    b21.innerHTML = b20.innerHTML;
+                    b20.innerHTML = "&nbsp;";
+                }
+                if(b30.innerHTML === "&nbsp;") {
+                    b30.innerHTML = b20.innerHTML;
+                    b20.innerHTML = "&nbsp;";
+                }
+            };
+            /* Nicole */
+            var b21onClick = () => {
+                var b21 = document.querySelector("#b21");
+                var b20 = document.querySelector("#b20");//esq
+                var b22 = document.querySelector("#b22");//dir
+                var b11 = document.querySelector("#b11");//cima
+                var b31 = document.querySelector("#b31");//baixo
+                if(b20.innerHTML === "&nbsp;") {
+                    b20.innerHTML = b21.innerHTML;
+                    b21.innerHTML = "&nbsp;";
+                }
+                if(b22.innerHTML === "&nbsp;") {
+                    b22.innerHTML = b21.innerHTML;
+                    b21.innerHTML = "&nbsp;";
+                }
+                if(b11.innerHTML === "&nbsp;") {
+                    b11.innerHTML = b21.innerHTML;
+                    b21.innerHTML = "&nbsp;";
+                }
+                if(b31.innerHTML === "&nbsp;") {
+                    b31.innerHTML = b21.innerHTML;
+                    b21.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b22onClick = () => {
+                var b22 = document.querySelector("#b22");
+                var b12 = document.querySelector("#b12");
+                var b21 = document.querySelector("#b21");
+                var b23 = document.querySelector("#b23");
+                if(b12.innerHTML === "&nbsp;") {
+                    b12.innerHTML = b22.innerHTML;
+                    b22.innerHTML = "&nbsp;";
+                }
+                if(b21.innerHTML === "&nbsp;") {
+                    b21.innerHTML = b22.innerHTML;
+                    b22.innerHTML = "&nbsp;";
+                }
+                if(b23.innerHTML === "&nbsp;") {
+                    b23.innerHTML = b22.innerHTML;
+                    b22.innerHTML = "&nbsp;";
+                }
+                if(b32.innerHTML === "&nbsp;") {
+                    b32.innerHTML = b22.innerHTML;
+                    b22.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b23onClick = () => {
+                var b23 = document.querySelector("#b23");
+                //Botão clicado
+                var b13 = document.querySelector("#b13");
+                var b22 = document.querySelector("#b22");
+                var b33 = document.querySelector("#b33");
+                if(b13.innerHTML === "&nbsp;") {
+                    b13.innerHTML = b23.innerHTML;
+                    b23.innerHTML = "&nbsp;";
+                }
+                if(b22.innerHTML === "&nbsp;") {
+                    b22.innerHTML = b23.innerHTML;
+                    b23.innerHTML = "&nbsp;";
+                }
+                if(b33.innerHTML === "&nbsp;") {
+                    b33.innerHTML = b23.innerHTML;
+                    b23.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b30onClick = () => {
+                var b30 = document.querySelector("#b30");
+                //Botão clicado
+                var b20 = document.querySelector("#b20");
+                var b31 = document.querySelector("#b31");
+                if(b20.innerHTML === "&nbsp;") {
+                    b20.innerHTML = b30.innerHTML;
+                    b30.innerHTML = "&nbsp;";
+                }
+                if(b31.innerHTML === "&nbsp;") {
+                    b31.innerHTML = b30.innerHTML;
+                    b30.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b31onClick = () => {
+                var b31 = document.querySelector("#b31");//Botão clicado
+                var b30 = document.querySelector("#b30");
+                var b21 = document.querySelector("#b21");
+                var b32 = document.querySelector("#b32");
+                if(b30.innerHTML === "&nbsp;") {
+                    b30.innerHTML = b31.innerHTML;
+                    b31.innerHTML = "&nbsp;";
+                }
+                if(b21.innerHTML === "&nbsp;") {
+                    b21.innerHTML = b31.innerHTML;
+                    b31.innerHTML = "&nbsp;";
+                }
+                if(b32.innerHTML === "&nbsp;") {
+                    b32.innerHTML = b31.innerHTML;
+                    b31.innerHTML = "&nbsp;";
+                }
+            };
+            /* Estevam */
+            var b32onClick = () => {
+                var b32 = document.querySelector("#b32");
+                var b22 = document.querySelector("#b22");
+                var b31 = document.querySelector("#b31");
+                var b33 = document.querySelector("#b33");
+                if(b22.innerHTML === "&nbsp;") {
+                    b22.innerHTML = b32.innerHTML;
+                    b32.innerHTML = "&nbsp;";
+                }
+                if(b31.innerHTML === "&nbsp;") {
+                    b31.innerHTML = b32.innerHTML;
+                    b32.innerHTML = "&nbsp;";
+                }
+                if(b33.innerHTML === "&nbsp;") {
+                    b33.innerHTML = b32.innerHTML;
+                    b32.innerHTML = "&nbsp;";
+                }
+            };
+            /* Marcos */
+            var b33onClick = () => {
+                var b33 = document.querySelector("#b33");//Botão clicado
+                var b23 = document.querySelector("#b23");
+                var b32 = document.querySelector("#b32");
+                if(b23.innerHTML === "&nbsp;") {
+                    b23.innerHTML = b33.innerHTML;
+                    b33.innerHTML = "&nbsp;";
+                }
+                if(b32.innerHTML === "&nbsp;") {
+                    b32.innerHTML = b33.innerHTML;
+                    b33.innerHTML = "&nbsp;";
+                }
+            };
+        </script>
+    </body>

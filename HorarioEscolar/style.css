@@ -1,0 +1,106 @@
+* {
+    font-family: 'Nanum Myeongjo';
+    padding-top: 0;
+    margin-left: 0;
+}
+html {
+    height: -webkit-fill-available;
+    max-height: -webkit-fill-available;
+}
+
+body {
+    -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
+    -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
+    -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
+    margin: 0px;
+}
+html, body {
+    min-height: 100%;
+}
+h1 {
+    font-size: 3rem;
+    text-align: center;
+}
+h2 {
+    font-size: 1.5rem;
+}
+button {
+    color:#000000;
+    background-color: #E6CCB3;
+    border-width:2px;
+    border-style: solid;
+    border-color: #000000;
+    position:relative;
+    margin:1em;display:inline-block;
+    padding: 0.5rem;
+    transition:all 0.3s ease-in-out;
+    text-align:center;
+    font-family:comfortaa;
+    font-weight:bold
+}
+button:before, button:after {
+    content:'';
+    display:block;
+    position:absolute;
+    border-color:#454545;
+    box-sizing:border-box;
+    border-style:solid;
+    width:1em;height:1em;
+    transition:all 0.3s ease-in-out}
+button:before {
+    top:-6px;
+    left:-6px;
+    border-width:2px 0 0 2px;
+    z-index:5;}
+button:after {
+    bottom:-6px;
+    right:-6px;
+    border-width:0 2px 2px 0;}
+button:hover:before, button:hover:after {
+    width:calc(100% + 12px);
+    height:calc(100% + 12px);
+    border-color:rgb(117, 117, 117)}
+button:hover {
+    color:#ffffff;
+    background-color:rgb(43, 136, 190);
+    border-color:#fff}
+form {
+    font-size: 1rem;
+}
+table {
+    font-size: 1rem;
+}
+view, #content {
+    font-size: 1rem;
+}
+#b1 {
+    height: 2rem;
+    display: inline-block;
+    color: black;
+}
+#b2 {
+    text-align: right;
+    display: inline-block;
+}
+#b3 {
+    background-color: rgb(52, 103, 134);
+}
+#b5 {
+    position: sticky;
+    top: 0;
+    height: 4,5vh;
+    display: inline-block;
+}
+#content {
+    text-align: center;
+    height: 91vh;
+    max-height: 91vh;
+}
+#b4 {
+    background-color: rgb(52, 103, 134);
+    position: sticky;
+    padding: 2rem;
+    bottom: 0;
+    display: flex;
+    height: 4,5vh;
+}

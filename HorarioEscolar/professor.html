@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>professor.html</title>
+    </head>
+    <body>
+        <form id="form" onsubmit="professorUI.save(event)">
+            <h2>Formulário de Professor</h2>
+            <input name="id" type="number" value="-1" readonly hidden/>
+            Nome<br/>
+            <input name="nome" type="text" required/><br/><br/>
+            Nascimento<br/>
+            <input name="nascimento" type="date"/><br/><br/>
+            E-mail<br/>
+            <input name="email" type="email"/><br/><br/>
+            Celular<br/>
+            <input name="celular" type="text"/><br/><br/>
+            <input name="afastado" type="checkbox"/> Afastado<br/><br/>
+
+            <button type="button" onclick="professorUI.list()">⬅️Voltar</button>
+            <button type="submit">💾 Salvar alterações</button>
+        </form>
+
+        <div id="table"></div>
+    </body>
+</html>

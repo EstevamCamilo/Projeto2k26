@@ -1,0 +1,2397 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Escreve Palavras 
+        </title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta charset="utf-8" />
+        <link rel="icon" type="image/x-icon" href="../Caça-Palavras/logo.png" />
+        <script src="../modal.js"></script>
+        <style>
+            body {
+                margin: 0px;
+            }
+            #cabecalho {
+                margin-left: auto;
+                margin-right: auto;
+                margin-top: 1rem;
+                padding: 0.5rem;
+                border: 1px solid rgb(0, 0, 0);
+                border-radius: 0.25rem;
+                font-size: 1.7rem;
+                font-family: sans-serif;
+                text-align: center;
+            }
+            #conteudo {
+                margin-top: 1rem;
+                text-align: center;
+                font-size: 1.5rem;
+                font-style: italic;
+                border-radius: 8px;
+                font-family: monospace;
+            }
+            #menu {
+                padding: 1rem;
+                font-size: 2vh;
+                color: white;
+            }
+            @media print {
+                #cabecalho {
+                    margin-top: 0px;
+                    display: flex;
+                }
+                #menu {
+                    display: none;
+                }
+                #mn {
+                    display: none;
+                }
+                #vb {
+                    display: none;
+                }
+                #b {
+                    display: none;
+                }
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #mn {
+                color: white;
+                margin-top: 0.5rem;
+                margin-bottom: 0.5rem;
+                margin-left: 21%;
+                margin-right: auto;
+                text-shadow: 1px 1px black;
+                font-size: 2rem;
+            }
+            #z,
+            #c,
+            #b,
+            #vb {
+                padding: 0.1rem;
+                border: 1px solid rgb(100, 100, 100);
+                background-color: rgb(255, 255, 255);
+                border-radius: 0.5rem;
+                cursor: pointer;
+                top: 0.5rem;
+            }
+            #c {
+                position: absolute;
+                top: 0.5rem;
+                right: 3rem;
+            }
+            #b {
+                position: absolute;
+                top: 0.5rem;
+                right: 0.5rem;
+            }
+            #fundo {
+                display: flex;
+                background-color: rgb(52, 103, 134);
+            }
+            #ca {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 35px;
+                margin-bottom: 0px;
+            }
+            #dclose {
+                position: relative;
+                float: right;
+                border: none;
+                background: none;
+                font-size: 30px;
+                display: flex;
+                cursor: pointer;
+            }
+            #sobre {
+                border-radius: 1rem;
+                border: 1px solid black;
+            }
+            #vb {
+                position: absolute;
+                left: 0.5rem;
+            }
+            #linhas,
+            #maximo {
+                width: 2rem;
+            }
+            #vt {
+                margin-right: 2rem;
+            }
+            #lg {
+                margin-top: 0px;
+                margin-left: 14rem;
+                width: 33%;
+                font-family: sans-serif;
+            }
+            #n {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 1rem;
+            }
+            .s {
+                font-size: 1.2rem;
+            }
+            #silabas {
+                border: 1px solid black;
+                border-radius: 0.25rem;
+                font-size: 1.5rem;
+            }
+        </style>
+    </head>
+    <body>
+        <div id="fundo">
+            <a id="vt" href="../index.html"
+               >
+                <button id="vb">
+                    <img src="../volta.png" />
+                </button
+                    >
+            </a>
+            <div id="menu">
+                N° de Palavras
+                <input id="linhas" type="number" min="2" value="5" max="20" />
+                <select id="categorias">
+                    <option value="all">Todos
+                    </option>
+                    <option value="A">A
+                    </option>
+                    <option value="B">B
+                    </option>
+                    <option value="C">C
+                    </option>
+                    <option value="D">D
+                    </option>
+                    <option value="E">E
+                    </option>
+                    <option value="F">F
+                    </option>
+                    <option value="G">G
+                    </option>
+                    <option value="H">H
+                    </option>
+                    <option value="I">I
+                    </option>
+                    <option value="J">J
+                    </option>
+                    <option value="K">K
+                    </option>
+                    <option value="L">L
+                    </option>
+                    <option value="M">M
+                    </option>
+                    <option value="N">N
+                    </option>
+                    <option value="O">O
+                    </option>
+                    <option value="P">P
+                    </option>
+                    <option value="Q">Q
+                    </option>
+                    <option value="R">R
+                    </option>
+                    <option value="S">S
+                    </option>
+                    <option value="T">T
+                    </option>
+                    <option value="U">U
+                    </option>
+                    <option value="V">V
+                    </option>
+                    <option value="W">W
+                    </option>
+                </select>
+                <button id="z" onclick="exibeLicao()">Criar Atividade
+                </button>
+                <button id="c" onclick="window.print()">
+                    <img src="../Caça-Palavras/printer.png" />
+                </button>
+            </div>
+            <h1 id="mn">Escreva Palavras
+            </h1>
+        </div>
+        <button id="b" onclick="sobre()">
+            <img src="../Caça-Palavras/info.png" />
+        </button>
+        <div id="conteudo">
+        </div>
+        <script>
+            const palavras = {
+                "all":[],
+                "A" :[
+                    {
+                        palavra: 'Abacaxi', emoji: '🍍' }
+                    ,
+                    {
+                        palavra: 'Avião', emoji: '✈️' }
+                    ,
+                    {
+                        palavra: 'Abelha', emoji: '🐝' }
+                    ,
+                    {
+                        palavra: 'Arara', emoji: '🦜' }
+                    ,
+                    {
+                        palavra: 'Aranha', emoji: '🕷️' }
+                    ,
+                    {
+                        palavra: 'Árvore', emoji: '🌳' }
+                    ,    
+                    {
+                        palavra: 'Abóbora', emoji: '🎃' }
+                    ,
+                    {
+                        palavra: 'Abajur', emoji: '💡' }
+                    ,
+                    {
+                        palavra: 'Alface', emoji: '🥬' }
+                    ,
+                    {
+                        palavra: 'Anel', emoji: '💍' }
+                    ,
+                    {
+                        palavra: 'Anjo', emoji: '👼' }
+                    ,
+                    {
+                        palavra: 'Almofada', emoji: '🛋️' }
+                    ,
+                    {
+                        palavra: 'Amendoim', emoji: '🥜' }
+                    ,
+                    {
+                        palavra: 'Alicate', emoji: '🔧' }
+                    ,
+                    {
+                        palavra: 'Agulha', emoji: '🪡' }
+                    ,
+                    {
+                        palavra: 'Agenda', emoji: '📅' }
+                    ,
+                    {
+                        palavra: 'Abacate', emoji: '🥑' }
+                    ,
+                    {
+                        palavra: 'Abajur', emoji: '💡' }
+                    ,
+                    {
+                        palavra: 'Arco-íris', emoji: '🌈' }
+                    ,
+                    {
+                        palavra: 'Aspirador', emoji: '🌀' }
+                    ,
+                    {
+                        palavra: 'Avelã', emoji: '🌰' }
+                    ,
+                    {
+                        palavra: 'Alfinete', emoji: '📌' }
+                    ,
+                    {
+                        palavra: 'Antena', emoji: '📡' }
+                    ,
+                    {
+                        palavra: 'Andorinha', emoji: '🐦' }
+                    ,
+                    {
+                        palavra: 'Avestruz', emoji: '🐧' }
+                    ,
+                    {
+                        palavra: 'Anzol', emoji: '🎣' }
+                    ,
+                    {
+                        palavra: 'Anêmona', emoji: '🌺' }
+                    ,
+                    {
+                        palavra: 'Aranhão', emoji: '🐾' }
+                    ,
+                    {
+                        palavra: 'Ampulheta', emoji: '⏳' }
+                    ,
+                    {
+                        palavra: 'Azulejo', emoji: '🔹' }
+                ],
+                "B": [
+                    {
+                        palavra: "Banana", emoji: "🍌" }
+                    ,
+                    {
+                        palavra: "Bola", emoji: "⚽" }
+                    ,
+                    {
+                        palavra: "Bicicleta", emoji: "🚲" }
+                    ,
+                    {
+                        palavra: "Borboleta", emoji: "🦋" }
+                    ,
+                    {
+                        palavra: "Batom", emoji: "💄" }
+                    ,
+                    {
+                        palavra: "Bota", emoji: "👢" }
+                    ,
+                    {
+                        palavra: "Berinjela", emoji: "🍆" }
+                    ,
+                    {
+                        palavra: "Baleia", emoji: "🐳" }
+                    ,
+                    {
+                        palavra: "Balão", emoji: "🎈" }
+                    ,
+                    {
+                        palavra: "Barco", emoji: "⛵" }
+                    ,
+                    {
+                        palavra: "Banquinho", emoji: "🪑" }
+                    ,
+                    {
+                        palavra: "Bolacha", emoji: "🍪" }
+                    ,
+                    {
+                        palavra: "Borragem", emoji: "🌺" }
+                    ,
+                    {
+                        palavra: "Borracha", emoji: "🖊️" }
+                    ,
+                    {
+                        palavra: "Beterraba", emoji: "🍆" }
+                    ,
+                    {
+                        palavra: "Botão", emoji: "🔘" }
+                    ,
+                    {
+                        palavra: "Bengala", emoji: "🦯" }
+                    ,
+                    {
+                        palavra: "Bambu", emoji: "🎋" }
+                    ,
+                    {
+                        palavra: "Bengala", emoji: "👴" }
+                    ,
+                    {
+                        palavra: "Bússola", emoji: "🧭" }
+                    ,
+                    {
+                        palavra: "Baú", emoji: "📦" }
+                    ,
+                    {
+                        palavra: "Búfalo", emoji: "🐃" }
+                    ,
+                    {
+                        palavra: "Bife", emoji: "🥩" }
+                    ,
+                    {
+                        palavra: "Barraca", emoji: "⛺" }
+                    ,
+                    {
+                        palavra: "Biscoito", emoji: "🍪" }
+                    ,
+                    {
+                        palavra: "Batom", emoji: "💋" }
+                    ,
+                    {
+                        palavra: "Biquíni", emoji: "👙" }
+                    ,
+                    {
+                        palavra: "Búzio", emoji: "🐚" }
+                    ,
+                    {
+                        palavra: "Boomerangue", emoji: "🪃" }
+                    ,
+                    {
+                        palavra: "Banheiro", emoji: "🚽" }
+                ],
+                "C":[
+                    {
+                        palavra: 'cachorro', emoji: '🐶' }
+                    ,
+                    {
+                        palavra: 'carro', emoji: '🚗' }
+                    ,
+                    {
+                        palavra: 'casa', emoji: '🏠' }
+                    ,
+                    {
+                        palavra: 'cadeira', emoji: '🪑' }
+                    ,
+                    {
+                        palavra: 'computador', emoji: '💻' }
+                    ,
+                    {
+                        palavra: 'cacto', emoji: '🌵' }
+                    ,
+                    {
+                        palavra: 'cenoura', emoji: '🥕' }
+                    ,
+                    {
+                        palavra: 'coelho', emoji: '🐰' }
+                    ,
+                    {
+                        palavra: 'celular', emoji: '📱' }
+                    ,
+                    {
+                        palavra: 'camiseta', emoji: '👕' }
+                    ,
+                    {
+                        palavra: 'coração', emoji: '❤️' }
+                    ,
+                    {
+                        palavra: 'copo', emoji: '🥤' }
+                    ,
+                    {
+                        palavra: 'cogumelo', emoji: '🍄' }
+                    ,
+                    {
+                        palavra: 'castelo', emoji: '🏰' }
+                    ,
+                    {
+                        palavra: 'cavalo', emoji: '🐴' }
+                    ,
+                    {
+                        palavra: 'coruja', emoji: '🦉' }
+                    ,
+                    {
+                        palavra: 'cereja', emoji: '🍒' }
+                    ,
+                    {
+                        palavra: 'computador', emoji: '💻' }
+                    ,
+                    {
+                        palavra: 'colher', emoji: '🥄' }
+                    ,
+                    {
+                        palavra: 'chapéu', emoji: '🎩' }
+                    ,
+                    {
+                        palavra: 'coco', emoji: '🥥' }
+                    ,
+                    {
+                        palavra: 'camisa', emoji: '👔' }
+                    ,
+                    {
+                        palavra: 'cobra', emoji: '🐍' }
+                    ,
+                    {
+                        palavra: 'carteira', emoji: '👛' }
+                    ,
+                    {
+                        palavra: 'coruja', emoji: '🦉' }
+                    ,
+                    {
+                        palavra: 'cenoura', emoji: '🥕' }
+                    ,
+                    {
+                        palavra: 'caixa', emoji: '📦' }
+                    ,
+                    {
+                        palavra: 'chapéu', emoji: '👒' }
+                    ,
+                    {
+                        palavra: 'cadeado', emoji: '🔒' }
+                    ,
+                    {
+                        palavra: 'colar', emoji: '📿' }
+                    ,
+                ],
+                "D": [
+                    {
+                        palavra: 'dinossauro', emoji: '🦕' }
+                    ,
+                    {
+                        palavra: 'dado', emoji: '🎲' }
+                    ,
+                    {
+                        palavra: 'dente', emoji: '🦷' }
+                    ,
+                    {
+                        palavra: 'dado', emoji: '🎲' }
+                    ,
+                    {
+                        palavra: 'dólar', emoji: '💵' }
+                    ,
+                    {
+                        palavra: 'dedo', emoji: '👆' }
+                    ,
+                    {
+                        palavra: 'dama', emoji: '👸' }
+                    ,
+                    {
+                        palavra: 'dardo', emoji: '🎯' }
+                    ,
+                    {
+                        palavra: 'desenho', emoji: '🎨' }
+                    ,
+                    {
+                        palavra: 'domino', emoji: '🀄' }
+                    ,
+                    {
+                        palavra: 'dicionário', emoji: '📚' }
+                    ,
+                    {
+                        palavra: 'dança', emoji: '💃' }
+                    ,
+                    {
+                        palavra: 'donut', emoji: '🍩' }
+                    ,
+                    {
+                        palavra: 'diamante', emoji: '💎' }
+                    ,
+                    {
+                        palavra: 'dente-de-leão', emoji: '🌼' }
+                    ,
+                    {
+                        palavra: 'dragão', emoji: '🐉' }
+                    ,
+                    {
+                        palavra: 'disco', emoji: '💿' }
+                    ,
+                    {
+                        palavra: 'dedal', emoji: '🧵' }
+                    ,
+                    {
+                        palavra: 'dado', emoji: '🎲' }
+                    ,
+                    {
+                        palavra: 'dedal', emoji: '🧵' }
+                    ,
+                    {
+                        palavra: 'disquete', emoji: '💾' }
+                    ,
+                    {
+                        palavra: 'doce', emoji: '🍬' }
+                    ,
+                    {
+                        palavra: 'dama', emoji: '♟️' }
+                    ,
+                    {
+                        palavra: 'dedo', emoji: '🤏' }
+                    ,
+                    {
+                        palavra: 'dente-de-sabre', emoji: '🐯' }
+                    ,
+                    {
+                        palavra: 'desodorante', emoji: '🌸' }
+                    ,
+                    {
+                        palavra: 'dardo', emoji: '🎯' }
+                    ,
+                    {
+                        palavra: 'dado', emoji: '🎲' }
+                    ,
+                    {
+                        palavra: 'duna', emoji: '🏜️' }
+                    ,
+                    {
+                        palavra: 'disfarce', emoji: '🎭' }
+                    ,
+                ],
+                "E":[
+                    {
+                        palavra: 'elefante', emoji: '🐘' }
+                    ,
+                    {
+                        palavra: 'escova', emoji: '🪥' }
+                    ,
+                    {
+                        palavra: 'espelho', emoji: '🪞' }
+                    ,
+                    {
+                        palavra: 'escada', emoji: '🪜' }
+                    ,
+                    {
+                        palavra: 'escorregador', emoji: '🪀' }
+                    ,
+                    {
+                        palavra: 'estrela', emoji: '⭐' }
+                    ,
+                    {
+                        palavra: 'envelope', emoji: '✉️' }
+                    ,
+                    {
+                        palavra: 'esquilo', emoji: '🐿️' }
+                    ,
+                    {
+                        palavra: 'escorpião', emoji: '🦂' }
+                    ,
+                    {
+                        palavra: 'erva', emoji: '🌿' }
+                    ,
+                    {
+                        palavra: 'estátua', emoji: '🗽' }
+                    ,
+                    {
+                        palavra: 'escova de dentes', emoji: '🪥' }
+                    ,
+                    {
+                        palavra: 'escavadeira', emoji: '🚜' }
+                    ,
+                    {
+                        palavra: 'esponja', emoji: '🧽' }
+                    ,
+                    {
+                        palavra: 'eletricidade', emoji: '⚡' }
+                    ,
+                    {
+                        palavra: 'espeto', emoji: '🍢' }
+                    ,
+                    {
+                        palavra: 'escorrega', emoji: '🎢' }
+                    ,
+                    {
+                        palavra: 'espada', emoji: '⚔️' }
+                    ,
+                    {
+                        palavra: 'espinho', emoji: '🌵' }
+                    ,
+                    {
+                        palavra: 'embalagem', emoji: '📦' }
+                    ,
+                    {
+                        palavra: 'escova de cabelo', emoji: '💆' }
+                    ,
+                    {
+                        palavra: 'enxada', emoji: '🪓' }
+                    ,
+                    {
+                        palavra: 'estante', emoji: '📚' }
+                    ,
+                    {
+                        palavra: 'esmeralda', emoji: '💎' }
+                    ,
+                    {
+                        palavra: 'eletrônica', emoji: '📱' }
+                    ,
+                    {
+                        palavra: 'equilíbrio', emoji: '⚖️' }
+                    ,
+                    {
+                        palavra: 'estátua da liberdade', emoji: '🗽' }
+                    ,
+                    {
+                        palavra: 'estrela do mar', emoji: '🌟' }
+                    ,
+                    {
+                        palavra: 'estilingue', emoji: '🪃' }
+                    ,
+                    {
+                        palavra: 'esqueleto', emoji: '💀' }
+                    ,
+                ],
+                "F":[
+                    {
+                        palavra: "Faca", emoji: "🔪" }
+                    ,
+                    {
+                        palavra: "Foca", emoji: "🦭" }
+                    ,
+                    {
+                        palavra: "Fogão", emoji: "🔥" }
+                    ,
+                    {
+                        palavra: "Ferramenta", emoji: "🛠️" }
+                    ,
+                    {
+                        palavra: "Framboesa", emoji: "🍓" }
+                    ,
+                    {
+                        palavra: "Ferro", emoji: "🔩" }
+                    ,
+                    {
+                        palavra: "Formiga", emoji: "🐜" }
+                    ,
+                    {
+                        palavra: "Flor", emoji: "🌸" }
+                    ,
+                    {
+                        palavra: "Foguete", emoji: "🚀" }
+                    ,
+                    {
+                        palavra: "Frigideira", emoji: "🍳" }
+                    ,
+                    {
+                        palavra: "Folha", emoji: "🍃" }
+                    ,
+                    {
+                        palavra: "Ferro de passar", emoji: "🔌" }
+                    ,
+                    {
+                        palavra: "Fita", emoji: "🎀" }
+                    ,
+                    {
+                        palavra: "Fogos de artifício", emoji: "🎆" }
+                    ,
+                    {
+                        palavra: "Fralda", emoji: "🚼" }
+                    ,
+                    {
+                        palavra: "Ferradura", emoji: "🐴" }
+                    ,
+                    {
+                        palavra: "Falcão", emoji: "🦅" }
+                    ,
+                    {
+                        palavra: "Fósforo", emoji: "🔥" }
+                    ,
+                    {
+                        palavra: "Filhote", emoji: "🐶" }
+                    ,
+                    {
+                        palavra: "Feijão", emoji: "🍲" }
+                    ,
+                    {
+                        palavra: "Farinha", emoji: "🌾" }
+                    ,
+                    {
+                        palavra: "Furadeira", emoji: "🔩" }
+                    ,
+                    {
+                        palavra: "Fava", emoji: "🌱" }
+                    ,
+                    {
+                        palavra: "Futebol", emoji: "⚽" }
+                    ,
+                    {
+                        palavra: "Falcão", emoji: "🐦" }
+                    ,
+                    {
+                        palavra: "Fantoche", emoji: "🤡" }
+                    ,
+                    {
+                        palavra: "Filtro", emoji: "🕶️" }
+                    ,
+                    {
+                        palavra: "Fruta", emoji: "🍎" }
+                    ,
+                    {
+                        palavra: "Foguete", emoji: "🚀" }
+                    ,
+                    {
+                        palavra: "Faca", emoji: "🍴" }
+                ],
+                "G":[
+                    {
+                        palavra: 'gato', emoji: '🐱' }
+                    ,
+                    {
+                        palavra: 'geladeira', emoji: '🧊' }
+                    ,
+                    {
+                        palavra: 'garrafa', emoji: '🍾' }
+                    ,
+                    {
+                        palavra: 'guitarra', emoji: '🎸' }
+                    ,
+                    {
+                        palavra: 'grama', emoji: '🌱' }
+                    ,
+                    {
+                        palavra: 'goiaba', emoji: '🍈' }
+                    ,
+                    {
+                        palavra: 'guarda-chuva', emoji: '☂️' }
+                    ,
+                    {
+                        palavra: 'galinha', emoji: '🐔' }
+                    ,
+                    {
+                        palavra: 'girassol', emoji: '🌻' }
+                    ,
+                    {
+                        palavra: 'gaveta', emoji: '🗄️' }
+                    ,
+                    {
+                        palavra: 'gelo', emoji: '❄️' }
+                    ,
+                    {
+                        palavra: 'gaiola', emoji: '🐦' }
+                    ,
+                    {
+                        palavra: 'gorro', emoji: '🧢' }
+                    ,
+                    {
+                        palavra: 'gravata', emoji: '👔' }
+                    ,
+                    {
+                        palavra: 'guardanapo', emoji: '🧺' }
+                    ,
+                    {
+                        palavra: 'garfo', emoji: '🍴' }
+                    ,
+                    {
+                        palavra: 'grilo', emoji: '🦗' }
+                    ,
+                    {
+                        palavra: 'graviola', emoji: '🍈' }
+                    ,
+                    {
+                        palavra: 'gafanhoto', emoji: '🦗' }
+                    ,
+                    {
+                        palavra: 'gaiola', emoji: '🐦' }
+                    ,
+                    {
+                        palavra: 'gelo', emoji: '❄️' }
+                    ,
+                    {
+                        palavra: 'gato', emoji: '🐱' }
+                    ,
+                    {
+                        palavra: 'guarda-roupa', emoji: '🚪' }
+                    ,
+                    {
+                        palavra: 'gaveta', emoji: '🗄️' }
+                    ,
+                    {
+                        palavra: 'guarda-sol', emoji: '⛱️' }
+                    ,
+                    {
+                        palavra: 'gravata', emoji: '👔' }
+                    ,
+                    {
+                        palavra: 'gel', emoji: '🧴' }
+                    ,
+                    {
+                        palavra: 'grinalda', emoji: '💐' }
+                    ,
+                    {
+                        palavra: 'girafa', emoji: '🦒' }
+                    ,
+                    {
+                        palavra: 'gaita', emoji: '🎶' }
+                    ,
+                ],
+                "H":[
+                    {
+                        palavra: "Hamburguer", emoji: "🍔" }
+                    ,
+                    {
+                        palavra: "Helicóptero", emoji: "🚁" }
+                    ,
+                    {
+                        palavra: "Hipopótamo", emoji: "🦛" }
+                    ,
+                    {
+                        palavra: "Harpista", emoji: "🎻" }
+                    ,
+                    {
+                        palavra: "Harpa", emoji: "🎶" }
+                    ,
+                    {
+                        palavra: "Haste", emoji: "🌱" }
+                    ,
+                    {
+                        palavra: "Hélice", emoji: "🚀" }
+                    ,
+                    {
+                        palavra: "Hidrante", emoji: "🚰" }
+                    ,
+                    {
+                        palavra: "Hipopótamo", emoji: "🐷" }
+                    ,
+                    {
+                        palavra: "Hospedeira", emoji: "👩‍✈️" }
+                    ,
+                    {
+                        palavra: "Hélice", emoji: "🌀" }
+                    ,
+                    {
+                        palavra: "Horta", emoji: "🌱" }
+                    ,
+                    {
+                        palavra: "Haltere", emoji: "🏋️‍♂️" }
+                    ,
+                    {
+                        palavra: "Hidrante", emoji: "🔥" }
+                    ,
+                    {
+                        palavra: "Horta", emoji: "🥦" }
+                    ,
+                    {
+                        palavra: "Harpa", emoji: "🎹" }
+                    ,
+                    {
+                        palavra: "Hipopótamo", emoji: "🦛" }
+                    ,
+                    {
+                        palavra: "Haste", emoji: "🚩" }
+                    ,
+                    {
+                        palavra: "Harpista", emoji: "🪕" }
+                    ,
+                    {
+                        palavra: "Hospedeira", emoji: "✈️" }
+                    ,
+                    {
+                        palavra: "Haltere", emoji: "🏋️" }
+                    ,
+                    {
+                        palavra: "Hélice", emoji: "🚁" }
+                    ,
+                    {
+                        palavra: "Hamburguer", emoji: "🍔" }
+                    ,
+                    {
+                        palavra: "Hospedeira", emoji: "🛫" }
+                    ,
+                    {
+                        palavra: "Haste", emoji: "🌿" }
+                    ,
+                    {
+                        palavra: "Hidrante", emoji: "💦" }
+                    ,
+                    {
+                        palavra: "Harpa", emoji: "🎵" }
+                    ,
+                    {
+                        palavra: "Hipopótamo", emoji: "🐼" }
+                    ,
+                    {
+                        palavra: "Horta", emoji: "🌳" }
+                    ,
+                    {
+                        palavra: "Helicóptero", emoji: "🚁" }
+                ],
+                "I":[
+                    {
+                        palavra: 'igreja', emoji: '⛪️' }
+                    ,
+                    {
+                        palavra: 'ilustração', emoji: '🎨' }
+                    ,
+                    {
+                        palavra: 'inseto', emoji: '🐛' }
+                    ,
+                    {
+                        palavra: 'ícone', emoji: '🌟' }
+                    ,
+                    {
+                        palavra: 'incenso', emoji: '🕯️' }
+                    ,
+                    {
+                        palavra: 'interruptor', emoji: '💡' }
+                    ,
+                    {
+                        palavra: 'impressora', emoji: '🖨️' }
+                    ,
+                    {
+                        palavra: 'iogurte', emoji: '🥛' }
+                    ,
+                    {
+                        palavra: 'isqueiro', emoji: '🔥' }
+                    ,
+                    {
+                        palavra: 'internet', emoji: '🌐' }
+                    ,
+                    {
+                        palavra: 'imagem', emoji: '🖼️' }
+                    ,
+                    {
+                        palavra: 'ilha', emoji: '🏝️' }
+                    ,
+                    {
+                        palavra: 'indiano', emoji: '🇮🇳' }
+                    ,
+                    {
+                        palavra: 'instrumento', emoji: '🎺' }
+                    ,
+                    {
+                        palavra: 'inox', emoji: '🔪' }
+                    ,
+                    {
+                        palavra: 'inoxidável', emoji: '🔩' }
+                    ,
+                    {
+                        palavra: 'iluminação', emoji: '💡' }
+                    ,
+                    {
+                        palavra: 'índigo', emoji: '🌈' }
+                    ,
+                    {
+                        palavra: 'imã', emoji: '🧲' }
+                    ,
+                    {
+                        palavra: 'íris', emoji: '🌸' }
+                    ,
+                    {
+                        palavra: 'identidade', emoji: '🆔' }
+                    ,
+                    {
+                        palavra: 'isolado', emoji: '🏝️' }
+                    ,
+                    {
+                        palavra: 'ioga', emoji: '🧘' }
+                    ,
+                    {
+                        palavra: 'inflável', emoji: '🎈' }
+                    ,
+                    {
+                        palavra: 'ingredientes', emoji: '🥦' }
+                    ,
+                    {
+                        palavra: 'indústria', emoji: '🏭' }
+                    ,
+                    {
+                        palavra: 'inseticida', emoji: '☠️' }
+                    ,
+                    {
+                        palavra: 'improviso', emoji: '🎭' }
+                    ,
+                    {
+                        palavra: 'invenção', emoji: '💡' }
+                    ,
+                    {
+                        palavra: 'interior', emoji: '🏞️' }
+                    ,
+                ],
+                "J":[
+                    {
+                        palavra: "Janela", emoji: "🪟" }
+                    ,
+                    {
+                        palavra: "Jaguar", emoji: "🐆" }
+                    ,
+                    {
+                        palavra: "Jardim", emoji: "🌷" }
+                    ,
+                    {
+                        palavra: "Jaqueta", emoji: "🧥" }
+                    ,
+                    {
+                        palavra: "Jacaré", emoji: "🐊" }
+                    ,
+                    {
+                        palavra: "Jogo", emoji: "🎮" }
+                    ,
+                    {
+                        palavra: "Jaca", emoji: "🍈" }
+                    ,
+                    {
+                        palavra: "Joaninha", emoji: "🐞" }
+                    ,
+                    {
+                        palavra: "Jabuticaba", emoji: "🫐" }
+                    ,
+                    {
+                        palavra: "Joelho", emoji: "🦵" }
+                    ,
+                    {
+                        palavra: "Jipe", emoji: "🚙" }
+                    ,
+                    {
+                        palavra: "Jato", emoji: "✈️" }
+                    ,
+                    {
+                        palavra: "Joia", emoji: "💎" }
+                    ,
+                    {
+                        palavra: "Jornal", emoji: "📰" }
+                    ,
+                    {
+                        palavra: "Jujuba", emoji: "🍬" }
+                    ,
+                    {
+                        palavra: "Janela", emoji: "🖼️" }
+                    ,
+                    {
+                        palavra: "Jogador", emoji: "⚽" }
+                    ,
+                    {
+                        palavra: "Jasmim", emoji: "🌸" }
+                    ,
+                    {
+                        palavra: "Juiz", emoji: "⚖️" }
+                    ,
+                    {
+                        palavra: "Jacinto", emoji: "💐" }
+                    ,
+                    {
+                        palavra: "Jaleco", emoji: "👨‍⚕️" }
+                    ,
+                    {
+                        palavra: "Joystick", emoji: "🕹️" }
+                    ,
+                    {
+                        palavra: "Jarra", emoji: "🍶" }
+                    ,
+                    {
+                        palavra: "Jiboia", emoji: "🐍" }
+                    ,
+                    {
+                        palavra: "Jaula", emoji: "🏞️" }
+                    ,
+                    {
+                        palavra: "Jangada", emoji: "⛵" }
+                    ,
+                    {
+                        palavra: "Jabuti", emoji: "🐢" }
+                    ,
+                    {
+                        palavra: "Juventude", emoji: "🧒" }
+                    ,
+                    {
+                        palavra: "Julgamento", emoji: "⚖️" }
+                ],
+                "K":[
+                    {
+                        palavra: 'kiwi', emoji: '🥝' }
+                    ,
+                    {
+                        palavra: 'kanguru', emoji: '🦘' }
+                    ,
+                    {
+                        palavra: 'ketchup', emoji: '🍅' }
+                    ,
+                    {
+                        palavra: 'kombi', emoji: '🚐' }
+                    ,
+                    {
+                        palavra: 'karaokê', emoji: '🎤' }
+                    ,
+                    {
+                        palavra: 'karatê', emoji: '🥋' }
+                    ,
+                    {
+                        palavra: 'kayak', emoji: '🛶' }
+                    ,
+                    {
+                        palavra: 'ketchup', emoji: '🍅' }
+                    ,
+                    {
+                        palavra: 'kilt', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }
+                    ,
+                    {
+                        palavra: 'kimono', emoji: '👘' }
+                    ,
+                    {
+                        palavra: 'koala', emoji: '🐨' }
+                    ,
+                    {
+                        palavra: 'kiwi', emoji: '🥝' }
+                    ,
+                    {
+                        palavra: 'kiropraxia', emoji: '🤕' }
+                    ,
+                    {
+                        palavra: 'kombucha', emoji: '🍵' }
+                    ,
+                    {
+                        palavra: 'kanguru', emoji: '🦘' }
+                    ,
+                    {
+                        palavra: 'ketchup', emoji: '🍅' }
+                    ,
+                    {
+                        palavra: 'kit', emoji: '🛠️' }
+                    ,
+                    {
+                        palavra: 'karaoke', emoji: '🎤' }
+                    ,
+                    {
+                        palavra: 'kilt', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }
+                    ,
+                    {
+                        palavra: 'kayak', emoji: '🛶' }
+                    ,
+                    {
+                        palavra: 'karaokê', emoji: '🎤' }
+                    ,
+                    {
+                        palavra: 'ketchup', emoji: '🍅' }
+                    ,
+                    {
+                        palavra: 'kiwi', emoji: '🥝' }
+                    ,
+                    {
+                        palavra: 'kiropraxia', emoji: '🤕' }
+                    ,
+                    {
+                        palavra: 'kombucha', emoji: '🍵' }
+                    ,
+                    {
+                        palavra: 'kanguru', emoji: '🦘' }
+                    ,
+                    {
+                        palavra: 'ketchup', emoji: '🍅' }
+                    ,
+                    {
+                        palavra: 'kit', emoji: '🛠️' }
+                    ,
+                    {
+                        palavra: 'karaoke', emoji: '🎤' }
+                    ,
+                    {
+                        palavra: 'kilt', emoji: '🏴󠁧󠁢󠁳󠁣󠁴󠁿' }
+                    ,
+                ],
+                "L":[
+                    {
+                        palavra: "Laranja", emoji: "🍊" }
+                    ,
+                    {
+                        palavra: "Leão", emoji: "🦁" }
+                    ,
+                    {
+                        palavra: "Laptop", emoji: "💻" }
+                    ,
+                    {
+                        palavra: "Lâmpada", emoji: "💡" }
+                    ,
+                    {
+                        palavra: "Livro", emoji: "📚" }
+                    ,
+                    {
+                        palavra: "Lagosta", emoji: "🦞" }
+                    ,
+                    {
+                        palavra: "Laranjeira", emoji: "🌳" }
+                    ,
+                    {
+                        palavra: "Lápis", emoji: "✏️" }
+                    ,
+                    {
+                        palavra: "Lupa", emoji: "🔍" }
+                    ,
+                    {
+                        palavra: "Lima", emoji: "🍈" }
+                    ,
+                    {
+                        palavra: "Luva", emoji: "🧤" }
+                    ,
+                    {
+                        palavra: "Leite", emoji: "🥛" }
+                    ,
+                    {
+                        palavra: "Lobo", emoji: "🐺" }
+                    ,
+                    {
+                        palavra: "Lenço", emoji: "🧣" }
+                    ,
+                    {
+                        palavra: "Lente", emoji: "🔬" }
+                    ,
+                    {
+                        palavra: "Língua", emoji: "👅" }
+                    ,
+                    {
+                        palavra: "Lagarto", emoji: "🦎" }
+                    ,
+                    {
+                        palavra: "Lixeira", emoji: "🗑️" }
+                    ,
+                    {
+                        palavra: "Leque", emoji: "🌬️" }
+                    ,
+                    {
+                        palavra: "Leiteira", emoji: "🥛" }
+                    ,
+                    {
+                        palavra: "Laranjeira", emoji: "🌳" }
+                    ,
+                    {
+                        palavra: "Lanterna", emoji: "🔦" }
+                    ,
+                    {
+                        palavra: "Lente", emoji: "📷" }
+                    ,
+                    {
+                        palavra: "Limão", emoji: "🍋" }
+                    ,
+                    {
+                        palavra: "Lhama", emoji: "🦙" }
+                    ,
+                    {
+                        palavra: "Lenhador", emoji: "🪓" }
+                    ,
+                    {
+                        palavra: "Lupa", emoji: "🔬" }
+                    ,
+                    {
+                        palavra: "Lírio", emoji: "🌺" }
+                    ,
+                    {
+                        palavra: "Lavadora", emoji: "🧺" }
+                    ,
+                    {
+                        palavra: "Leopardo", emoji: "🐆" }
+                ],
+                "M":[
+                    {
+                        palavra: 'macaco', emoji: '🐒' }
+                    ,
+                    {
+                        palavra: 'mochila', emoji: '🎒' }
+                    ,
+                    {
+                        palavra: 'moto', emoji: '🏍️' }
+                    ,
+                    {
+                        palavra: 'mamão', emoji: '🥭' }
+                    ,
+                    {
+                        palavra: 'mesa', emoji: '🪑' }
+                    ,
+                    {
+                        palavra: 'morango', emoji: '🍓' }
+                    ,
+                    {
+                        palavra: 'microfone', emoji: '🎤' }
+                    ,
+                    {
+                        palavra: 'mar', emoji: '🌊' }
+                    ,
+                    {
+                        palavra: 'martelo', emoji: '🔨' }
+                    ,
+                    {
+                        palavra: 'macarrão', emoji: '🍝' }
+                    ,
+                    {
+                        palavra: 'mala', emoji: '🧳' }
+                    ,
+                    {
+                        palavra: 'melancia', emoji: '🍉' }
+                    ,
+                    {
+                        palavra: 'macieira', emoji: '🍎' }
+                    ,
+                    {
+                        palavra: 'mouse', emoji: '🖱️' }
+                    ,
+                    {
+                        palavra: 'maçã', emoji: '🍏' }
+                    ,
+                    {
+                        palavra: 'mesa', emoji: '🪑' }
+                    ,
+                    {
+                        palavra: 'mariposa', emoji: '🦋' }
+                    ,
+                    {
+                        palavra: 'moeda', emoji: '💰' }
+                    ,
+                    {
+                        palavra: 'mula', emoji: '🐴' }
+                    ,
+                    {
+                        palavra: 'meia', emoji: '🧦' }
+                    ,
+                    {
+                        palavra: 'máquina', emoji: '🏭' }
+                    ,
+                    {
+                        palavra: 'manteiga', emoji: '🧈' }
+                    ,
+                    {
+                        palavra: 'macaco', emoji: '🐒' }
+                    ,
+                    {
+                        palavra: 'mola', emoji: '🔩' }
+                    ,
+                    {
+                        palavra: 'mangueira', emoji: '🚿' }
+                    ,
+                    {
+                        palavra: 'míssil', emoji: '🚀' }
+                    ,
+                    {
+                        palavra: 'máscara', emoji: '😷' }
+                    ,
+                    {
+                        palavra: 'morango', emoji: '🍓' }
+                    ,
+                    {
+                        palavra: 'martelo', emoji: '🔨' }
+                    ,
+                    {
+                        palavra: 'mochila', emoji: '🎒' }
+                    ,
+                ],
+                "N":[
+                    {
+                        palavra: "Nuvem", emoji: "☁️" }
+                    ,
+                    {
+                        palavra: "Navio", emoji: "🚢" }
+                    ,
+                    {
+                        palavra: "Nariz", emoji: "👃" }
+                    ,
+                    {
+                        palavra: "Ninho", emoji: "🐣" }
+                    ,
+                    {
+                        palavra: "Noite", emoji: "🌙" }
+                    ,
+                    {
+                        palavra: "Ninja", emoji: "🥷" }
+                    ,
+                    {
+                        palavra: "Nabo", emoji: "🥕" }
+                    ,
+                    {
+                        palavra: "Nadadeira", emoji: "🐬" }
+                    ,
+                    {
+                        palavra: "Natação", emoji: "🏊" }
+                    ,
+                    {
+                        palavra: "Navalha", emoji: "✂️" }
+                    ,
+                    {
+                        palavra: "Nectarina", emoji: "🍑" }
+                    ,
+                    {
+                        palavra: "Nuvem de trovão", emoji: "🌩️" }
+                    ,
+                    {
+                        palavra: "Narval", emoji: "🦄" }
+                    ,
+                    {
+                        palavra: "Noz", emoji: "🌰" }
+                    ,
+                    {
+                        palavra: "Narguilé", emoji: "🌬️" }
+                    ,
+                    {
+                        palavra: "Névoa", emoji: "🌫️" }
+                    ,
+                    {
+                        palavra: "Ninho de pássaro", emoji: "🐦" }
+                    ,
+                    {
+                        palavra: "Números", emoji: "🔢" }
+                    ,
+                    {
+                        palavra: "Nebulosa", emoji: "🌌" }
+                    ,
+                    {
+                        palavra: "Nanquim", emoji: "🖋️" }
+                    ,
+                    {
+                        palavra: "Néon", emoji: "💡" }
+                    ,
+                    {
+                        palavra: "Nabo", emoji: "🍆" }
+                    ,
+                    {
+                        palavra: "Ninho de abelha", emoji: "🐝" }
+                    ,
+                    {
+                        palavra: "Nabo", emoji: "🥔" }
+                    ,
+                    {
+                        palavra: "Nadadeiras de tubarão", emoji: "🦈" }
+                    ,
+                    {
+                        palavra: "Nanômetro", emoji: "📏" }
+                    ,
+                    {
+                        palavra: "Nectarina", emoji: "🍊" }
+                    ,
+                    {
+                        palavra: "Nata", emoji: "🥛" }
+                    ,
+                    {
+                        palavra: "Ninho de formiga", emoji: "🐜" }
+                    ,
+                    {
+                        palavra: "Nariz", emoji: "👄" }
+                ],
+                "O":[
+                    {
+                        palavra: 'olho', emoji: '👁️' }
+                    ,
+                    {
+                        palavra: 'orelha', emoji: '👂' }
+                    ,
+                    {
+                        palavra: 'ovelha', emoji: '🐑' }
+                    ,
+                    {
+                        palavra: 'oliva', emoji: '🫒' }
+                    ,
+                    {
+                        palavra: 'óculos', emoji: '👓' }
+                    ,
+                    {
+                        palavra: 'ovo', emoji: '🥚' }
+                    ,
+                    {
+                        palavra: 'orangotango', emoji: '🦧' }
+                    ,
+                    {
+                        palavra: 'órgão', emoji: '🎹' }
+                    ,
+                    {
+                        palavra: 'onça', emoji: '🐆' }
+                    ,
+                    {
+                        palavra: 'orangotango', emoji: '🐵' }
+                    ,
+                    {
+                        palavra: 'óleo', emoji: '🛢️' }
+                    ,
+                    {
+                        palavra: 'ouvido', emoji: '👂' }
+                    ,
+                    {
+                        palavra: 'ônibus', emoji: '🚌' }
+                    ,
+                    {
+                        palavra: 'oliveira', emoji: '🌿' }
+                    ,
+                    {
+                        palavra: 'oculos de sol', emoji: '🕶️' }
+                    ,
+                    {
+                        palavra: 'olho', emoji: '👁️' }
+                    ,
+                    {
+                        palavra: 'ostra', emoji: '🦪' }
+                    ,
+                    {
+                        palavra: 'ovni', emoji: '🛸' }
+                    ,
+                    {
+                        palavra: 'ouro', emoji: '🪙' }
+                    ,
+                    {
+                        palavra: 'ônibus', emoji: '🚎' }
+                    ,
+                    {
+                        palavra: 'ostra', emoji: '🐚' }
+                    ,
+                    {
+                        palavra: 'ouvido', emoji: '👂' }
+                    ,
+                    {
+                        palavra: 'orelha', emoji: '👂' }
+                    ,
+                    {
+                        palavra: 'oliva', emoji: '🫒' }
+                    ,
+                    {
+                        palavra: 'ovelha', emoji: '🐑' }
+                    ,
+                    {
+                        palavra: 'óculos', emoji: '👓' }
+                    ,
+                    {
+                        palavra: 'orangotango', emoji: '🦧' }
+                    ,
+                    {
+                        palavra: 'órgão', emoji: '🎹' }
+                    ,
+                    {
+                        palavra: 'onça', emoji: '🐆' }
+                    ,
+                    {
+                        palavra: 'ombro', emoji: '👉' }
+                    ,
+                ],
+                "P":[
+                    {
+                        palavra: "Piano", emoji: "🎹" }
+                    ,
+                    {
+                        palavra: "Pássaro", emoji: "🐦" }
+                    ,
+                    {
+                        palavra: "Pêssego", emoji: "🍑" }
+                    ,
+                    {
+                        palavra: "Pote", emoji: "🍯" }
+                    ,
+                    {
+                        palavra: "Pincel", emoji: "🖌️" }
+                    ,
+                    {
+                        palavra: "Porco", emoji: "🐷" }
+                    ,
+                    {
+                        palavra: "Papagaio", emoji: "🦜" }
+                    ,
+                    {
+                        palavra: "Pneu", emoji: "🚗" }
+                    ,
+                    {
+                        palavra: "Pinguim", emoji: "🐧" }
+                    ,
+                    {
+                        palavra: "Pendrive", emoji: "💾" }
+                    ,
+                    {
+                        palavra: "Pipoca", emoji: "🍿" }
+                    ,
+                    {
+                        palavra: "Picolé", emoji: "🍦" }
+                    ,
+                    {
+                        palavra: "Pincel", emoji: "🖌️" }
+                    ,
+                    {
+                        palavra: "Piano", emoji: "🎼" }
+                    ,
+                    {
+                        palavra: "Pá", emoji: "⛏️" }
+                    ,
+                    {
+                        palavra: "Prato", emoji: "🍽️" }
+                    ,
+                    {
+                        palavra: "Pêssegos", emoji: "🍑" }
+                    ,
+                    {
+                        palavra: "Pássaros", emoji: "🐦" }
+                    ,
+                    {
+                        palavra: "Pistola", emoji: "🔫" }
+                    ,
+                    {
+                        palavra: "Pirulito", emoji: "🍭" }
+                    ,
+                    {
+                        palavra: "Ponte", emoji: "🌉" }
+                    ,
+                    {
+                        palavra: "Preguiça", emoji: "🦥" }
+                    ,
+                    {
+                        palavra: "Pulseira", emoji: "💍" }
+                    ,
+                    {
+                        palavra: "Papagaio", emoji: "🦜" }
+                    ,
+                    {
+                        palavra: "Pimenta", emoji: "🌶️" }
+                    ,
+                    {
+                        palavra: "Perfume", emoji: "🌸" }
+                    ,
+                    {
+                        palavra: "Piano", emoji: "🎵" }
+                    ,
+                    {
+                        palavra: "Pimentão", emoji: "🫑" }
+                    ,
+                    {
+                        palavra: "Pombo", emoji: "🕊️" }
+                    ,
+                    {
+                        palavra: "Pote de Mel", emoji: "🍯" }
+                ],
+                "Q":[
+                    {
+                        palavra: 'quadro', emoji: '🖼️' }
+                    ,
+                    {
+                        palavra: 'queijo', emoji: '🧀' }
+                    ,
+                    {
+                        palavra: 'quebra-cabeça', emoji: '🧩' }
+                    ,
+                    {
+                        palavra: 'queimadura', emoji: '🔥' }
+                    ,
+                    {
+                        palavra: 'quadrado', emoji: '🔲' }
+                    ,
+                    {
+                        palavra: 'queimador', emoji: '🔥' }
+                    ,
+                    {
+                        palavra: 'quati', emoji: '🦝' }
+                    ,
+                    {
+                        palavra: 'quarto', emoji: '🛏️' }
+                    ,
+                    {
+                        palavra: 'quimono', emoji: '🥋' }
+                    ,
+                    {
+                        palavra: 'quilha', emoji: '⛵' }
+                    ,
+                    {
+                        palavra: 'qualquer', emoji: '🔀' }
+                    ,
+                    {
+                        palavra: 'questão', emoji: '❓' }
+                    ,
+                    {
+                        palavra: 'química', emoji: '⚗️' }
+                    ,
+                    {
+                        palavra: 'quebra-nozes', emoji: '🌰' }
+                    ,
+                    {
+                        palavra: 'quilômetro', emoji: '📏' }
+                    ,
+                    {
+                        palavra: 'quadra', emoji: '🏀' }
+                    ,
+                    {
+                        palavra: 'quebrar', emoji: '💔' }
+                    ,
+                    {
+                        palavra: 'quarta-feira', emoji: '📅' }
+                    ,
+                    {
+                        palavra: 'quimera', emoji: '🐉' }
+                    ,
+                    {
+                        palavra: 'quatro', emoji: '4️⃣' }
+                    ,
+                    {
+                        palavra: 'quarentena', emoji: '🏠😷' }
+                    ,
+                    {
+                        palavra: 'quociente', emoji: '➗' }
+                    ,
+                    {
+                        palavra: 'quilha', emoji: '🦈' }
+                    ,
+                    {
+                        palavra: 'quarto', emoji: '🔒' }
+                    ,
+                    {
+                        palavra: 'quilate', emoji: '💎' }
+                    ,
+                    {
+                        palavra: 'quadrilha', emoji: '💃' }
+                    ,
+                    {
+                        palavra: 'quieto', emoji: '🤫' }
+                    ,
+                    {
+                        palavra: 'quilograma', emoji: '🏋️' }
+                    ,
+                    {
+                        palavra: 'qualidade', emoji: '✨' }
+                    ,
+                    {
+                        palavra: 'quebra-gelo', emoji: '⛏️' }
+                    ,
+                ],
+                "R":[
+                    {
+                        palavra: 'rato', emoji: '🐭' }
+                    ,
+                    {
+                        palavra: 'rosa', emoji: '🌹' }
+                    ,
+                    {
+                        palavra: 'rádio', emoji: '📻' }
+                    ,
+                    {
+                        palavra: 'relógio', emoji: '⌚' }
+                    ,
+                    {
+                        palavra: 'raio', emoji: '⚡' }
+                    ,
+                    {
+                        palavra: 'régua', emoji: '📏' }
+                    ,
+                    {
+                        palavra: 'repolho', emoji: '🥬' }
+                    ,
+                    {
+                        palavra: 'rã', emoji: '🐸' }
+                    ,
+                    {
+                        palavra: 'rifle', emoji: '🔫' }
+                    ,
+                    {
+                        palavra: 'rosquinha', emoji: '🍩' }
+                    ,
+                    {
+                        palavra: 'rebite', emoji: '🔩' }
+                    ,
+                    {
+                        palavra: 'rabanete', emoji: '🥕' }
+                    ,
+                    {
+                        palavra: 'régua', emoji: '📏' }
+                    ,
+                    {
+                        palavra: 'roda', emoji: '🎡' }
+                    ,
+                    {
+                        palavra: 'rinoceronte', emoji: '🦏' }
+                    ,
+                    {
+                        palavra: 'repolho', emoji: '🥬' }
+                    ,
+                    {
+                        palavra: 'raquete', emoji: '🏸' }
+                    ,
+                    {
+                        palavra: 'rato', emoji: '🐁' }
+                    ,
+                    {
+                        palavra: 'risada', emoji: '😂' }
+                    ,
+                    {
+                        palavra: 'relógio', emoji: '⌚' }
+                    ,
+                    {
+                        palavra: 'raposa', emoji: '🦊' }
+                    ,
+                    {
+                        palavra: 'rápido', emoji: '🏃‍♂️' }
+                    ,
+                    {
+                        palavra: 'rapadura', emoji: '🍬' }
+                    ,
+                    {
+                        palavra: 'raio', emoji: '⚡' }
+                    ,
+                    {
+                        palavra: 'repolho', emoji: '🥬' }
+                    ,
+                    {
+                        palavra: 'rato', emoji: '🐀' }
+                    ,
+                    {
+                        palavra: 'rocha', emoji: '🪨' }
+                    ,
+                    {
+                        palavra: 'rega', emoji: '🚿' }
+                    ,
+                    {
+                        palavra: 'rede', emoji: '🕸️' }
+                    ,
+                    {
+                        palavra: 'rúcula', emoji: '🌿' }
+                    ,
+                ],
+                "S":[
+                    {
+                        palavra: "Sofá", emoji: "🛋️" }
+                    ,
+                    {
+                        palavra: "Sapato", emoji: "👞" }
+                    ,
+                    {
+                        palavra: "Sorvete", emoji: "🍦" }
+                    ,
+                    {
+                        palavra: "Sapo", emoji: "🐸" }
+                    ,
+                    {
+                        palavra: "Serra", emoji: "🪚" }
+                    ,
+                    {
+                        palavra: "Semente", emoji: "🌱" }
+                    ,
+                    {
+                        palavra: "Sino", emoji: "🔔" }
+                    ,
+                    {
+                        palavra: "Sol", emoji: "☀️" }
+                    ,
+                    {
+                        palavra: "Sorveteiro", emoji: "🍨" }
+                    ,
+                    {
+                        palavra: "Saxofone", emoji: "🎷" }
+                    ,
+                    {
+                        palavra: "Sanduíche", emoji: "🥪" }
+                    ,
+                    {
+                        palavra: "Seringa", emoji: "💉" }
+                    ,
+                    {
+                        palavra: "Sabonete", emoji: "🧼" }
+                    ,
+                    {
+                        palavra: "Sabre", emoji: "🤺" }
+                    ,
+                    {
+                        palavra: "Sino", emoji: "🛎️" }
+                    ,
+                    {
+                        palavra: "Salsicha", emoji: "🌭" }
+                    ,
+                    {
+                        palavra: "Sapoti", emoji: "🍈" }
+                    ,
+                    {
+                        palavra: "Saci", emoji: "👻" }
+                    ,
+                    {
+                        palavra: "Sabão", emoji: "🧽" }
+                    ,
+                    {
+                        palavra: "Saxofonista", emoji: "🎵" }
+                    ,
+                    {
+                        palavra: "Sorveteria", emoji: "🏪" }
+                    ,
+                    {
+                        palavra: "Sapateira", emoji: "👠" }
+                    ,
+                    {
+                        palavra: "Sardinha", emoji: "🐟" }
+                    ,
+                    {
+                        palavra: "Sapo", emoji: "🦎" }
+                    ,
+                    {
+                        palavra: "Sorvete de Flocos", emoji: "🍨" }
+                    ,
+                    {
+                        palavra: "Serrote", emoji: "🪚" }
+                    ,
+                    {
+                        palavra: "Saco de Dormir", emoji: "🛌" }
+                    ,
+                    {
+                        palavra: "Sino de Igreja", emoji: "⛪" }
+                    ,
+                    {
+                        palavra: "Semente de Girassol", emoji: "🌻" }
+                    ,
+                    {
+                        palavra: "Sapateado", emoji: "💃" }
+                ],
+                "T":[
+                    {
+                        palavra: 'tigre', emoji: '🐯' }
+                    ,
+                    {
+                        palavra: 'tartaruga', emoji: '🐢' }
+                    ,
+                    {
+                        palavra: 'telefone', emoji: '☎️' }
+                    ,
+                    {
+                        palavra: 'tesoura', emoji: '✂️' }
+                    ,
+                    {
+                        palavra: 'tênis', emoji: '👟' }
+                    ,
+                    {
+                        palavra: 'trompete', emoji: '🎺' }
+                    ,
+                    {
+                        palavra: 'tábua', emoji: '🪑' }
+                    ,
+                    {
+                        palavra: 'tomate', emoji: '🍅' }
+                    ,
+                    {
+                        palavra: 'torre', emoji: '🗼' }
+                    ,
+                    {
+                        palavra: 'travesseiro', emoji: '🛏️' }
+                    ,
+                    {
+                        palavra: 'tartaruga', emoji: '🐢' }
+                    ,
+                    {
+                        palavra: 'tulipa', emoji: '🌷' }
+                    ,
+                    {
+                        palavra: 'toalha', emoji: '🛀' }
+                    ,
+                    {
+                        palavra: 'torneira', emoji: '🚰' }
+                    ,
+                    {
+                        palavra: 'touro', emoji: '🐂' }
+                    ,
+                    {
+                        palavra: 'tambor', emoji: '🥁' }
+                    ,
+                    {
+                        palavra: 'trenó', emoji: '🛷' }
+                    ,
+                    {
+                        palavra: 'tangerina', emoji: '🍊' }
+                    ,
+                    {
+                        palavra: 'tesouro', emoji: '🏴‍☠️' }
+                    ,
+                    {
+                        palavra: 'tênis', emoji: '👟' }
+                    ,
+                    {
+                        palavra: 'trator', emoji: '🚜' }
+                    ,
+                    {
+                        palavra: 'tartaruga', emoji: '🐢' }
+                    ,
+                    {
+                        palavra: 'trombone', emoji: '🎶' }
+                    ,
+                    {
+                        palavra: 'tábua', emoji: '🪑' }
+                    ,
+                    {
+                        palavra: 'trem', emoji: '🚂' }
+                    ,
+                    {
+                        palavra: 'travesseiro', emoji: '🛏️' }
+                    ,
+                    {
+                        palavra: 'tigela', emoji: '🍲' }
+                    ,
+                    {
+                        palavra: 'toupeira', emoji: '🦔' }
+                    ,
+                    {
+                        palavra: 'tinta', emoji: '🎨' }
+                    ,
+                    {
+                        palavra: 'teclado', emoji: '⌨️' }
+                    ,
+                ],
+                "U":[
+                    {
+                        palavra: 'uva', emoji: '🍇' }
+                    ,
+                    {
+                        palavra: 'urso', emoji: '🐻' }
+                    ,
+                    {
+                        palavra: 'universidade', emoji: '🎓' }
+                    ,
+                    {
+                        palavra: 'unicórnio', emoji: '🦄' }
+                    ,
+                    {
+                        palavra: 'uísque', emoji: '🥃' }
+                    ,
+                    {
+                        palavra: 'urubu', emoji: '🦅' }
+                    ,
+                    {
+                        palavra: 'uísque', emoji: '🥃' }
+                    ,
+                    {
+                        palavra: 'uva-passa', emoji: '🍇' }
+                    ,
+                    {
+                        palavra: 'umbrella', emoji: '☂️' }
+                    ,
+                    {
+                        palavra: 'urso polar', emoji: '🐻‍❄️' }
+                    ,
+                    {
+                        palavra: 'uva verde', emoji: '🍇' }
+                    ,
+                    {
+                        palavra: 'uniforme', emoji: '👔' }
+                    ,
+                    {
+                        palavra: 'urso panda', emoji: '🐼' }
+                    ,
+                    {
+                        palavra: 'unha', emoji: '💅' }
+                    ,
+                    {
+                        palavra: 'unicornio', emoji: '🦄' }
+                    ,
+                    {
+                        palavra: 'uva roxa', emoji: '🍇' }
+                    ,
+                    {
+                        palavra: 'urso marrom', emoji: '🐻' }
+                    ,
+                    {
+                        palavra: 'umbral', emoji: '🚪' }
+                    ,
+                    {
+                        palavra: 'urutu', emoji: '🐍' }
+                    ,
+                    {
+                        palavra: 'urutau', emoji: '🐦' }
+                    ,
+                    {
+                        palavra: 'utensílio', emoji: '🍴' }
+                    ,
+                    {
+                        palavra: 'uva doce', emoji: '🍇' }
+                    ,
+                    {
+                        palavra: 'unha pintada', emoji: '💅' }
+                    ,
+                    {
+                        palavra: 'urina', emoji: '💦' }
+                    ,
+                    {
+                        palavra: 'urinol', emoji: '🚽' }
+                    ,
+                    {
+                        palavra: 'urubu-rei', emoji: '🦅' }
+                    ,
+                    {
+                        palavra: 'urso preto', emoji: '🐻' }
+                    ,
+                    {
+                        palavra: 'umbigo', emoji: '🔘' }
+                    ,
+                    {
+                        palavra: 'urutuba', emoji: '🐍' }
+                    ,
+                    {
+                        palavra: 'ulmeiro', emoji: '🌳' }
+                    ,
+                ],
+                "V":[
+                    {
+                        palavra: 'vaca', emoji: '🐄' }
+                    ,
+                    {
+                        palavra: 'vaso', emoji: '🌷' }
+                    ,
+                    {
+                        palavra: 'violin', emoji: '🎻' }
+                    ,
+                    {
+                        palavra: 'vela', emoji: '🕯️' }
+                    ,
+                    {
+                        palavra: 'ventilador', emoji: '🌬️' }
+                    ,
+                    {
+                        palavra: 'vassoura', emoji: '🧹' }
+                    ,
+                    {
+                        palavra: 'violão', emoji: '🎸' }
+                    ,
+                    {
+                        palavra: 'violeta', emoji: '🌸' }
+                    ,
+                    {
+                        palavra: 'veado', emoji: '🦌' }
+                    ,
+                    {
+                        palavra: 'vírus', emoji: '🦠' }
+                    ,
+                    {
+                        palavra: 'vassoura', emoji: '🧹' }
+                    ,
+                    {
+                        palavra: 'vinho', emoji: '🍷' }
+                    ,
+                    {
+                        palavra: 'vestido', emoji: '👗' }
+                    ,
+                    {
+                        palavra: 'velocímetro', emoji: '🚗' }
+                    ,
+                    {
+                        palavra: 'volante', emoji: '🎢' }
+                    ,
+                    {
+                        palavra: 'velocidade', emoji: '🏎️' }
+                    ,
+                    {
+                        palavra: 'vela', emoji: '🕯️' }
+                    ,
+                    {
+                        palavra: 'ventilador', emoji: '🌬️' }
+                    ,
+                    {
+                        palavra: 'viking', emoji: '🧑‍🦰' }
+                    ,
+                    {
+                        palavra: 'vasilha', emoji: '🥣' }
+                    ,
+                    {
+                        palavra: 'vaso', emoji: '🌷' }
+                    ,
+                    {
+                        palavra: 'violino', emoji: '🎻' }
+                    ,
+                    {
+                        palavra: 'vestido', emoji: '👗' }
+                    ,
+                    {
+                        palavra: 'verde', emoji: '🟢' }
+                    ,
+                    {
+                        palavra: 'velocista', emoji: '🏃' }
+                    ,
+                    {
+                        palavra: 'vulcão', emoji: '🌋' }
+                    ,
+                    {
+                        palavra: 'velocímetro', emoji: '🚗' }
+                    ,
+                    {
+                        palavra: 'violão', emoji: '🎸' }
+                    ,
+                    {
+                        palavra: 'vaporizador', emoji: '💨' }
+                    ,
+                    {
+                        palavra: 'vaca', emoji: '🐄' }
+                    ,
+                ],
+                "W":[
+                    {
+                        palavra: 'waffle', emoji: '🧇' }
+                    ,
+                    {
+                        palavra: 'windsurf', emoji: '🏄‍♂️' }
+                    ,
+                    {
+                        palavra: 'walkie-talkie', emoji: '📻' }
+                    ,
+                    {
+                        palavra: 'wafer', emoji: '🍪' }
+                    ,
+                    {
+                        palavra: 'weber', emoji: '🍔' }
+                    ,
+                    {
+                        palavra: 'wok', emoji: '🥘' }
+                    ,
+                    {
+                        palavra: 'watermelon', emoji: '🍉' }
+                    ,
+                    {
+                        palavra: 'whisky', emoji: '🥃' }
+                    ,
+                    {
+                        palavra: 'wrap', emoji: '🌯' }
+                    ,
+                    {
+                        palavra: 'whatsapp', emoji: '📱' }
+                    ,
+                    {
+                        palavra: 'webcam', emoji: '📷' }
+                    ,
+                    {
+                        palavra: 'wifi', emoji: '📶' }
+                    ,
+                    {
+                        palavra: 'walkman', emoji: '📼' }
+                    ,
+                    {
+                        palavra: 'windsurfista', emoji: '🏄‍♀️' }
+                    ,
+                    {
+                        palavra: 'weimaraner', emoji: '🐕' }
+                    ,
+                    {
+                        palavra: 'westie', emoji: '🐶' }
+                    ,
+                    {
+                        palavra: 'wombat', emoji: '🐨' }
+                    ,
+                    {
+                        palavra: 'wallaby', emoji: '🦘' }
+                    ,
+                    {
+                        palavra: 'wasp', emoji: '🐝' }
+                    ,
+                    {
+                        palavra: 'watusi', emoji: '🐮' }
+                    ,
+                    {
+                        palavra: 'wahoo', emoji: '🐟' }
+                    ,
+                    {
+                        palavra: 'wagyu', emoji: '🥩' }
+                    ,
+                    {
+                        palavra: 'woodpecker', emoji: '🐦' }
+                    ,
+                    {
+                        palavra: 'warthog', emoji: '🐗' }
+                    ,
+                    {
+                        palavra: 'whale', emoji: '🐳' }
+                    ,
+                    {
+                        palavra: 'wolf', emoji: '🐺' }
+                    ,
+                    {
+                        palavra: 'wildebeest', emoji: '🐃' }
+                    ,
+                    {
+                        palavra: 'wasp', emoji: '🐝' }
+                    ,
+                    {
+                        palavra: 'woodlouse', emoji: '🐜' }
+                    ,
+                    {
+                        palavra: 'whippet', emoji: '🐆' }
+                    ,
+                ]
+            };
+            for(let idx in palavras){
+                if(idx !== "all"){
+                    for(let p of palavras[idx]){
+                        palavras["all"].push(p);
+                    }
+                }
+            }
+            const exibeLicao = function () {
+                //Entrada de dados
+                let categoria = document.querySelector("#categorias").value;
+                let linhas = parseInt(document.querySelector('#linhas').value);
+                if (linhas >= palavras.length) {
+                    linhas = palavras.length;
+                };
+                //Saída de dados
+                let conteudo = document.querySelector('#conteudo');
+                //Sorteia as palavras da lição
+                let sorteadas = [];
+                for (let i = 0; i < linhas; i++) {
+                    let n;
+                    do {
+                        n = parseInt(Math.random() * palavras[categoria].length);
+                    }
+                    while (
+                        sorteadas.indexOf(n) > -1 
+                    );
+                    sorteadas.push(n);
+                };
+                //Cria cabeçalho
+                let cabe = '';
+                let ti = '';
+                cabe += "<br/> <table id='cabecalho' align='center'>";
+                cabe += '<tr>';
+                cabe += '<td> Escola:';
+                cabe += '<td>__________________________';
+                cabe += '<td>&nbsp;Data:__/__/____';
+                cabe += '</tr>';
+                cabe += '<tr>';
+                cabe += '<td>Nome:';
+                cabe += '<td>___________________________';
+                cabe += '<td>&nbsp;Série:_________';
+                cabe += '</tr>';
+                cabe += '</table>';
+                //cria o conteúdo
+                let html = "<h1 id='ca'>Complete as palavras</h1><br>";
+                html += "<table id='silabas' cellspacing='30' align='center'>";
+                html += '<tr>';
+                for (let i = 0; i < linhas; i++) {
+                    //let palavra = palavras[categoria][sorteadas[i]];
+                    let palavra;
+                    palavra = palavras[categoria][sorteadas[i]];
+                    html += "<td style='text-align:left'>";
+                    html += palavra.emoji + ' ';
+                    html += palavra.palavra[0].toUpperCase() + ' ';
+                    for (let j = 1; j < palavra.palavra.length; j++) {
+                        html += '__&nbsp;';
+                    }
+                    // [Palavras|palavra: string;emoji: string;]
+                    if (i % 2 === 1) {
+                        html += '<tr>';
+                    }
+                }
+                html += '</table>';
+                conteudo.innerHTML = cabe;
+                conteudo.innerHTML += html;
+            };
+        </script>
+    </body>
+</html>

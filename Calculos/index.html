@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#0b1020" />
+  <meta name="description" content="CalcHub Pro: uma central completa de cálculos matemáticos, científicos, financeiros e escolares." />
+  <meta property="og:title" content="CalcHub Pro — Seu universo de cálculos" />
+  <meta property="og:description" content="20 ferramentas, gráficos interativos, histórico e favoritos em um único lugar." />
+  <title>CalcHub Pro — Sua central de cálculos</title>
+  <link rel="icon" href="./assets/icons/favicon.svg" type="image/svg+xml" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <!-- Tailwind CDN: utilitários progressivos; o layout também possui CSS local completo. -->
+  <script async src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="./css/themes.css" />
+  <link rel="stylesheet" href="./css/style.css" />
+  <script async src="https://unpkg.com/lucide@0.468.0/dist/umd/lucide.min.js"></script>
+  <script async src="https://cdn.jsdelivr.net/npm/chart.js@4.4.8/dist/chart.umd.min.js"></script>
+  <script async src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+  <script type="module" src="./js/app.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Pular para o conteúdo</a>
+  <div id="app" class="app-shell">
+    <aside id="sidebar" class="sidebar" aria-label="Menu principal">
+      <a class="brand" href="#home" data-nav="home" aria-label="CalcHub Pro, início">
+        <span class="brand-mark" aria-hidden="true"><svg viewBox="0 0 40 40" fill="none"><rect x="0" y="0" width="40" height="40" rx="12" fill="url(#brand-grad)"/><path d="M11 21.5 17.5 28 29 12.5" stroke="white" stroke-width="3.6" stroke-linecap="round" stroke-linejoin="round"/><defs><linearGradient id="brand-grad" x1="1" y1="1" x2="40" y2="40"><stop stop-color="#8075FF"/><stop offset="1" stop-color="#4D9CFF"/></linearGradient></defs></svg></span>
+        <span class="brand-name">calc<span>hub</span><strong>pro</strong><small>SEU ESPAÇO DE CÁLCULOS</small></span>
+      </a>
+      <div class="sidebar-scroll">
+        <div class="sidebar-label">ESPAÇO DE TRABALHO</div>
+        <nav class="primary-nav" id="primary-nav" aria-label="Navegação principal"></nav>
+        <div class="sidebar-label menu-heading">CATEGORIAS</div>
+        <nav id="category-nav" class="primary-nav" aria-label="Categorias"></nav>
+        <div class="sidebar-label menu-heading">FAVORITOS <span id="sidebar-fav-count" class="sidebar-count">0</span></div>
+        <div id="sidebar-favorites" class="sidebar-favorites"></div>
+      </div>
+      <div class="sidebar-footer">
+        <div class="sidebar-tip"><span class="tip-icon" data-icon="sparkles"></span><div><b>Dica rápida</b><p>Pressione <kbd>Ctrl</kbd> + <kbd>K</kbd> para encontrar qualquer cálculo.</p></div></div>
+        <div class="sidebar-bottom"><span class="version-badge">●</span> CalcHub Pro <span class="muted">v1.0.0</span></div>
+      </div>
+    </aside>
+    <div id="overlay" class="mobile-overlay" hidden></div>
+    <div class="main-shell">
+      <header class="topbar">
+        <div class="topbar-start">
+          <button id="menu-toggle" class="icon-button mobile-menu" aria-label="Abrir menu"><span data-icon="menu"></span></button>
+          <div class="breadcrumb" id="breadcrumbs"><span class="muted">Workspace</span><span class="crumb-chevron" data-icon="chevron-right"></span><strong>Visão geral</strong></div>
+        </div>
+        <div class="topbar-actions">
+          <button id="global-search" class="search-trigger" aria-label="Buscar ferramentas"><span data-icon="search"></span><span>Pesquisar ferramenta...</span><kbd>⌘ K</kbd></button>
+          <button id="theme-toggle" class="icon-button" aria-label="Alternar tema" title="Alternar tema"><span data-icon="moon"></span></button>
+          <button id="help-trigger" class="icon-button" aria-label="Central de ajuda" title="Ajuda"><span data-icon="circle-help"></span></button>
+          <span class="topbar-divider" aria-hidden="true"></span>
+          <button id="profile-button" class="avatar-button" title="Configurações locais" aria-label="Sobre a plataforma">CH</button>
+        </div>
+      </header>
+      <main id="main-content" tabindex="-1" class="page-content" aria-live="polite">
+        <div class="skeleton-container" aria-label="Carregando interface"><div class="skeleton skeleton-title"></div><div class="skeleton skeleton-hero"></div><div class="skeleton-grid"><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div><div class="skeleton skeleton-card"></div></div></div>
+      </main>
+      <footer class="app-footer"><span>© <span id="year"></span> CalcHub Pro · Feito para simplificar o complexo.</span><span><span class="status-dot"></span> Todos os sistemas operacionais</span></footer>
+    </div>
+  </div>
+  <div id="toast-stack" class="toast-stack" role="status" aria-live="polite"></div>
+  <div id="modal-layer"></div>
+  <div id="search-layer"></div>
+</body>
+</html>
