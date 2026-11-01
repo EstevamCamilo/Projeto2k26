@@ -1,174 +1,78 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Jogo da Forca</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <meta charset="utf-8"/>
-        <style>
-            * {
-                font-family: sans-serif;
-            }
-            
-            body {
-                text-align: center;
-            }
-            button {
-                margin: 0.25rem;
-                font-size: 2rem;
-                min-width: 2.5rem;
-                min-height: 2.5rem;
-            }
-            #forca {
-                margin-right: 3rem;
-                display: inline-block;
-                font-family: monospace;
-                font-size: 3rem;
-                text-align: left;
-            }
-            #palavra {
-                font-size: 3rem;
-                display: inline-block;
-            }
-            #teclado{
-                margin-top: 3rem;
-                display: block;
-            }
-        </style>
-    </head>
-    <body>
-        <header>
-            <a href="../index.html"><button id="vb"><img src="../volta.png"/></button></a>
-            <h1>Forca!!</h1>
-        </header>
-        <div id="forca"></div>
-        <div id="palavra"></div>
-        <div id="teclado"></div>
-        
-        <script>
-            const palavras          = ["LEÃO",   "ESCORPIÃO", "ONÇA",    "CACHORRO", "GATO",    "DINOSSAURO", "ARANHA","COMPUTADOR","MOSCA","GAFANHOTO","","","","","","","","","","","","","","","","","","","",""];
-            const palavrasSemAcento = ["LEAO",   "ESCORPIAO", "ONCA",    "CACHORRO", "GATO",    "DINOSSAURO", "ARANHA","COMPUTADOR","MOSCA","GAFANHOTO","","","","","","","","","","","","","","","","","","","",""];
-            const palavrasDicas     = ["MAMÍFERO","ARACNÍDEO","MAMÍFERO","MAMÍFERO", "MAMÍFERO","REPTIL", "ARACNÍDEO" ,"TECNOLOGIA","INSETO","INSETO","","","","","","","","","","","","","","","","","","","",""];
-            
-            var erros = 0;
-            var palavraSelecionada = -1; //guarda o índice da palavra selecionada 
-            var letrasSelecionadas = [];
-            
-            /* Sorteia a palavra e zera a jogada (erros, palavra e letras selecionadas) */
-            var sorteiaPalavra = () => {
-                //Zera a quantidade de erros
-                erros = 0;
-                //Zera a lista de letras selecionadas
-                letrasSelecionadas = [];
-                
-                //sorteia uma palavra da lista de palavras;
-                palavraSelecionada = parseInt(Math.random() * palavras.length);
-                
-                //Exibe as letras ocultas da palavra selecionada
-                desenhaPalavra();
-                
-                //Desenha a forca vazia
-                desenhaForca();
-                //Cria o teclado virtual novamente para habilitar as teclas
-                criaTecladoVirtual();
-            };
-            
-            /* cria o teclado virtual na div #teclado */
-            var criaTecladoVirtual = () => {
-                //Lista de letras do alfabeto
-                let letras = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P","Q","R","S","T","U","V","W","X","Y","Z"]; 
-                //Obtem a div #teclado
-                let teclado = document.querySelector("#teclado");
-                //Apaga o conteúdo da div "#teclado"
-                teclado.innerHTML = "";
-                //Cria os botões do teclado
-                for(let letra of letras) { //Pega cada letra da lista de letras
-                    let botao = document.createElement("button"); //Cria um elemento HTML button
-                    botao.onclick = () => tecladoOnClick(letra, botao); //Atribui evento ao clicar
-                    botao.innerHTML = letra; //Define o HTML interno como a letra do alfabeto
-                    teclado.appendChild(botao); //Adiciona o botão à div #teclado
-                }
-            };
-            
-            /* Evento do botão do teclado virtual */
-            var tecladoOnClick = (letra, botao) => {
-                //Desabilita o botão
-                botao.disabled = true;
-                //Adiciona a letra na lista de letras selecionadas
-                letrasSelecionadas.push(letra);
-                //Desenha a palavra
-                desenhaPalavra();
-                
-                //Obtem a div #teclado
-                let teclado = document.querySelector("#teclado");
-                
-                //Verifica se ganhou
-                //Obtem a div #palavra
-                let palavra = document.querySelector("#palavra");
-                if(!palavra.innerHTML.includes("_")) {
-                    teclado.innerHTML="";
-                    teclado.innerHTML+="<h1>Você ganhou</h1>";
-                    teclado.innerHTML+="<button onclick='sorteiaPalavra()'>Reiniciar</button>";
-                }
-                
-                //Verifica se errou
-                let palavraSemAcento = palavrasSemAcento[palavraSelecionada];
-                if(!palavraSemAcento.includes(letra)){
-                    erros++; //Adiciona mais uma à variável erro
-                    desenhaForca(); //Desenha a forca
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Uma letra de cada vez, uma nova descoberta." />
+    <title>Jogo da Forca — Biblioteca QVC</title>
+    <link rel="icon" href="../Caça-Palavras/logo.png" />
+    <link rel="stylesheet" href="games.css" />
+    <script type="module" src="games.js"></script>
+    <link rel="stylesheet" href="../shared/platform.css" />
+    <script type="module" src="../shared/platform.js"></script>
+    <script type="module" src="../shared/visit.js"></script>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <script type="module" src="../shared/pwa.js"></script>
+  </head>
+  <body data-qvc-modern data-qvc-game="forca" data-qvc-print-target="#game-document">
+    <div class="qvc-game-page">
+      <header>
+        <a class="qvc-game-back" href="../index.html">← Voltar ao Hub</a>
+        <div class="qvc-game-eyebrow">Brincar também é aprender</div>
+        <h1>Jogo da Forca</h1>
+        <p>Uma letra de cada vez, uma nova descoberta.</p>
+      </header>
+      <main class="qvc-game-layout">
+        <aside class="qvc-game-panel" aria-label="Instruções e opções do jogo">
+          <h2>Uma descoberta por vez</h2>
+          <p>
+            Escolha letras no teclado da tela ou no teclado do computador. São seis tentativas
+            incorretas; os acentos são revelados junto com a letra.
+          </p>
 
-                    if(erros===6) {
-                        teclado.innerHTML="";
-                        teclado.innerHTML+="<h1>Você perdeu</h1>";
-                        teclado.innerHTML+="<button onclick='sorteiaPalavra()'>Reiniciar</button>";
-                    }
-                }
-            };
-            
-            /* Desenha a forca conforme a quantidade de erros */
-            var desenhaForca = () => {
-                let forcas = [
-                    "┌───┐<br/>│<br/>│<br/>│<br/><br/>",                //0
-                    "┌───┐<br/>│   O<br/>│<br/>│<br/><br/>",            //1
-                    "┌───┐<br/>│   O<br/>│   │<br/>│<br/><br/>",        //2
-                    "┌───┐<br/>│   O<br/>│  /│<br/>│<br/><br/>",        //3
-                    "┌───┐<br/>│   O<br/>│  /│\\<br/>│<br/><br/>",      //4
-                    "┌───┐<br/>│   O<br/>│  /│\\<br/>│  /<br/><br/>",   //5
-                    "┌───┐<br/>│   O<br/>│  /│\\<br/>│  / \\<br/><br/>" //6
-                ];
-                //Obtem a div #forca
-                let forca = document.querySelector("#forca");
-                forca.innerHTML = forcas[erros].replaceAll(" ","&nbsp;"); //Define o HTML interno com o desenho da forca
-            };
-            
-            /* Desenha a palavra conforme as letras selecionadas*/
-            var desenhaPalavra = () => {
-                //Obtem a palavra selecionada (String) com base no índice da palavra
-                let palavraSel = palavras[palavraSelecionada];
-                let palavraSemAcento = palavrasSemAcento[palavraSelecionada];
-                let dica = palavrasDicas[palavraSelecionada];
-                
-                //Obtem a div #palavra
-                let palavra = document.querySelector("#palavra");
-                //Apaga o conteúdo da div "#palavra"
-                palavra.innerHTML = "<small>"+dica+"</small><br/><br/></br>";
-                //Desenha cada letra da palavra selecionada na div "#palavra"
-                for(let i = 0; i < palavraSel.length; i++) {
-                    let letra = palavraSel[i]; //Letra com acento
-                    let letraSemAcento = palavraSemAcento[i]; //Letra sem acento
-                    //Se a lista de letras selecionadas incluir a letra sem acento
-                    if(letrasSelecionadas.includes(letraSemAcento)){
-                        palavra.innerHTML += letra+" "; //Exibe a letra selecionada
-                    } else {
-                        palavra.innerHTML += "_ "; //Senão exibe o "_"
-                    }
-                }
-            }
-
-            /* executa ao carregar os elementos da janela */
-            //window.onload = () => {
-                //Exibe a palavra selecionada
-                sorteiaPalavra();
-            //};
-        </script>
-    </body>
+          <button id="game-reset" class="qvc-game-button" type="button">↻ Nova rodada</button>
+          <button id="game-print" class="qvc-game-button qvc-game-button-secondary" type="button">
+            Imprimir / Exportar PDF
+          </button>
+          <p>Jogos gratuitos, sem cadastro e sem envio de informações.</p>
+          <a class="qvc-game-back" href="jogos.html">Explorar os outros jogos →</a>
+        </aside>
+        <section id="game-document" class="qvc-game-document" aria-labelledby="game-title">
+          <h2 id="game-title">Jogo da Forca</h2>
+          <p id="game-status" class="qvc-game-status" role="status" aria-live="polite"></p>
+          <svg
+            id="game-drawing"
+            class="qvc-hangman-illustration"
+            viewBox="0 0 180 170"
+            role="img"
+            aria-label="Ilustração do jogo da forca"
+          >
+            <g fill="none" stroke="#346786" stroke-width="4" stroke-linecap="round">
+              <path d="M25 155h100M50 155V15h80v22" />
+              <circle data-mistake="1" cx="130" cy="52" r="15" />
+              <path data-mistake="2" d="M130 67v43" />
+              <path data-mistake="3" d="m130 78-23 20" />
+              <path data-mistake="4" d="m130 78 23 20" />
+              <path data-mistake="5" d="m130 110-22 30" />
+              <path data-mistake="6" d="m130 110 22 30" />
+            </g>
+          </svg>
+          <p id="game-clue" class="qvc-word-clue"></p>
+          <div
+            id="game-word"
+            class="qvc-word-reveal"
+            role="group"
+            aria-label="Palavra a descobrir"
+          ></div>
+          <div
+            id="game-board"
+            class="qvc-letter-keyboard"
+            role="group"
+            aria-label="Teclado de letras"
+          ></div>
+          <p class="qvc-game-footnote">Biblioteca QVC · Aprender, descobrir e compartilhar.</p>
+        </section>
+      </main>
+    </div>
+  </body>
 </html>

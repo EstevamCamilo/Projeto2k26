@@ -1,0 +1,7 @@
+node_modules/
+dist/
+Biblioteca/shared/tailwind.css
+Biblioteca/shared/offline-files.js
+Biblioteca/Calculos/js/
+reports/
+test-results/

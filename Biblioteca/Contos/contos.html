@@ -192,8 +192,14 @@
                 font-size: 30px;
             }
         </style>
-    </head>
-    <body>
+
+<link rel="stylesheet" href="../shared/platform.css">
+<script type="module" src="../shared/platform.js"></script>
+<script type="module" src="../shared/visit.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<script type="module" src="../shared/pwa.js"></script>
+</head>
+    <body data-qvc-legacy>
         <div id="cabecalho">
             <a href="../index.html">
                 <button id="vb">
@@ -303,7 +309,7 @@
             <a href="contos/bellaebaleias.html">
                 <img
                      id="bimg"
-                     src="imgContos/bella.png   "
+                     src="imgContos/bella.png"
                      width="300vw"
                      height="200vw"
                      />
@@ -363,7 +369,7 @@
     <div id="contos">
         <dialog id="conto13">
             <button id="bdclose" onclick="document.querySelector('#conto13').close()">
-                <img src="../Caça-Palavras/cross.png"/>
+                <img src="../cross.png"/>
             </button>
             <br>
             <H1 id="tc">"Aventuras de Rex: A história do cachorro que se perdeu e encontrou um novo lar"

@@ -1,40 +1,386 @@
-<!DOCTYPE html>
-<html>
-    <title>Horário Escolar</title>
-        <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>📝</text></svg>">
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="preconnect" href="https://fonts.googleapis.com">
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-        <link href="https://fonts.googleapis.com/css?family=Nanum%20Myeongjo" rel="stylesheet">
-        <link rel="stylesheet" href="style.css">
-    <body>
-        <script src="app.js"></script>
-        <script src="professor.js"></script>
-        <script src="disciplina.js"></script>
-        <script src="horario.js"></script>
-        <div id="b5">
-            <h1><u>Horário Escolar</u></h1>
-            <div id="b3">
-                <div id="b1">
-                    <button onclick="app.goHome();"><b>🏠 Inicio</b></button>
-                </div>
-                <div id="b2">
-                    <button onclick="professorUI.start('#content')"><b>👨‍🏫 Professores</b></button>
-                    <button onclick="disciplinaUI.start('#content')"><b>📚 Disciplinas</b></button>
-                    <button onclick="horarioUI.start('#content')"><b>🕐 Horário</b></button>
-                </div>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="theme-color" content="#346786" />
+    <meta
+      name="description"
+      content="Organize aulas, professores e disciplinas em uma grade escolar semanal, com alertas de conflitos e impressão A4."
+    />
+    <title>Horário Escolar — Biblioteca QVC</title>
+    <link rel="stylesheet" href="../shared/platform.css" />
+    <link rel="stylesheet" href="agenda.css" />
+    <script type="module" src="agenda.js"></script>
+
+    <script type="module" src="../shared/platform.js"></script>
+    <script type="module" src="../shared/visit.js"></script>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <script type="module" src="../shared/pwa.js"></script>
+  </head>
+  <body data-qvc-modern data-qvc-print-target="#schedule-preview">
+    <a class="agenda-skip no-print" href="#agenda-main">Pular para o planejamento</a>
+    <main class="agenda-app" id="agenda-main">
+      <a class="agenda-back no-print" href="../index.html">← Voltar ao Hub</a>
+      <header class="agenda-hero no-print">
+        <div>
+          <span class="agenda-eyebrow">MAIS TEMPO PARA ENSINAR</span>
+          <h1>Organize a semana.<br /><span>Abra espaço para aprender.</span></h1>
+          <p>Turmas, professores e disciplinas em um planejamento que faz sentido.</p>
+        </div>
+        <div class="agenda-hero-art" aria-hidden="true">
+          <svg viewBox="0 0 110 110">
+            <rect x="15" y="23" width="80" height="73" rx="14" fill="#fff" />
+            <path
+              d="M15 43h80M35 15v17M75 15v17"
+              stroke="#346786"
+              stroke-width="6"
+              stroke-linecap="round"
+            />
+            <path
+              d="m36 65 11 11 26-27"
+              fill="none"
+              stroke="#6b9d83"
+              stroke-width="7"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            />
+          </svg>
+        </div>
+      </header>
+      <div class="agenda-toolbar no-print" aria-label="Ações do planejamento">
+        <div class="agenda-toolbar-group">
+          <button type="button" class="agenda-button agenda-button-primary" id="print-schedule">
+            <span aria-hidden="true">▤</span> Imprimir / Exportar PDF</button
+          ><button type="button" class="agenda-button" id="export-schedule">
+            Baixar planejamento JSON</button
+          ><button type="button" class="agenda-button" id="import-schedule">
+            Importar planejamento</button
+          ><input
+            type="file"
+            accept=".json,.txt,application/json,text/plain"
+            id="schedule-file"
+            aria-label="Arquivo do planejamento para importar"
+            hidden
+          />
+        </div>
+        <span class="agenda-local-note">Seus dados ficam neste navegador.</span>
+      </div>
+      <p class="agenda-status no-print" role="status" id="schedule-status" aria-live="polite"></p>
+      <div class="agenda-stat-grid no-print" aria-label="Resumo do planejamento">
+        <div class="agenda-stat">
+          <span>Turmas organizadas</span><strong id="class-count">1</strong>
+        </div>
+        <div class="agenda-stat">
+          <span>Aulas na semana</span><strong id="lesson-count">0</strong>
+        </div>
+        <div class="agenda-stat">
+          <span>Conflitos para revisar</span><strong id="conflict-count">0</strong>
+        </div>
+      </div>
+      <div class="agenda-tabs no-print" role="tablist" aria-label="Áreas do planejamento">
+        <button
+          type="button"
+          role="tab"
+          id="tab-week"
+          aria-controls="panel-week"
+          aria-selected="true"
+          tabindex="0"
+        >
+          Grade semanal</button
+        ><button
+          type="button"
+          role="tab"
+          id="tab-registry"
+          aria-controls="panel-registry"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Turmas e cadastros</button
+        ><button
+          type="button"
+          role="tab"
+          id="tab-periods"
+          aria-controls="panel-periods"
+          aria-selected="false"
+          tabindex="-1"
+        >
+          Horários das aulas
+        </button>
+      </div>
+      <section id="panel-week" role="tabpanel" aria-labelledby="tab-week">
+        <div class="agenda-workspace">
+          <aside class="agenda-controls no-print" aria-label="Configurar aula e documento">
+            <section class="agenda-card">
+              <div class="agenda-card-title">
+                <h2>Seu documento</h2>
+                <p>Um cabeçalho pronto para a escola.</p>
+              </div>
+              <div class="agenda-fields">
+                <label
+                  >Escola<input
+                    type="text"
+                    id="schedule-school"
+                    maxlength="120"
+                    placeholder="Nome da escola" /></label
+                ><label
+                  >Nome do aluno<input
+                    type="text"
+                    id="schedule-student"
+                    maxlength="120"
+                    placeholder="Opcional" /></label
+                ><label>Data<input type="date" id="schedule-date" /></label
+                ><label
+                  >Turma da prévia<select aria-label="Turma da prévia" id="active-class"></select
+                ></label>
+              </div>
+            </section>
+            <section class="agenda-card">
+              <div class="agenda-card-title">
+                <h2 id="lesson-form-heading">Adicionar uma aula</h2>
+                <p>Ou selecione uma aula na grade para editar.</p>
+              </div>
+              <form class="agenda-fields" id="lesson-form">
+                <input type="hidden" id="lesson-id" /><label
+                  >Turma<select aria-label="Turma" id="lesson-class" required></select></label
+                ><label
+                  >Dia da semana<select aria-label="Dia da semana" id="lesson-day" required>
+                    <option value="0">Segunda-feira</option>
+                    <option value="1">Terça-feira</option>
+                    <option value="2">Quarta-feira</option>
+                    <option value="3">Quinta-feira</option>
+                    <option value="4">Sexta-feira</option>
+                  </select></label
+                ><label
+                  >Horário<select aria-label="Horário" id="lesson-period" required></select></label
+                ><label
+                  >Disciplina<select aria-label="Disciplina" id="lesson-subject" required>
+                    <option value="">Cadastre uma disciplina</option>
+                  </select></label
+                ><label
+                  >Professor<select aria-label="Professor" id="lesson-teacher" required>
+                    <option value="">Cadastre um professor</option>
+                  </select></label
+                ><label
+                  >Sala (opcional)<input
+                    id="lesson-room"
+                    maxlength="60"
+                    placeholder="Ex.: Sala 03" /></label
+                ><button type="submit" class="agenda-button agenda-button-primary" id="save-lesson">
+                  Adicionar aula</button
+                ><button type="button" class="agenda-button" id="cancel-lesson" hidden>
+                  Cancelar edição</button
+                ><button
+                  type="button"
+                  class="agenda-button agenda-button-danger"
+                  id="delete-lesson"
+                  hidden
+                >
+                  Remover esta aula
+                </button>
+              </form>
+              <p class="agenda-tip">
+                Comece pela aba “Turmas e cadastros” para adicionar professores e disciplinas.
+              </p>
+            </section>
+          </aside>
+          <div class="agenda-preview-column">
+            <div class="agenda-preview-heading no-print">
+              <h2>Uma semana de possibilidades</h2>
+              <span>Prévia de impressão · A4</span>
             </div>
+            <section
+              class="agenda-document"
+              id="schedule-preview"
+              aria-label="Prévia da grade escolar"
+            >
+              <header class="agenda-document-header" data-qvc-school-header>
+                <span class="agenda-document-brand">BIBLIOTECA QVC · PLANEJAMENTO ESCOLAR</span>
+                <h2>Horário escolar</h2>
+                <p class="agenda-document-school" id="preview-school">
+                  Escola: ____________________________________
+                </p>
+                <div class="agenda-student-fields">
+                  <p id="preview-student">Nome do Aluno: ______________________________</p>
+                  <p id="preview-class">Turma: Turma A</p>
+                  <p id="preview-date">Data: ____ / ____ / ______</p>
+                </div>
+              </header>
+              <div
+                class="agenda-table-wrap"
+                tabindex="0"
+                aria-label="Grade semanal; role horizontalmente em telas menores"
+              >
+                <table class="agenda-week-table" id="weekly-table">
+                  <caption class="agenda-visually-hidden">
+                    Horários escolares de segunda a sexta-feira
+                  </caption>
+                  <thead>
+                    <tr>
+                      <th scope="col">Horário</th>
+                      <th scope="col">Segunda</th>
+                      <th scope="col">Terça</th>
+                      <th scope="col">Quarta</th>
+                      <th scope="col">Quinta</th>
+                      <th scope="col">Sexta</th>
+                    </tr>
+                  </thead>
+                  <tbody id="schedule-grid"></tbody>
+                </table>
+              </div>
+              <footer class="agenda-document-footer">
+                <p>
+                  Observações: __________________________________________________________________
+                </p>
+                <p>
+                  ______________________________________________________________________________
+                </p>
+                <small>QVC Educação · mais organização, mais aprendizado.</small>
+              </footer>
+            </section>
+            <section
+              class="agenda-card agenda-conflicts no-print"
+              id="conflicts-panel"
+              aria-labelledby="conflicts-title"
+            >
+              <div class="agenda-card-title">
+                <h2 id="conflicts-title">Tudo no seu lugar</h2>
+                <p id="conflicts-description">
+                  Os conflitos consideram todas as turmas do planejamento.
+                </p>
+              </div>
+              <ul id="conflicts-list"></ul>
+            </section>
+          </div>
         </div>
-        <div id="content">
-            <h2>Este aplicativo tem a função de criar horários para escolas</h2>
-            <input id="arquivo" type="file" onchange="app.loadFile()" hidden/>
-            <button onclick="document.querySelector('#arquivo').click()">📂 <b><u>Carregar dados do arquivo</u></b></button>
-            <button onclick="app.saveFile()">💾 <b><u>Salvar dados em arquivo</u></b></button>
-            <br/>
-            <span id="stats">
-            </span>
+      </section>
+      <section
+        id="panel-registry"
+        role="tabpanel"
+        aria-labelledby="tab-registry"
+        hidden
+        class="no-print"
+      >
+        <div class="agenda-registry-grid">
+          <section class="agenda-card">
+            <div class="agenda-card-title">
+              <h2>Turmas</h2>
+              <p>Cada turma tem sua própria grade.</p>
+            </div>
+            <form id="class-form" class="agenda-fields">
+              <input type="hidden" id="class-id" /><label
+                >Nome da turma<input
+                  id="class-name"
+                  maxlength="80"
+                  required
+                  placeholder="Ex.: 3º ano A" /></label
+              ><button type="submit" class="agenda-button agenda-button-primary" id="save-class">
+                Adicionar turma</button
+              ><button type="button" class="agenda-button" id="cancel-class" hidden>
+                Cancelar edição
+              </button>
+            </form>
+            <ul class="agenda-registry-list" id="class-list"></ul>
+          </section>
+          <section class="agenda-card">
+            <div class="agenda-card-title">
+              <h2>Professores</h2>
+              <p>Quem transforma cada encontro.</p>
+            </div>
+            <form id="teacher-form" class="agenda-fields">
+              <input type="hidden" id="teacher-id" /><label
+                >Nome do professor<input
+                  id="teacher-name"
+                  maxlength="100"
+                  required
+                  placeholder="Nome completo" /></label
+              ><label
+                >E-mail (opcional)<input
+                  id="teacher-email"
+                  type="email"
+                  maxlength="150"
+                  placeholder="professor@escola.com" /></label
+              ><button type="submit" class="agenda-button agenda-button-primary" id="save-teacher">
+                Adicionar professor</button
+              ><button type="button" class="agenda-button" id="cancel-teacher" hidden>
+                Cancelar edição
+              </button>
+            </form>
+            <ul class="agenda-registry-list" id="teacher-list"></ul>
+          </section>
+          <section class="agenda-card">
+            <div class="agenda-card-title">
+              <h2>Disciplinas</h2>
+              <p>Cores ajudam a reconhecer sua semana.</p>
+            </div>
+            <form id="subject-form" class="agenda-fields">
+              <input type="hidden" id="subject-id" /><label
+                >Nome da disciplina<input
+                  id="subject-name"
+                  maxlength="100"
+                  required
+                  placeholder="Ex.: Matemática" /></label
+              ><label
+                >Cor de identificação<input
+                  id="subject-color"
+                  type="color"
+                  value="#346786" /></label
+              ><button type="submit" class="agenda-button agenda-button-primary" id="save-subject">
+                Adicionar disciplina</button
+              ><button type="button" class="agenda-button" id="cancel-subject" hidden>
+                Cancelar edição
+              </button>
+            </form>
+            <ul class="agenda-registry-list" id="subject-list"></ul>
+          </section>
         </div>
-        <div id="b4"></div>
-    </body>
+      </section>
+      <section
+        id="panel-periods"
+        role="tabpanel"
+        aria-labelledby="tab-periods"
+        hidden
+        class="no-print"
+      >
+        <section class="agenda-card">
+          <div class="agenda-card-title">
+            <h2>O ritmo das suas aulas</h2>
+            <p>Configure início e fim dos períodos. Intervalos podem permanecer sem aulas.</p>
+          </div>
+          <form id="period-form" class="agenda-period-form">
+            <input type="hidden" id="period-id" /><label
+              >Nome do período<input
+                id="period-label"
+                maxlength="60"
+                required
+                placeholder="Ex.: 1ª aula" /></label
+            ><label>Início<input id="period-start" type="time" required value="07:00" /></label
+            ><label>Fim<input id="period-end" type="time" required value="07:50" /></label
+            ><button type="submit" class="agenda-button agenda-button-primary" id="save-period">
+              Adicionar horário</button
+            ><button type="button" class="agenda-button" id="cancel-period" hidden>
+              Cancelar edição
+            </button>
+          </form>
+          <ul class="agenda-registry-list" id="period-list"></ul>
+        </section>
+      </section>
+      <p class="agenda-footer no-print">
+        Exporte uma cópia para guardar seu trabalho ou levar o planejamento a outro dispositivo.
+      </p>
+    </main>
+    <dialog class="agenda-dialog" id="import-dialog" aria-labelledby="import-dialog-title">
+      <h2 id="import-dialog-title">Importar este planejamento?</h2>
+      <p id="import-summary"></p>
+      <p>
+        A importação substituirá o planejamento aberto. Baixe uma cópia do atual antes de continuar.
+      </p>
+      <div class="agenda-dialog-actions">
+        <button type="button" class="agenda-button" id="cancel-import">Cancelar</button
+        ><button type="button" class="agenda-button agenda-button-primary" id="confirm-import">
+          Importar e substituir
+        </button>
+      </div>
+    </dialog>
+  </body>
 </html>

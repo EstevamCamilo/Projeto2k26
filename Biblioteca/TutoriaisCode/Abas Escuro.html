@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <title>Navegação em Abas Black</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -75,8 +75,14 @@
                 color: black;
             }
         </style>
-    </head>
-    <body>
+
+<link rel="stylesheet" href="../shared/platform.css">
+<script type="module" src="../shared/platform.js"></script>
+<script type="module" src="../shared/visit.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<script type="module" src="../shared/pwa.js"></script>
+</head>
+    <body data-qvc-legacy>
         <div id="abas">
             <span class='abaSel' onclick="abaOnClick(event, 0)">Início</span>
             <span class='aba' onclick="abaOnClick(event, 1)">HTML</span>

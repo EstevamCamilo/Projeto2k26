@@ -1,372 +1,288 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-    <head>
-        <meta charset="UTF-8">
-        <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link rel="icon" type="image/x-icon" href="../Caça-Palavras/logo.png" />
-        <title>Gerador de Provas</title>
-        <style>
-            body {
-                margin: 0px;
-            }
-            #cabecalho {
-                margin-left: auto;
-                margin-right: auto;
-                margin-top: 1rem;
-                padding: 0.5rem;
-                border: 1px solid rgb(0, 0, 0);
-                border-radius: 0.25rem;
-                font-size: 1.7rem;
-                font-family: sans-serif;
-                text-align: center;
-            }
-            #conteudo {
-                margin-top: 1rem;
-                text-align: center;
-                font-size: 1.5rem;
-                font-style: italic;
-                border-radius: 8px;
-                font-family: monospace;
-                padding: 0px;
-            }
-            #menu {
-                padding: 1rem;
-                font-size: 2vh;
-                color: white;
-            }
-            @media print {
-                #cabecalho {
-                    margin-top: -30px;
-                    display: flex;
-                }
-                #menu {
-                    display: none;
-                }
-                #mn {
-                    display: none;
-                }
-                #vb {
-                    display: none;
-                }
-                #b {
-                    display: none;
-                }
-            }
-            #fundo {
-                display: flex;
-                background-color: rgb(52, 103, 134);
-            }
-            #mn {
-                color: white;
-                margin-top: 0.5rem;
-                margin-bottom: 0.5rem;
-                margin-left: 25%;
-                margin-right: auto;
-                text-shadow: 1px 1px black;
-                font-size: 2rem;
-            }
-            #z,
-            #c,
-            #b,
-            #vb {
-                padding: 0.1rem;
-                border: 1px solid rgb(100, 100, 100);
-                background-color: rgb(255, 255, 255);
-                border-radius: 0.5rem;
-                cursor: pointer;
-                top: 0.5rem;
-            }
-            #c {
-                position: absolute;
-                top: 0.5rem;
-                right: 3rem;
-            }
-            #b {
-                position: absolute;
-                top: 0.5rem;
-                right: 0.5rem;
-            }
-            #fundo {
-                display: flex;
-                background-color: rgb(52, 103, 134);
-            }
-            #ca {
-                text-align: center;
-                font-family: sans-serif;
-                font-size: 35px;
-                margin-bottom: 0px;
-            }
-            #dclose {
-                position: relative;
-                float: right;
-                border: none;
-                background: none;
-                font-size: 30px;
-                display: flex;
-                cursor: pointer;
-            }
-            #sobre {
-                border-radius: 1rem;
-                border: 1px solid black;
-            }
-            #vb {
-                position: absolute;
-                left: 0.5rem;
-            }
-            #linhas,
-            #maximo {
-                width: 2rem;
-            }
-            #vt {
-                margin-right: 2rem;
-            }
-            #lg {
-                margin-top: 0px;
-                margin-left: 14rem;
-                width: 33%;
-                font-family: sans-serif;
-            }
-            #n {
-                text-align: center;
-                font-family: sans-serif;
-                font-size: 1rem;
-            }
-            .s {
-                font-size: 1.2rem;
-            }
-            #silabas {
-                border: 1px solid black;
-                border-radius: 0.25rem;
-                font-size: 1.5rem;
-                padding-left: 8rem;
-                padding-right: 8rem;
-            }
-            #pal {
-                padding-right: 20rem;
-            }
-            #pimg {
-                font-size: 3rem;
-            }
-            #picture__input {
-                display: none;
-            }
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta
+      name="description"
+      content="Crie provas com questões de múltipla escolha, dissertativas e verdadeiro ou falso. Personalize cabeçalho, pontuação e gabarito e imprima em A4."
+    />
+    <meta name="theme-color" content="#346786" />
+    <link rel="icon" href="../Caça-Palavras/logo.png" />
+    <link rel="stylesheet" href="../shared/platform.css" />
+    <link rel="stylesheet" href="exams.css" />
+    <title>Gera Provas — Biblioteca QVC</title>
+    <script type="module" src="exams.js"></script>
 
-.picture {
-  width: 100px;
-  margin-left: 18rem;
-  aspect-ratio: 16/9;
-  background: #ddd;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 1px solid black;
-  cursor: pointer;
-  font-family: sans-serif;
-  transition: color 300ms ease-in-out, background 300ms ease-in-out;
-  outline: none;
-  overflow: hidden;
-}
-
-.picture:active {
-  border-color: turquoise;
-  color: turquoise;
-  background: #eee;
-}
-
-.picture__img {
-  max-width: 100%;
-}
-
-        </style>
-    </head>
-    <body>
-        <!--
-            Site da Inspiração:
-            www.gradepen.com/?ref=hVoEzTgTC 
-        -->
-        <div id="fundo">
-            <a id="vt" href="../index.html"
-               >
-                <button id="vb">
-                    <img src="../volta.png" />
-                </button
-                    >
-            </a>
-            <div id="menu">
-                <button id="z" onclick="exibeLicao()">Criar Prova
-                </button>
-                <button id="c" onclick="window.print()">
-                    <img src="../Caça-Palavras/printer.png" />
-                </button>
-            </div>
-            <h1 id="mn"> Gerador de Provas
-            </h1>
+    <script type="module" src="../shared/platform.js"></script>
+    <script type="module" src="../shared/visit.js"></script>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <script type="module" src="../shared/pwa.js"></script>
+  </head>
+  <body data-qvc-modern data-qvc-print-target="#exam-preview">
+    <a class="exam-skip" href="#exam-main">Pular para o editor de provas</a>
+    <div class="exam-app">
+      <header class="exam-app-header" aria-label="Cabeçalho do gerador de provas">
+        <a class="exam-back" href="../index.html"
+          ><span aria-hidden="true">←</span> Voltar ao Hub</a
+        >
+        <div class="exam-heading">
+          <span class="exam-eyebrow">ESPAÇO DO PROFESSOR</span>
+          <h1>Uma boa prova começa<br />com uma boa ideia.</h1>
+          <p>Organize suas questões, personalize os detalhes e leve o aprendizado para o papel.</p>
         </div>
-        <button id="b" onclick="sobre()">
-            <img src="../Caça-Palavras/info.png" />
-        </button>
-        <div id="conteudo">
-            <div id="cabecalhoProva">
-             <label class="picture" for="picture__input" tabIndex="0">
-                <span class="picture__image"></span>
+        <div class="exam-top-actions">
+          <button type="button" id="exam-save" class="exam-button exam-button-outline">
+            Guardar prova</button
+          ><button type="button" id="exam-print" class="exam-button exam-button-primary" disabled>
+            <svg
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="1.8"
+              aria-hidden="true"
+            >
+              <path d="M6 9V3h12v6M6 18H4V9h16v9h-2M6 14h12v7H6Z" />
+              <path d="M17 12h.01" /></svg
+            >Imprimir / Exportar PDF
+          </button>
+        </div>
+      </header>
+      <div class="exam-summary" aria-label="Resumo da avaliação">
+        <div><span>QUESTÕES</span><strong id="exam-question-count">0</strong></div>
+        <div><span>PONTUAÇÃO TOTAL</span><strong id="exam-total-points">0 pontos</strong></div>
+        <div><span>SEU MATERIAL</span><strong>Formato A4</strong></div>
+        <p id="exam-save-status" role="status" aria-live="polite">
+          Seu trabalho fica neste navegador.
+        </p>
+      </div>
+      <main class="exam-builder" id="exam-main">
+        <aside class="exam-controls" aria-label="Configuração e questões da avaliação">
+          <section class="exam-panel">
+            <div class="exam-panel-title">
+              <span class="exam-step">1</span>
+              <div>
+                <h2>Os detalhes da sua prova</h2>
+                <p>O cabeçalho acompanha suas alterações.</p>
+              </div>
+            </div>
+            <form id="exam-metadata" class="exam-fields" novalidate>
+              <label for="exam-title"
+                >Título da avaliação<input id="exam-title" name="title" maxlength="120" required
+              /></label>
+              <label for="exam-school"
+                >Escola / instituição<input
+                  id="exam-school"
+                  name="school"
+                  maxlength="180"
+                  placeholder="Nome da escola"
+              /></label>
+              <div class="exam-field-pair">
+                <label for="exam-subject"
+                  >Disciplina<input
+                    id="exam-subject"
+                    name="subject"
+                    maxlength="100"
+                    placeholder="Ex.: Matemática" /></label
+                ><label for="exam-teacher"
+                  >Professor(a)<input id="exam-teacher" name="teacher" maxlength="120"
+                /></label>
+              </div>
+              <label for="exam-student"
+                >Nome do aluno (opcional)<input
+                  id="exam-student"
+                  name="student"
+                  maxlength="180"
+                  placeholder="Deixe em branco para preencher à mão"
+              /></label>
+              <div class="exam-field-pair">
+                <label for="exam-class"
+                  >Turma<input
+                    id="exam-class"
+                    name="className"
+                    maxlength="80"
+                    placeholder="Ex.: 4º ano A" /></label
+                ><label for="exam-date">Data<input id="exam-date" name="date" type="date" /></label>
+              </div>
+              <label for="exam-instructions"
+                >Instruções para a turma<textarea
+                  id="exam-instructions"
+                  name="instructions"
+                  rows="3"
+                  maxlength="2000"
+                  placeholder="Leia cada questão com atenção. Faça no seu ritmo."
+                ></textarea>
               </label>
-              <input type="file" name="picture__input" id="picture__input">
-             <input name="escola" type="text" placeholder="Nome da escola" maxlength="35">
-             <input name="curso" type="text" placeholder="Curso" maxlength="15">
-             <input name="disciplina" type="text" placeholder="Disciplina" maxlength="15">
-             <input name="professor" type="text" placeholder="Professor" maxlength="35">
-             <input name="turma" type="text" placeholder="Turma" maxlength="10">
-             <input name="date" type="date">
+              <label class="exam-check" for="exam-answer-key"
+                ><input id="exam-answer-key" name="includeAnswerKey" type="checkbox" /> Incluir
+                gabarito em página separada</label
+              >
+            </form>
+          </section>
+          <section class="exam-panel" id="question-editor-panel">
+            <div class="exam-panel-title">
+              <span class="exam-step">2</span>
+              <div>
+                <h2 id="question-editor-title">Crie uma questão</h2>
+                <p>Varie os formatos e as descobertas.</p>
+              </div>
             </div>
-            <div id="Instrucoes">
-                <textarea autocomplete="on" placeholder="Instruções para prova" maxlength="150" spellcheck="true" rows="5" cols="30">Instruções da prova </textarea>
+            <form id="question-form" class="exam-fields" novalidate>
+              <div class="exam-field-pair">
+                <label for="question-type"
+                  >Tipo de questão<select
+                    id="question-type"
+                    name="type"
+                    aria-label="Tipo de questão"
+                  >
+                    <option value="multiple">Múltipla escolha</option>
+                    <option value="open">Dissertativa</option>
+                    <option value="truefalse">Verdadeiro ou falso</option>
+                  </select></label
+                ><label for="question-points"
+                  >Valor em pontos<input
+                    id="question-points"
+                    name="points"
+                    type="number"
+                    min="0"
+                    max="1000"
+                    step="0.25"
+                    value="1"
+                    required
+                /></label>
+              </div>
+              <label for="question-prompt"
+                >Enunciado<textarea
+                  id="question-prompt"
+                  name="prompt"
+                  rows="4"
+                  maxlength="3000"
+                  placeholder="Qual descoberta sua turma vai fazer?"
+                  required
+                  aria-describedby="question-error"
+                ></textarea>
+              </label>
+              <fieldset id="multiple-fields">
+                <legend>Alternativas e resposta correta</legend>
+                <p class="exam-hint">Marque a alternativa correta para o gabarito.</p>
+                <div id="question-options"></div>
+                <button class="exam-button exam-button-subtle" type="button" id="add-option">
+                  + Adicionar alternativa
+                </button>
+              </fieldset>
+              <fieldset id="open-fields" hidden disabled>
+                <legend>Espaço de resposta</legend>
+                <label for="question-lines"
+                  >Linhas para escrever<select
+                    id="question-lines"
+                    name="lines"
+                    aria-label="Linhas para escrever"
+                  >
+                    <option value="2">2 linhas</option>
+                    <option value="4" selected>4 linhas</option>
+                    <option value="6">6 linhas</option>
+                    <option value="8">8 linhas</option>
+                    <option value="12">12 linhas</option>
+                  </select></label
+                ><label for="question-model-answer"
+                  >Resposta esperada / critérios (opcional)<textarea
+                    id="question-model-answer"
+                    name="modelAnswer"
+                    rows="3"
+                    maxlength="2000"
+                    placeholder="Aparece somente no gabarito do professor."
+                  ></textarea>
+                </label>
+              </fieldset>
+              <fieldset id="truefalse-fields" hidden disabled>
+                <legend>Afirmações e gabarito</legend>
+                <p class="exam-hint">
+                  Inclua de uma a dez afirmações. Escolha V ou F para cada uma.
+                </p>
+                <div id="question-statements"></div>
+                <button class="exam-button exam-button-subtle" type="button" id="add-statement">
+                  + Adicionar afirmação
+                </button>
+              </fieldset>
+              <p id="question-error" class="exam-error" role="alert" hidden></p>
+              <div class="exam-editor-actions">
+                <button type="submit" id="question-submit" class="exam-button exam-button-primary">
+                  + Adicionar à prova</button
+                ><button
+                  type="button"
+                  id="question-cancel"
+                  class="exam-button exam-button-outline"
+                  hidden
+                >
+                  Cancelar edição
+                </button>
+              </div>
+              <p class="exam-hint">
+                Inclua ou salve a questão para guardá-la na prova. Os dados do cabeçalho são salvos
+                automaticamente.
+              </p>
+            </form>
+          </section>
+          <section class="exam-panel exam-files">
+            <h2>Leve seu trabalho com você</h2>
+            <p>
+              Guarde uma cópia editável para usar em outro computador. O arquivo inclui questões e
+              gabaritos.
+            </p>
+            <div class="exam-file-actions">
+              <button type="button" class="exam-button exam-button-outline" id="exam-export">
+                Baixar arquivo editável</button
+              ><button type="button" class="exam-button exam-button-outline" id="exam-import">
+                Importar prova</button
+              ><input
+                id="exam-import-file"
+                type="file"
+                accept="application/json,.json"
+                hidden
+              /><button
+                type="button"
+                class="exam-button exam-button-subtle"
+                id="exam-undo-import"
+                hidden
+              >
+                Desfazer importação
+              </button>
             </div>
-            <div id="addQuestoes">
-                <button id="addQ" onclick="window.adicionar.showModal()">Adiciona Questão</button> 
-                <dialog id="adicionar">
-                    <button onclick="adicionar.close()"><img src="" alt="">X</button>
-                    <select>
-                        <option value="0">Multipla escolhas</option>
-                        <option value="1">Verdadeira ou Falsa</option>
-                        <option value="2">Discursiva</option>
-                    </select>
-                    Autor:<input name="autor" type="text">
-                    Disciplina:<input name="disciplina" type="text">
-                    Ano:<input name="name_01" id="id_01" type="date" value="<?php echo getDatetimeNow() ?>" />
-
-                    <select id="idioma">
-                        <option value="0">Português</option>
-                        <option value="1">Espanhol</option>
-                        <option value="2">Ingles</option>
-                    </select>
-                    <select id="nivelEnsino">
-                        <option value="0">Fundamental</option>
-                        <option value="1">Médio</option>
-                        <option value="2">Superior</option>
-                    </select>
-                    <p>texto da questao</p><input name="pergunta" type="text">
-                    <div id="multiplaEscolha">
-                    </div>
-                    <div id="vf"></div>
-                    linhas pra texto <input type="number" name="ltexto">
-                    linhas para desenho <input type="number" name="ldesenho">
-                    <button onclick="submit">Adicionar</button>
-
-                    
-
-                </dialog>               
+          </section>
+        </aside>
+        <div class="exam-preview-column">
+          <section class="exam-panel exam-organizer" aria-labelledby="exam-organizer-title">
+            <div class="exam-organizer-heading">
+              <div>
+                <h2 id="exam-organizer-title">Sua prova, na sua ordem</h2>
+                <p>Edite, organize ou remova as questões abaixo.</p>
+              </div>
+              <a href="#exam-preview" class="exam-link">Ver a prévia ↓</a>
             </div>
-            
-            <div id="visQuestoes"></div>
+            <ol id="exam-question-list" class="exam-question-list"></ol>
+            <p id="exam-list-empty" class="exam-empty">
+              Adicione sua primeira questão para começar. Você pode misturar os três formatos.
+            </p>
+          </section>
+          <div class="exam-preview-label">
+            <span><span class="exam-ready-dot"></span>PRÉ-VISUALIZAÇÃO DO MATERIAL</span
+            ><span>A4 · pronta para imprimir</span>
+          </div>
+          <article id="exam-preview" class="exam-document" aria-label="Pré-visualização da prova">
+            <div id="exam-paper-content"></div>
+          </article>
+          <p class="exam-print-help">
+            Escolha “Salvar como PDF” no diálogo de impressão para baixar o documento. Revise
+            questões e gabarito antes de usar.
+          </p>
         </div>
-        <script>
-            const inputFile = document.querySelector("#picture__input");
-const pictureImage = document.querySelector(".picture__image");
-const pictureImageTxt = "Logo da escola";
-pictureImage.innerHTML = pictureImageTxt;
-
-inputFile.addEventListener("change", function (e) {
-  const inputTarget = e.target;
-  const file = inputTarget.files[0];
-
-  if (file) {
-    const reader = new FileReader();
-
-    reader.addEventListener("load", function (e) {
-      const readerTarget = e.target;
-
-      const img = document.createElement("img");
-      img.src = readerTarget.result;
-      img.classList.add("picture__img");
-
-      pictureImage.innerHTML = "";
-      pictureImage.appendChild(img);
-    });
-
-    reader.readAsDataURL(file);
-  } else {
-    pictureImage.innerHTML = pictureImageTxt;
-  }
-});
-
-
-        const cabecalho = function(){
-
-        }    
-            
-        var modal = {
-            //Gerencia modal
-            showDialog: function (content, id) {
-                console.log(content);
-                console.log(id);
-                console.log(typeof content);
-                let overlay = document.createElement('div');
-                overlay.id = id === undefined ? 'o' + new Date().getTime() : id;
-                overlay.style.position = 'absolute';
-                overlay.style.top =
-                    overlay.style.bottom =
-                    overlay.style.left =
-                    overlay.style.right =
-                    '0';
-                overlay.style.backgroundColor = 'rgba(255,255,255,0.5)';
-                overlay.style.display = 'flex';
-                overlay.style.alignItems = overlay.style.justifyContent = 'center';
-                let dialog = document.createElement('div');
-                dialog.style.display = 'inline-block';
-                dialog.style.padding = '1rem';
-                dialog.style.border = '5px solid rgb(52, 103, 134';
-                dialog.style.borderRadius = '1rem';
-                dialog.style.boxShadow = '0 0 1em black';
-                dialog.style.backgroundColor = 'white';
-                let bClose = document.createElement('button');
-                bClose.innerHTML = "<img src='../../Caça-Palavras/cross.png'/>";
-                bClose.style.position = 'relative';
-                bClose.style.float = 'right';
-                bClose.style.border = 'none';
-                bClose.style.background = 'none';
-                bClose.style.fontSize = '30px';
-                bClose.onclick = () => this.closeDialog(id);
-                dialog.appendChild(bClose);
-                if (typeof content === 'string' || content instanceof String) {
-                    let element = document.createElement('div');
-                    element.innerHTML = content;
-                    dialog.appendChild(element);
-                }
-                else {
-                    dialog.appendChild(content);
-                }
-                overlay.appendChild(dialog);
-                document.body.appendChild(overlay);
-            }
-            ,
-            closeDialog: function (id) {
-                document.body.removeChild(document.querySelector('#' + id));
-            }
-            ,
-        };
-        const sobre = function () {
-            let html = '';
-            html += "<br/><img src='../../Caça-Palavras/logo2.png' id='lg'/>";
-            html += "<h2 id=''>Criadores:</h2>";
-            html += "<p id='n'>Estevam Fernandes Camilo</p>";
-            html += "<p id='n'>Juan Henrique Conceição Veronez</p>";
-            html += "<p id='n'>Matheus Henrique Queiroz da Silva</p>";
-            html += "<h1 id=''>QVC.org - Up Software para o futuro!</h1>";
-            html += "<ul class='s'>";
-            html += '<li>Site: qvc-educador-on.web.app</li>';
-            html += '<li>Contato: siteqvc@gmail.com</li>';
-            html += '<li>Suporte: suporteQVC@gmail.com</li>';
-            html += '</ul>';
-            modal.showDialog(html, 'Sobre');
-        };
-        const adicionar = function () {
-            let html = '';
-            html += "<br/><img src='../../Caça-Palavras/logo2.png' id='lg'/>";
-            html += "<h2>Adicionar Questão</h2>";
-            html += "<select> </select>";
-            html +=
-            modal.showDialog(html, 'adicionar');
-        };
-        </script>
-    </body>
+      </main>
+      <footer class="exam-footer">
+        <a href="../index.html">QVC · Aprender transforma</a>
+        <p>Materiais que começam com você e crescem com a sua turma.</p>
+      </footer>
+      <div id="exam-notice" class="exam-notice" role="status" aria-live="polite" hidden></div>
+    </div>
+    <noscript>Ative o JavaScript para montar e imprimir avaliações.</noscript>
+  </body>
 </html>

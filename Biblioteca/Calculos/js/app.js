@@ -180,7 +180,8 @@ function makeOfflinePDF(rows,title){
  pdf+=`trailer\n<< /Root 1 0 R /Size ${objects.length} >>\nstartxref\n${xref}\n%%EOF`;
  return new Blob([pdf],{type:'application/pdf'});
 }
-function exportPDF(){
+function exportPDF(){if(window.QVC){window.QVC.print();return}return exportPDFLegacy()}
+function exportPDFLegacy(){
  if(!lastResult?.result.rows)return;
  const rows=lastResult.result.rows,filename=`calchub-tabuada-${lastResult.data.numero}.pdf`,{jsPDF}=window.jspdf||{};
  if(jsPDF){const pdf=new jsPDF({orientation:'portrait',unit:'mm',format:'a4'});let y=21;const addHeader=()=>{pdf.setFont('helvetica','bold');pdf.setFontSize(19);pdf.text('CalcHub Pro | Tabuada',18,16);pdf.setFont('helvetica','normal');pdf.setFontSize(10)};addHeader();rows.forEach(r=>{if(y>280){pdf.addPage();y=22;addHeader()}pdf.text(`${r[0].replace('×','x')} = ${r[1]}`,20,y);y+=8});pdf.save(filename)}

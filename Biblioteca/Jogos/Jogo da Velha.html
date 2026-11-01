@@ -1,125 +1,54 @@
-<html>
-    <head>
-        <title>
-        </title>
-        <meta charset="utf-8">
-    </head>
-    <body>
-        <h1># Jogo da Velha 
-        </h1>
-        <style>
-            body {
-                text-align: center;
-            }
-            .botao {
-                margin: 5px;
-                padding: 10px;
-                font-size: 50px;
-                width: 80px;
-                height: 80px;
-            }
-            div {
-                background-color: black;
-                display: inline-block;
-            }
-        </style>
-        <header>
-            <a href="../index.html"><button id="vb"><img src="../volta.png"/></button></a>
-            <h1>Jogo da velha!!</h1>
-        </header>
-        
-        <div id="j">
-            <button class="botao" id="b0" onclick="clicou(0)">&nbsp;
-            </button>
-            <button class="botao" id="b1" onclick="clicou(1)">&nbsp;
-            </button>
-            <button class="botao" id="b2" onclick="clicou(2)">&nbsp;
-            </button>
-            <br>
-            <button class="botao" id="b3" onclick="clicou(3)">&nbsp;
-            </button>
-            <button class="botao" id="b4" onclick="clicou(4)">&nbsp;
-            </button>
-            <button class="botao" id="b5" onclick="clicou(5)">&nbsp;
-            </button>
-            <br>
-            <button class="botao" id="b6" onclick="clicou(6)">&nbsp;
-            </button>
-            <button class="botao" id="b7" onclick="clicou(7)">&nbsp;
-            </button>
-            <button class="botao" id="b8" onclick="clicou(8)">&nbsp;
-            </button>
-            <br>
-        </div>
-        <script>
-            var vez = 0;
-            var clicou = (botoes) => {
-                if(vez%2 === 0) {
-                    document.querySelector("#b"+botoes).innerHTML = "X";
-                }
-                else {
-                    document.querySelector("#b"+botoes).innerHTML = "O";
-                }
-                vez = vez + 1
-            };
-            //MODAL
-            var modal = {
-                //Gerencia modal
-                showDialog: function (content, id) {
-                    console.log(content);
-                    console.log(id)
-                    console.log(typeof (content));
-                    let overlay = document.createElement("div");
-                    overlay.id = id === undefined ? "o" + new Date().getTime() : id;
-                    overlay.style.position = "absolute";
-                    overlay.style.top = overlay.style.bottom = overlay.style.left = overlay.style.right = "0";
-                    overlay.style.backgroundColor = "rgba(255,255,255,0.5)";
-                    overlay.style.display = "flex";
-                    overlay.style.alignItems = overlay.style.justifyContent = "center";
-                    let dialog = document.createElement("div");
-                    dialog.style.display = "inline-block";
-                    dialog.style.padding = "1rem";
-                    dialog.style.borderRadius = "1rem";
-                    dialog.style.boxShadow = "0 0 1em black";
-                    dialog.style.backgroundColor = "white";
-                    let bClose = document.createElement("button");
-                    bClose.innerHTML = "<img src='cross.png'/>";
-                    bClose.style.position = "relative";
-                    bClose.style.float = "right";
-                    bClose.style.border = "none";
-                    bClose.style.background = "none";
-                    bClose.style.fontSize = "30px";
-                    bClose.onclick = () => this.closeDialog(id);
-                    dialog.appendChild(bClose);
-                    if (typeof (content) === "string" || content instanceof String) {
-                        let element = document.createElement("div");
-                        element.innerHTML = content;
-                        dialog.appendChild(element);
-                    } else {
-                        dialog.appendChild(content);
-                    }
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="Um clássico para pensar, planejar e jogar em dupla." />
+    <title>Jogo da Velha — Biblioteca QVC</title>
+    <link rel="icon" href="../Caça-Palavras/logo.png" />
+    <link rel="stylesheet" href="games.css" />
+    <script type="module" src="games.js"></script>
+    <link rel="stylesheet" href="../shared/platform.css" />
+    <script type="module" src="../shared/platform.js"></script>
+    <script type="module" src="../shared/visit.js"></script>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <script type="module" src="../shared/pwa.js"></script>
+  </head>
+  <body data-qvc-modern data-qvc-game="velha" data-qvc-print-target="#game-document">
+    <div class="qvc-game-page">
+      <header>
+        <a class="qvc-game-back" href="../index.html">← Voltar ao Hub</a>
+        <div class="qvc-game-eyebrow">Brincar também é aprender</div>
+        <h1>Jogo da Velha</h1>
+        <p>Um clássico para pensar, planejar e jogar em dupla.</p>
+      </header>
+      <main class="qvc-game-layout">
+        <aside class="qvc-game-panel" aria-label="Instruções e opções do jogo">
+          <h2>Uma descoberta por vez</h2>
+          <p>
+            Alternem X e O para formar uma linha com três símbolos, na horizontal, vertical ou
+            diagonal. Casas ocupadas ficam protegidas. Use Tab e Enter para jogar pelo teclado.
+          </p>
 
-                    overlay.appendChild(dialog);
-                    document.body.appendChild(overlay);
-                }
-                ,
-                closeDialog: function (id) {
-                    document.body.removeChild(document.querySelector("#" + id));
-                }
-            };
-            const sobre = function () {
-                let html = "";
-                html += "<img src='logo2.png' id='lg'/>";
-                html += "<h1 id='l'>Caça Palavras </h1>";
-                html += "<h2 id=''>Criadores:</h2>";
-                html += "<p id='n'>Matheus Henrique Queiroz da Silva</p>";
-                html += "<p id='n'>Estevam Fernandes Camilo</p>";
-                html += "<p id='n'>Juan Henrique Conceição Veronez</p>";
-                html += "<h1 id=''>QVC.org - Up Software para o futuro!</h1>";
-                html += "<p id='s'>Site: http://QVC.org</p>";
-                html += "<p id='s'>Contato: org.QVC@gmail.com</p>";
-                html += "<p id='s'>Suporte: suporteQVC.org@gmail.com</p>";
-                modal.showDialog(html, "Sobre");
-            }
-        </script>
-    </body></html>
+          <button id="game-reset" class="qvc-game-button" type="button">↻ Nova rodada</button>
+          <button id="game-print" class="qvc-game-button qvc-game-button-secondary" type="button">
+            Imprimir / Exportar PDF
+          </button>
+          <p>Jogos gratuitos, sem cadastro e sem envio de informações.</p>
+          <a class="qvc-game-back" href="jogos.html">Explorar os outros jogos →</a>
+        </aside>
+        <section id="game-document" class="qvc-game-document" aria-labelledby="game-title">
+          <h2 id="game-title">Jogo da Velha</h2>
+          <p id="game-status" class="qvc-game-status" role="status" aria-live="polite"></p>
+          <div
+            id="game-board"
+            class="qvc-tic-board"
+            role="group"
+            aria-label="Tabuleiro do jogo da velha"
+          ></div>
+          <p class="qvc-game-footnote">Biblioteca QVC · Aprender, descobrir e compartilhar.</p>
+        </section>
+      </main>
+    </div>
+  </body>
+</html>

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <title>Escreve Palavras 
         </title>
@@ -141,19 +141,26 @@
                 font-size: 1.5rem;
             }
         </style>
-    </head>
-    <body>
+
+<link rel="stylesheet" href="../shared/platform.css">
+<script type="module" src="../shared/platform.js"></script>
+<script type="module" src="../shared/visit.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<script type="module" src="../shared/pwa.js"></script>
+</head>
+    <body data-qvc-legacy data-qvc-print-target="#conteudo">
         <div id="fundo">
             <a id="vt" href="../index.html"
                >
-                <button id="vb">
-                    <img src="../volta.png" />
+                <button id="vb" aria-label="Voltar ao Hub">
+                    <img alt="" src="../volta.png" />
                 </button
                     >
             </a>
             <div id="menu">
-                N° de Palavras
-                <input id="linhas" type="number" min="2" value="5" max="20" />
+                <label for="linhas">Quantidade de palavras</label>
+                <input id="linhas" type="number" min="1" value="5" max="20" />
+                <label for="categorias">Letra inicial</label>
                 <select id="categorias">
                     <option value="all">Todos
                     </option>
@@ -206,15 +213,15 @@
                 </select>
                 <button id="z" onclick="exibeLicao()">Criar Atividade
                 </button>
-                <button id="c" onclick="window.print()">
-                    <img src="../Caça-Palavras/printer.png" />
+                <button id="c" aria-label="Imprimir / Exportar PDF" onclick="window.QVC ? window.QVC.print() : window.print()">
+                    <img alt="" src="../Caça-Palavras/printer.png" />
                 </button>
             </div>
             <h1 id="mn">Escreva Palavras
             </h1>
         </div>
-        <button id="b" onclick="sobre()">
-            <img src="../Caça-Palavras/info.png" />
+        <button id="b" aria-label="Sobre a Biblioteca QVC" onclick="sobre()">
+            <img alt="" src="../Caça-Palavras/info.png" />
         </button>
         <div id="conteudo">
         </div>
@@ -2334,64 +2341,36 @@
                 }
             }
             const exibeLicao = function () {
-                //Entrada de dados
-                let categoria = document.querySelector("#categorias").value;
-                let linhas = parseInt(document.querySelector('#linhas').value);
-                if (linhas >= palavras.length) {
-                    linhas = palavras.length;
-                };
-                //Saída de dados
-                let conteudo = document.querySelector('#conteudo');
-                //Sorteia as palavras da lição
-                let sorteadas = [];
-                for (let i = 0; i < linhas; i++) {
-                    let n;
-                    do {
-                        n = parseInt(Math.random() * palavras[categoria].length);
-                    }
-                    while (
-                        sorteadas.indexOf(n) > -1 
-                    );
-                    sorteadas.push(n);
-                };
-                //Cria cabeçalho
-                let cabe = '';
-                let ti = '';
-                cabe += "<br/> <table id='cabecalho' align='center'>";
-                cabe += '<tr>';
-                cabe += '<td> Escola:';
-                cabe += '<td>__________________________';
-                cabe += '<td>&nbsp;Data:__/__/____';
-                cabe += '</tr>';
-                cabe += '<tr>';
-                cabe += '<td>Nome:';
-                cabe += '<td>___________________________';
-                cabe += '<td>&nbsp;Série:_________';
-                cabe += '</tr>';
-                cabe += '</table>';
-                //cria o conteúdo
-                let html = "<h1 id='ca'>Complete as palavras</h1><br>";
-                html += "<table id='silabas' cellspacing='30' align='center'>";
-                html += '<tr>';
-                for (let i = 0; i < linhas; i++) {
-                    //let palavra = palavras[categoria][sorteadas[i]];
-                    let palavra;
-                    palavra = palavras[categoria][sorteadas[i]];
-                    html += "<td style='text-align:left'>";
-                    html += palavra.emoji + ' ';
-                    html += palavra.palavra[0].toUpperCase() + ' ';
-                    for (let j = 1; j < palavra.palavra.length; j++) {
-                        html += '__&nbsp;';
-                    }
-                    // [Palavras|palavra: string;emoji: string;]
-                    if (i % 2 === 1) {
-                        html += '<tr>';
-                    }
+                const category = document.getElementById('categorias').value;
+                const candidates = Array.isArray(palavras[category]) ? palavras[category].filter(item => item && typeof item.palavra === 'string' && item.palavra.trim()) : [];
+                const quantity = QVCLegacy.count('linhas', candidates.length, 20);
+                if (quantity === null) return;
+                const selected = QVCLegacy.shuffle(candidates).slice(0, quantity);
+                const content = QVCLegacy.prepare(document.getElementById('conteudo'), 'Complete as palavras');
+                const instruction = document.createElement('p');
+                instruction.textContent = 'Observe a figura e complete as letras que faltam em cada palavra.';
+                content.append(instruction);
+                const list = document.createElement('div');
+                list.className = 'qvc-exercise-list';
+                for (const item of selected) {
+                    const row = document.createElement('div');
+                    row.className = 'qvc-exercise-row';
+                    row.dataset.qvcWord = item.palavra;
+                    const picture = document.createElement('span');
+                    picture.className = 'qvc-exercise-image';
+                    picture.setAttribute('role', 'img');
+                    picture.setAttribute('aria-label', item.palavra);
+                    picture.textContent = item.emoji || '✦';
+                    const answer = document.createElement('span');
+                    answer.className = 'qvc-answer-space';
+                    const letters = Array.from(item.palavra.toLocaleUpperCase('pt-BR'));
+                    answer.textContent = letters[0] + ' ' + letters.slice(1).map(() => '__').join(' ');
+                    row.append(picture, answer);
+                    list.append(row);
                 }
-                html += '</table>';
-                conteudo.innerHTML = cabe;
-                conteudo.innerHTML += html;
+                content.append(list);
             };
+            exibeLicao();
         </script>
     </body>
 </html>

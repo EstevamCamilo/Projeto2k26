@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <title>Caça - Palavras
         </title>
@@ -122,16 +122,24 @@
                 left: 0.5rem;
             }
         </style>
-    </head>
-    <body>
+
+<link rel="stylesheet" href="../shared/platform.css">
+<script type="module" src="../shared/platform.js"></script>
+<script type="module" src="../shared/visit.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<script type="module" src="../shared/pwa.js"></script>
+</head>
+    <body data-qvc-legacy data-qvc-print-target="#tabelaB">
         <div id="fundo">
             <div id="menu">
                 <a href="../index.html">
-                    <button id="vb">
-                        <img src="../volta.png"/>
+                    <button id="vb" aria-label="Voltar ao Hub">
+                        <img alt="" src="../volta.png"/>
                     </button>
                 </a>
-                <input id="npalavras" type="number" min="5" max="25" value="25" />
+                <label for="npalavras">Quantidade de palavras</label>
+                <input id="npalavras" type="number" min="1" max="25" value="25" />
+                <label for="categorias">Categoria</label>
                 <select id="categorias">
                     <option value="frutas">Frutas
                     </option>
@@ -143,12 +151,12 @@
                 <button id="z" onclick="crialicao()">
                     Criar Caça Palavras
                 </button>
-                <button id="b" onclick="sobre()">
-                    <img src="info.png">
+                <button id="b" aria-label="Sobre a Biblioteca QVC" onclick="sobre()">
+                    <img alt="" src="info.png">
                     </img>
                 </button>
-            <button id="c" onclick="window.print()">
-                <img src="printer.png" />
+            <button id="c" aria-label="Imprimir / Exportar PDF" onclick="window.QVC ? window.QVC.print() : window.print()">
+                <img alt="" src="printer.png" />
             </button>
         </div>
         <h1 id="mn">Caça - Palavras
@@ -546,137 +554,75 @@
                 ]
             };
             const crialicao = function () {
-                let npalavras = parseInt(document.querySelector("#npalavras").value);
-                if (npalavras > 25) npalavras = 25;
-                let categoria = document.querySelector("#categorias").value;
-                let conteudo = document.querySelector("#conteudo");
-                //Torna CA e cabecalho visiveis quando faz a tabela
-                // let cabecalhoV = document.querySelector("#cabecalho").style.display = 'block';
-                //let caV = document.querySelector("#ca").style.display = 'block';
-                let randompalavras = [];
-                //Exibe palavras de cade categoria
-                let listaPalavras = "<table align='center'>";
-                /*if(categoria === "frutas"){
-                    document.querySelector("#Id1").innerHTML = "Jabuticaba, Maracuja, Morango, Abacate, Roma, Melao, Melancia, Mamão, limão, Kiwi, Coco, Cereja, Caju, Amora, Ameixa, Acerola, Abacaxi, Goiaba, Pera, Uva, Pessego, manga, Laranja, Maça, Banana";
-                } else if (categoria === "animais"){
-                    document.querySelector("#Id1").innerHTML = "galinha, vaca, cachorro,gato, leao, peixe, porco,coelho, macaco, elefante, abelha, cavalo, falcao, gorila, hipopota, jacare, onça, pantera, rato, urso, cobra, tatu, arara, tucano, golfinho"
-                } else {
-                    document.querySelector("#Id1").innerHTML = "bolo, chocolate, pipa, flor, balao, pirulito, anel, mao, bone, bola, cama, mato, mala, mola, carro, medico, dentista, artista, policial, professor, arvore, bandeira, bicicleta, relogio, hospital"
-                }*/
-                //Sorteia palavras sem repetir
-                for (let i = 0; i < npalavras; i++) {
-                    if (i % 5 === 0) listaPalavras += "<tr>";
-                    let p;
-                    do {
-                        let idx = parseInt(Math.random() * palavras[categoria].length);
-                        p = palavras[categoria][idx];
-                    }
-                    while (randompalavras.indexOf(p) > -1);
-                    randompalavras.push(p);
-                    listaPalavras +="<td id='listap'>" + p.palavra + " " + "</td>";
-                }
-                listaPalavras += "</table>";
-                //ordena a lista de palavras
-                randompalavras.sort((a, b) => {
-                    return (a.palavra.length < b.palavra.length);
-                }
-                                   );
-                //Gera a matriz vazia
-                let tabela = [];
-                for (let i = 0; i < 22; i++) {
-                    let linha = [];
-                    for (let j = 0; j < 22; j++) {
-                        linha.push("_");
-                    }
-                    tabela.push(linha);
-                }
-                //Coloca as palavras na matriz
-                for (let idx = 0; idx < randompalavras.length; idx++) {
-                    let p = randompalavras[idx];
-                    let x;
-                    let y;
-                    do {
-                        x = parseInt(Math.random() * 15);
-                        y = parseInt(Math.random() * 15);
-                    }
-                    while (!podePosicaoPalavra(idx, p, tabela, x, y));
-                    //Exibe cada letra na matriz
-                    for (let i = 0; i < p.palavra.length; i++) {
-                        tabela[y][x] = p.palavra.charAt(i).toUpperCase();
-                        if (idx % 2 === 0) {
-                            x++;
+                const category = document.getElementById('categorias').value;
+                const candidates = Array.isArray(palavras[category]) ? palavras[category].filter(item => item && typeof item.palavra === 'string' && item.palavra.trim()) : [];
+                const quantity = QVCLegacy.count('npalavras', candidates.length, 25);
+                if (quantity === null) return;
+                const selected = QVCLegacy.shuffle(candidates).slice(0, quantity).map(item => item.palavra.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLocaleUpperCase('pt-BR'));
+                // Every attempt is finite. Distinct-row placement guarantees a fallback for all words.
+                const size = Math.max(22, selected.length, ...selected.map(word => word.length));
+                const grid = Array.from({ length: size }, () => Array(size).fill(''));
+                const placements = [];
+                const directions = [[1, 0], [0, 1], [1, 1], [-1, 1]];
+                let fallback = false;
+                for (const word of [...selected].sort((a, b) => b.length - a.length)) {
+                    let found = false;
+                    const starts = QVCLegacy.shuffle(Array.from({ length: size * size }, (_, i) => [i % size, Math.floor(i / size)]));
+                    for (const [startX, startY] of starts) {
+                        for (const [dx, dy] of QVCLegacy.shuffle(directions)) {
+                            const cells = Array.from(word, (_, i) => [startX + dx * i, startY + dy * i]);
+                            if (!cells.every(([x, y], i) => x >= 0 && y >= 0 && x < size && y < size && (!grid[y][x] || grid[y][x] === word[i]))) continue;
+                            cells.forEach(([x, y], i) => { grid[y][x] = word[i]; });
+                            placements.push({ word, cells });
+                            found = true;
+                            break;
                         }
-                        else if (idx % 3 === 0) {
-                            x++;
-                            y++;
-                        }
-                        else {
-                            y++;
-                        }
+                        if (found) break;
                     }
+                    if (!found) { fallback = true; break; }
                 }
-                //Exibe a lição
-                var letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O",
-                              "P", "Q", "R", "S", "T", "U", "V", "W", "X", "Y", "Z"];
-                let cabe = "";
-                let ti = "";
-                var html = "";
-                cabe += "<br/> <table id='cabecalho' align='center'>";
-                cabe += "<tr>";
-                cabe += "<td> Escola:";
-                cabe += "<td>__________________________";
-                cabe += "<td>&nbsp;Data:__/__/____";
-                cabe += "</tr>";
-                cabe += "<tr>";
-                cabe += "<td>Nome:";
-                cabe += "<td>___________________________";
-                cabe += "<td>&nbsp;Série:_________";
-                cabe += "</tr>";
-                cabe += "</table>";
-                ti += "<h1 id='ca'>Caça Palavras";
-                ti += "</h1>";
-                html += "<br/> <table id='tabela' align='center' cellspacing='0'>";
-                for (let i = 0; i < tabela.length; i++) {
-                    html += "<tr>";
-                    for (let j = 0; j < tabela[i].length; j++) {
-                        if (tabela[i][j] === "_") {
-                            html += "<td class='quad'>" + letras[parseInt(Math.random() * letras.length)];
-                        }
-                        else {
-                            //html += "<td class='quad'>" + tabela[i][j];
-                            html += "<td class='quad'>" + tabela[i][j];
-                        }
-                    }
+                if (fallback) {
+                    grid.forEach(row => row.fill(''));
+                    placements.length = 0;
+                    selected.forEach((word, y) => {
+                        const cells = Array.from(word, (_, x) => [x, y]);
+                        cells.forEach(([x, row], i) => { grid[row][x] = word[i]; });
+                        placements.push({ word, cells });
+                    });
                 }
-                html += "</table>";
-                html += "<br/>";
-                document.querySelector("#Id1").innerHTML = listaPalavras;
-                conteudo.innerHTML = cabe;
-                conteudo.innerHTML += ti;
-                conteudo.innerHTML += html;
-                console.log(randompalavras);
+                grid.forEach(row => row.forEach((letter, i) => { if (!letter) row[i] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); }));
+                const content = QVCLegacy.prepare(document.getElementById('conteudo'), 'Caça-palavras');
+                const instruction = document.createElement('p');
+                instruction.className = 'qvc-wordsearch-instruction';
+                instruction.textContent = 'Encontre e circule as palavras. As letras da grade aparecem sem acentos.';
+                const table = document.createElement('table');
+                table.id = 'tabela';
+                table.className = 'qvc-wordsearch-grid';
+                table.setAttribute('aria-label', 'Grade do caça-palavras');
+                table.dataset.qvcPlacements = JSON.stringify(placements);
+                const body = document.createElement('tbody');
+                grid.forEach(row => {
+                    const line = document.createElement('tr');
+                    row.forEach(letter => {
+                        const cell = document.createElement('td');
+                        cell.textContent = letter;
+                        line.append(cell);
+                    });
+                    body.append(line);
+                });
+                table.append(body);
+                const list = document.createElement('ul');
+                list.className = 'qvc-wordsearch-list';
+                list.setAttribute('aria-label', 'Palavras para encontrar');
+                selected.forEach(word => {
+                    const item = document.createElement('li');
+                    item.textContent = word;
+                    list.append(item);
+                });
+                content.append(instruction, table, list);
+                document.getElementById('Id1').replaceChildren();
             };
-            const podePosicaoPalavra = function (idx, p, tabela, x, y) {
-                let pode = true;
-                for (let k = 0; k < p.palavra.length; k++) {
-                    if (tabela[y][x] !== "_" && tabela[y][x] !== p.palavra.charAt(k)) {
-                        pode = false;
-                    }
-                    if (idx % 2 === 0) {
-                        //horizontal
-                        x++;
-                    }
-                    else if (idx % 3 === 0) {
-                        x++;
-                        y++;
-                    }
-                    else {
-                        //vertical
-                        y++;
-                    }
-                }
-                return pode;
-            };
+            crialicao();
         </script>
         </body>
 </html>

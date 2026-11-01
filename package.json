@@ -1,0 +1,27 @@
+{
+  "name": "qvc-biblioteca-educacional",
+  "version": "2.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Biblioteca de ferramentas pedagógicas em HTML5, JavaScript moderno e Tailwind CSS",
+  "engines": {
+    "node": ">=24"
+  },
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "start": "node scripts/serve.mjs",
+    "build:css": "tailwindcss -i styles/tailwind.css -o Biblioteca/shared/tailwind.css --minify",
+    "build": "npm run build:css && node scripts/offline.mjs && node scripts/build.mjs",
+    "preview": "node scripts/serve.mjs --root dist",
+    "test": "node --test tests/*.test.mjs Biblioteca/Calculos/tests/*.test.mjs \"Biblioteca/Gera Provas\"/*.test.mjs Biblioteca/HorarioEscolar/*.test.mjs Biblioteca/Atividades/*.test.mjs",
+    "test:e2e": "playwright test",
+    "format": "prettier --write scripts tests styles Biblioteca/shared Biblioteca/index.html README.md package.json index.html"
+  },
+  "devDependencies": {
+    "@axe-core/playwright": "^4.10.2",
+    "@playwright/test": "^1.55.1",
+    "@tailwindcss/cli": "^4.1.13",
+    "prettier": "^3.6.2",
+    "tailwindcss": "^4.1.13"
+  }
+}

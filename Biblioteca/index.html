@@ -1,175 +1,327 @@
-<!DOCTYPE html>
-<html>
-    <head>
-        <title>Biblioteca QVC
-        </title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <meta charset="utf-8" />
-        <link rel="icon" type="image/x-icon" href="Caça-Palavras/logo.png" />
-        <link rel="stylesheet" href="style.css" />
-        <script src="app.js"></script>
-        <script src="modal.js"></script>
-    </head>
-    <body onload="filterSelection('all')">
-        <div id="cabecalho">
-            <heading>
-                <div
-                     class="categorias"
-                     id="myBtnContainer"
-                     style="text-align: center"
-                     >
-                    <button
-                            class="btn active"
-                            id=""
-                            onclick="filterSelection('all')"
-                            >
-                        Todos
-                        <button
-                                class="btn"
-                                id="educacao Geral"
-                                onclick="filterSelection('Propios')"
-                                >
-                            Próprios
-                        </button>
-                        <button
-                                class="btn"
-                                id="educacao Infantil"
-                                onclick="filterSelection('Parceiros')"
-                                >
-                            Parceiros
-                        </button>
-                        </div>
-                    <h1 id="titulo">Biblioteca QVC
-                    </h1>
-                    <button id="b" onclick="sobre()">
-                        <img src="Caça-Palavras/info.png">
-                        </img>
-                    </button>
-            </heading>
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#346786" />
+    <meta
+      name="description"
+      content="QVC: ferramentas gratuitas para criar atividades escolares, montar provas, organizar horários e transformar curiosidade em aprendizado."
+    />
+    <meta property="og:title" content="QVC — Aprender transforma" />
+    <meta
+      property="og:description"
+      content="Uma biblioteca de possibilidades para professores, estudantes e famílias."
+    />
+    <meta property="og:type" content="website" />
+    <title>QVC — Aprender transforma</title>
+    <link rel="icon" href="Calculos/assets/icons/favicon.svg" type="image/svg+xml" />
+    <link rel="stylesheet" href="shared/tailwind.css" />
+    <link rel="stylesheet" href="shared/platform.css" />
+    <link rel="stylesheet" href="shared/hub.css" />
+    <script type="module" src="shared/platform.js"></script>
+    <script type="module" src="shared/hub.js"></script>
+    <link rel="manifest" href="manifest.webmanifest" />
+    <script type="module" src="shared/pwa.js"></script>
+  </head>
+  <body data-qvc-hub data-qvc-modern>
+    <a href="#hub-main" class="hub-skip">Pular para o conteúdo</a>
+    <aside class="hub-sidebar" aria-label="Menu da biblioteca">
+      <a href="index.html" class="hub-brand"
+        ><span class="hub-brand-mark"
+          ><svg aria-hidden="true"><use href="shared/icons.svg#book" /></svg></span
+        ><span>qvc<span class="hub-brand-dot">.</span><small>APRENDER TRANSFORMA</small></span></a
+      >
+      <div class="hub-sidebar-scroll">
+        <p class="hub-nav-label">SEU UNIVERSO DE APRENDIZADO</p>
+        <nav aria-label="Navegação principal">
+          <button class="hub-nav active" data-view="explore">
+            <svg aria-hidden="true"><use href="shared/icons.svg#grid" /></svg>Explorar biblioteca</button
+          ><button class="hub-nav" data-view="favorites">
+            <svg aria-hidden="true"><use href="shared/icons.svg#star" /></svg>Meus favoritos
+            <span id="favorites-count">0</span></button
+          ><button class="hub-nav" data-view="history">
+            <svg aria-hidden="true"><use href="shared/icons.svg#history" /></svg>Minhas descobertas</button
+          ><button class="hub-nav" data-view="assistant">
+            <svg aria-hidden="true"><use href="shared/icons.svg#sparkles" /></svg>Ideias para a aula
+          </button>
+        </nav>
+        <p class="hub-nav-label hub-nav-section">CATEGORIAS</p>
+        <nav id="hub-category-nav" aria-label="Categorias educacionais"></nav>
+        <div class="hub-sidebar-tip">
+          <svg aria-hidden="true"><use href="shared/icons.svg#sparkles" /></svg
+          ><strong>Uma ideia vira uma aula.</strong>
+          <p>Crie atividades do seu jeito, prontas para imprimir.</p>
+          <a href="Gera Provas/geraprovas.html">Vamos criar ↗</a>
         </div>
-        <div id="biblioteca" class="container" >
-            <div class="filterDiv Propios" id="cacaPalavras">
-                <a href="Caça-Palavras/cacapalavras.html"
-                   >
-                    <img
-                         id="bimg"
-                         src="caça.png"
-                         width="300vw"
-                         height="200vw"
-                         />
-                </a>
+      </div>
+      <div class="hub-sidebar-footer">
+        <button id="theme-toggle" class="hub-nav">
+          <svg aria-hidden="true"><use href="shared/icons.svg#sun" /></svg>Alternar tema</button
+        ><button id="hub-about" class="hub-nav">Sobre e privacidade</button
+        ><span class="hub-local-label"><i></i>Seu aprendizado fica com você</span>
+      </div>
+    </aside>
+    <div class="hub-body">
+      <header class="hub-topbar">
+        <button
+          class="hub-mobile-toggle"
+          id="mobile-menu"
+          aria-label="Abrir menu"
+          aria-expanded="false"
+        >
+          ☰</button
+        ><span class="hub-breadcrumb"
+          >Biblioteca educacional <span aria-hidden="true">›</span
+          ><strong id="view-label">Explorar</strong></span
+        ><button id="quick-search" class="hub-search-shortcut">
+          <svg aria-hidden="true"><use href="shared/icons.svg#search" /></svg
+          ><span>Buscar uma ferramenta</span><kbd>Ctrl K</kbd></button
+        ><span class="hub-avatar" aria-hidden="true">E</span>
+      </header>
+      <main id="hub-main" tabindex="-1" class="hub-main">
+        <div id="hub-intro">
+          <div class="hub-welcome">
+            <span><i></i>UM MUNDO DE POSSIBILIDADES</span
+            ><small>Para ensinar. Para descobrir. Para crescer.</small>
+          </div>
+          <section class="hub-hero rounded-2xl">
+            <div class="hub-hero-copy">
+              <span class="hub-eyebrow"
+                ><svg aria-hidden="true"><use href="shared/icons.svg#sparkles" /></svg>Pequenas
+                descobertas, grandes futuros</span
+              >
+              <h1>Aprender pode ser<br /><em>extraordinário.</em></h1>
+              <p>
+                Ideias que inspiram. Ferramentas que facilitam.<br />Um lugar para transformar
+                curiosidade em conhecimento.
+              </p>
+              <form id="hub-search-form" class="hub-hero-search">
+                <svg aria-hidden="true"><use href="shared/icons.svg#search" /></svg
+                ><input
+                  id="hub-search"
+                  type="search"
+                  placeholder="O que você quer aprender hoje?"
+                  aria-label="Pesquisar ferramentas"
+                /><button type="submit" aria-label="Pesquisar">
+                  <svg aria-hidden="true"><use href="shared/icons.svg#arrow" /></svg>
+                </button>
+              </form>
+              <div class="hub-suggestions">
+                <span>Experimente:</span><button data-query="caça-palavras">Caça-palavras</button
+                ><button data-query="caligrafia">Caligrafia</button
+                ><button data-query="provas">Provas</button>
+              </div>
+              <div class="hub-trust">
+                <span>✓ 100% gratuito</span><span>✓ Sem cadastro</span><span>✓ Do seu jeito</span>
+              </div>
             </div>
-            <div class="filterDiv Propios" id="separaSilabas">
-                <a href="Separa Silabas/separasilabas.html"
-                   >
-                    <img
-                         src="separa.png"
-                         width="300vw"
-                         height="200vw"
-                         />
-                </a>
+            <svg
+              class="hub-hero-art"
+              viewBox="0 0 420 310"
+              role="img"
+              aria-label="Livros e ideias: um mundo de aprendizado"
+            >
+              <circle cx="230" cy="155" r="125" fill="#d3e5ef" />
+              <circle
+                cx="230"
+                cy="155"
+                r="100"
+                fill="none"
+                stroke="#8eb3cb"
+                stroke-dasharray="4 8"
+              />
+              <g transform="translate(128 99) rotate(-9 95 80)">
+                <rect x="5" y="8" width="190" height="162" rx="17" fill="#a3bdce" />
+                <rect width="190" height="162" rx="17" fill="white" />
+                <path d="M15 25q40-18 80 4 40-22 80-4v113q-40-18-80 7-40-25-80-7Z" fill="#eff5f9" />
+                <path d="M95 29v116" stroke="#b7cedd" stroke-width="3" />
+                <path
+                  d="M28 48h46m-46 14h37m-37 14h46m40-28h42m-42 14h35m-35 14h42"
+                  stroke="#8eafc4"
+                  stroke-width="4"
+                  stroke-linecap="round"
+                />
+                <circle cx="53" cy="107" r="16" fill="#b7dca6" />
+                <path d="m130 93 15 28h-30Z" fill="#f4c08e" />
+              </g>
+              <g transform="translate(295 45) rotate(10)">
+                <rect width="73" height="75" rx="17" fill="#f5d0ae" />
+                <text
+                  x="36"
+                  y="52"
+                  text-anchor="middle"
+                  font-size="36"
+                  font-weight="700"
+                  fill="#85491d"
+                >
+                  Aa
+                </text>
+              </g>
+              <g transform="translate(66 47) rotate(-12)">
+                <rect width="76" height="65" rx="15" fill="#c4e2b7" />
+                <text
+                  x="38"
+                  y="44"
+                  text-anchor="middle"
+                  font-size="31"
+                  font-weight="700"
+                  fill="#3d713e"
+                >
+                  2+3
+                </text>
+              </g>
+              <g transform="translate(323 218) rotate(12)">
+                <rect width="61" height="61" rx="16" fill="#346786" />
+                <path d="m31 12 5 13 13 5-13 5-5 14-5-14-14-5 14-5Z" fill="white" />
+              </g>
+              <path d="m100 232 6 17 18 7-18 6-6 18-7-18-17-6 17-7Z" fill="#e5ac73" />
+              <circle cx="375" cy="155" r="7" fill="#b3d49f" />
+            </svg>
+          </section>
+          <div class="hub-stats">
+            <div>
+              <span class="hub-stat-icon tone-blue"
+                ><svg aria-hidden="true"><use href="shared/icons.svg#grid" /></svg></span
+              ><span
+                ><strong id="tool-count">38 ferramentas</strong
+                ><small>para explorar e descobrir</small></span
+              >
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="Contos/contos.html"
-                   >
-                    <img
-                         src="contos.png"
-                         width="300vw"
-                         height="200vw"
-                         />
-                </a>
+            <div>
+              <span class="hub-stat-icon tone-green"
+                ><svg aria-hidden="true"><use href="shared/icons.svg#teacher" /></svg></span
+              ><span><strong>6 categorias</strong><small>um universo de aprendizado</small></span>
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="EscrevePalavras/EscrevePalavras.html"
-                   >
-                    <img
-                         src="escrevepal.png"
-                         width="300vw"
-                         height="200vw"
-                         />
-                </a>
+            <div>
+              <span class="hub-stat-icon tone-orange"
+                ><svg aria-hidden="true"><use href="shared/icons.svg#print" /></svg></span
+              ><span
+                ><strong>Prontas para imprimir</strong
+                ><small>da tela para a sala de aula</small></span
+              >
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="LigaPalavras/LigaPalavras.html"
-                   >
-                    <img
-                         src="LigaP.png"
-                         width="300vw"
-                         height="200vw"
-                         />
-                </a>
+            <div>
+              <span class="hub-stat-icon tone-rose"
+                ><svg aria-hidden="true"><use href="shared/icons.svg#heart" /></svg></span
+              ><span><strong>Para todos</strong><small>aprendizado no seu ritmo</small></span>
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="Tabela Periodica/index.html"
-                   >
-                    <img
-                         src="tabelape.png"
-                         width="300vw"
-                         height="200vw"
-                         />
-                </a>
+          </div>
+          <section class="hub-section">
+            <div class="hub-section-heading">
+              <div>
+                <span class="hub-section-label">ENCONTRE SEU CAMINHO</span>
+                <h2>O que vamos descobrir hoje?</h2>
+                <p>Escolha um assunto e deixe a curiosidade guiar.</p>
+              </div>
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="Calculos/index.html">
-                    <!--
-                    Site da Inspiração
-                    www.gradepen.com/?ref=hVoEzTgTC
-                    -->
-                    <img
-                         src="calculos.png"
-                         width="300vw"
-                         height="200vw"
-                         /> 
-                </a>
+            <div id="hub-categories" class="hub-category-grid"></div>
+          </section>
+          <section class="hub-section">
+            <div class="hub-section-heading">
+              <div>
+                <span class="hub-section-label">IDEIAS PARA COMEÇAR</span>
+                <h2>Pequenas ferramentas. Grandes descobertas.</h2>
+              </div>
+              <button id="show-all" class="hub-text-link">Explorar biblioteca →</button>
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="HorarioEscolar/index.html">
-                    <img
-                         src="HorarioEscolar.png"
-                         width="300vw"
-                         height="200vw"
-                         /> 
-                </a> 
+            <div id="featured-tools" class="hub-tools-grid"></div>
+          </section>
+          <section class="hub-teacher-banner rounded-2xl">
+            <span class="hub-teacher-art"
+              ><svg aria-hidden="true"><use href="shared/icons.svg#teacher" /></svg
+            ></span>
+            <div>
+              <span class="hub-section-label">QUEM ENSINA TAMBÉM MERECE APOIO</span>
+              <h2>Mais criatividade. Menos trabalho.</h2>
+              <p>Monte avaliações, organize as aulas e prepare materiais que fazem a diferença.</p>
             </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="Jogos/jogos.html">
-                    <img
-                         src="jogos.png"
-                         width="300vw"
-                         height="200vw"
-                         /> 
-                </a>
-            </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="Gera Provas/geraprovas.html">
-                    <img
-                         src="geraprova.png"
-                         width="300vw"
-                         height="200vw"
-                         /> 
-                </a>
-            </div>
-            <div class="filterDiv Propios" id="calculos">
-                <a href="TutoriaisCode/Abas Claro.html">
-                    <img
-                         src="TutoriaisCode.png"
-                         width="300vw"
-                         height="200vw"
-                         /> 
-                </a>
-            </div>
-        <div id="rodape">
-            <i>Brasil
-            </i>
-            <i>Politica de privacidade
-            </i>
-            <i>Termos de uso
-            </i>
-            <i
-               >© 2023 QVC. Todos os direitos reservados. Digital Aprendizagem
-                por uso de aplicativo moveis Ltda - CNPJ: xx.xxx.xxx/xxxx-xx,
-                Brasil-SP
-            </i>
+            <a href="Gera Provas/geraprovas.html" class="hub-button">Espaço do professor →</a>
+          </section>
         </div>
-    </body>
+        <section id="hub-library" class="hub-section" aria-labelledby="library-title">
+          <div class="hub-section-heading">
+            <div>
+              <span class="hub-section-label" id="library-eyebrow">SUA PRÓXIMA DESCOBERTA</span>
+              <h2 id="library-title">Explore a biblioteca</h2>
+              <p id="results-count" role="status"></p>
+            </div>
+            <label class="hub-filter"
+              >Categoria<select id="category-filter">
+                <option value="">Todas as categorias</option>
+              </select></label
+            >
+          </div>
+          <div id="hub-tools" class="hub-tools-grid"></div>
+          <div id="hub-empty" class="hub-empty" hidden>
+            <h3>Vamos tentar outro caminho?</h3>
+            <p>Nenhuma ferramenta encontrada. Experimente outro termo.</p>
+            <button class="hub-button" id="clear-filters">Limpar filtros</button>
+          </div>
+        </section>
+        <section id="hub-history" class="hub-section" hidden>
+          <span class="hub-section-label">CADA DESCOBERTA CONTA</span>
+          <h1>Seu espaço de aprender</h1>
+          <p class="hub-muted">Favoritos e registros ficam neste navegador.</p>
+          <div id="hub-progress"></div>
+          <div id="hub-history-list"></div>
+          <button id="clear-history" class="hub-button hub-button-outline">Limpar histórico</button>
+        </section>
+        <section id="hub-assistant" class="hub-section" hidden>
+          <span class="hub-section-label">SUGESTÕES LOCAIS · SEM ENVIO DE DADOS</span>
+          <h1>Uma ideia para a próxima aula</h1>
+          <p class="hub-muted">
+            Sugestões por modelos locais, sem IA generativa. Personalize e revise o material.
+          </p>
+          <form id="assistant-form" class="hub-assistant-form">
+            <label
+              >Tema da aula<input
+                name="topic"
+                required
+                maxlength="100"
+                placeholder="Ex.: animais da floresta" /></label
+            ><label
+              >Etapa<select name="level">
+                <option>Educação infantil</option>
+                <option>Ensino fundamental</option>
+              </select></label
+            ><label
+              >Objetivo<select name="goal">
+                <option>Alfabetização</option>
+                <option>Matemática</option>
+                <option>Criatividade</option>
+              </select></label
+            ><button class="hub-button" type="submit">Sugerir atividades</button>
+          </form>
+          <div id="assistant-result" class="hub-assistant-result" aria-live="polite"></div>
+        </section>
+        <div class="hub-values">
+          <span>♧ Seus dados ficam com você</span><span>✦ Criatividade sem limites</span
+          ><span>♡ Feito para incluir</span>
+        </div>
+      </main>
+      <footer class="hub-footer">
+        <strong>qvc.</strong><span>Feito para quem acredita no poder de aprender.</span
+        ><button id="about-footer">Sobre e privacidade</button><span>Aprendizado livre</span>
+      </footer>
+    </div>
+    <dialog id="hub-about-dialog">
+      <div class="hub-dialog-heading">
+        <h2>Aprender transforma</h2>
+        <button id="close-about" aria-label="Fechar">×</button>
+      </div>
+      <p>
+        QVC é uma biblioteca gratuita para professores, estudantes e famílias. Seus favoritos,
+        atividades e registros ficam no navegador, sem cadastro e sem envio a servidores.
+      </p>
+      <p>
+        Os recursos pedagógicos devem ser revisados pelo educador. O assistente usa modelos locais,
+        sem IA generativa. Use a exportação das ferramentas para guardar cópias do seu trabalho.
+      </p>
+      <p>
+        Acervo original: Estevam Fernandes Camilo, Juan Henrique Conceição Veronez e Matheus
+        Henrique Queiroz da Silva.
+      </p>
+    </dialog>
+  </body>
 </html>

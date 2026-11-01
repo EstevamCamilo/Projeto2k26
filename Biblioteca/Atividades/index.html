@@ -1,0 +1,147 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta
+      name="description"
+      content="Crie atividades de caligrafia, labirintos, desenhos para colorir, ligação de pontos e coordenação motora com prévia e impressão A4."
+    />
+    <title>Atividades infantis — QVC Educação</title>
+    <link rel="stylesheet" href="atividades.css" />
+    <script type="module" src="atividades.js"></script>
+
+    <link rel="stylesheet" href="../shared/platform.css" />
+    <script type="module" src="../shared/platform.js"></script>
+    <script type="module" src="../shared/visit.js"></script>
+    <link rel="manifest" href="../manifest.webmanifest" />
+    <script type="module" src="../shared/pwa.js"></script>
+  </head>
+  <body data-qvc-modern data-qvc-print-target="#activity-preview">
+    <a class="early-skip" href="#activity-main">Pular para o conteúdo</a>
+    <div class="early-page">
+      <a class="early-back" href="../index.html">← Voltar ao Hub</a>
+      <header class="early-intro">
+        <span class="early-eyebrow">DESCOBRIR • BRINCAR • APRENDER</span>
+        <h1 id="tool-title">Atividades infantis</h1>
+        <p>Pequenos desafios para grandes descobertas. Personalize, confira e leve para o papel.</p>
+      </header>
+      <main id="activity-main" class="early-layout">
+        <aside class="early-controls" aria-label="Personalização da atividade">
+          <h2>Do seu jeito</h2>
+          <p class="early-muted">A prévia acompanha suas escolhas.</p>
+          <form id="activity-form">
+            <label for="activity-type">Atividade</label>
+            <select id="activity-type" name="type">
+              <option value="caligrafia">Caligrafia</option>
+              <option value="labirinto">Labirinto</option>
+              <option value="colorir">Desenhos para colorir</option>
+              <option value="pontos">Ligue os pontos</option>
+              <option value="coordenacao">Coordenação motora</option>
+            </select>
+            <label for="activity-title">Título do material</label>
+            <input id="activity-title" name="title" maxlength="120" />
+            <div id="word-controls">
+              <label for="activity-words">Palavras ou nomes para praticar</label>
+              <textarea
+                id="activity-words"
+                name="words"
+                rows="3"
+                maxlength="600"
+                placeholder="CASA, BOLA, ESCOLA"
+              ></textarea>
+              <small
+                >Separe por vírgulas, ponto e vírgula ou linhas. Até 12 palavras, com 28 caracteres
+                cada.</small
+              >
+              <label for="activity-case">Formato das letras</label>
+              <select id="activity-case" name="letterCase">
+                <option value="upper">MAIÚSCULAS</option>
+                <option value="lower">minúsculas</option>
+                <option value="original">Como você escreveu</option>
+              </select>
+            </div>
+            <div id="count-controls">
+              <label for="activity-count">Quantidade de itens</label>
+              <input id="activity-count" name="count" type="number" min="1" max="12" value="6" />
+            </div>
+            <div id="maze-controls" hidden>
+              <label for="activity-complexity">Complexidade do labirinto</label>
+              <select id="activity-complexity" name="complexity">
+                <option value="4">Primeiros caminhos · 4 × 4</option>
+                <option value="6">Caminho curto · 6 × 6</option>
+                <option value="8">Explorador · 8 × 8</option>
+                <option value="10">Novo desafio · 10 × 10</option>
+                <option value="12">Grande descoberta · 12 × 12</option>
+              </select>
+            </div>
+            <label for="activity-adaptation">Apresentação</label>
+            <select id="activity-adaptation" name="adaptation">
+              <option value="standard">Padrão</option>
+              <option value="short">Menos itens e etapas curtas</option>
+              <option value="spaced">Leitura ampliada e espaçada</option>
+            </select>
+            <fieldset class="early-school-fields">
+              <legend>Cabeçalho escolar</legend>
+              <label for="activity-school">Escola</label>
+              <input
+                id="activity-school"
+                name="school"
+                maxlength="120"
+                autocomplete="organization"
+              />
+              <label for="activity-student">Nome do aluno</label>
+              <input id="activity-student" name="student" maxlength="120" autocomplete="off" />
+              <label for="activity-classroom">Turma</label>
+              <input id="activity-classroom" name="classroom" maxlength="60" />
+              <label for="activity-date">Data</label>
+              <input id="activity-date" name="date" type="date" />
+            </fieldset>
+            <label class="early-checkbox" id="solution-control" hidden>
+              <input id="activity-solution" name="showSolution" type="checkbox" />
+              Mostrar solução
+            </label>
+            <div class="early-control-actions">
+              <button id="regenerate" type="button" class="early-button">↻ Nova versão</button>
+              <button id="save-activity" type="button" class="early-button early-button-secondary">
+                Guardar atividade
+              </button>
+            </div>
+          </form>
+          <p class="early-note">
+            Os ajustes de apresentação apoiam diferentes ritmos. Revise o material e personalize com
+            o educador responsável.
+          </p>
+          <p class="early-note">
+            Seu material fica neste navegador. Nomes e dados escolares não são enviados para
+            servidores.
+          </p>
+        </aside>
+        <section class="early-preview-region" aria-label="Prévia da atividade">
+          <div class="early-toolbar">
+            <span><i aria-hidden="true"></i> Prévia em tempo real</span>
+            <button id="print-activity" type="button" class="early-button">
+              Imprimir / Exportar PDF
+            </button>
+          </div>
+          <div id="color-controls" class="early-palette-bar" hidden>
+            <span id="palette-label">Escolha uma cor, depois uma parte do desenho:</span>
+            <div id="palette" role="group" aria-labelledby="palette-label"></div>
+          </div>
+          <div class="early-paper-scroll">
+            <article
+              id="activity-preview"
+              class="early-paper"
+              aria-label="Folha da atividade"
+            ></article>
+          </div>
+          <p class="early-preview-note">
+            Formato A4 · Na janela de impressão, escolha “Salvar como PDF” para baixar o documento.
+          </p>
+          <p id="activity-status" class="early-status" role="status" aria-live="polite"></p>
+        </section>
+      </main>
+      <footer class="early-footer">QVC Educação · aprender transforma</footer>
+    </div>
+  </body>
+</html>

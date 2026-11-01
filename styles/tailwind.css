@@ -1,0 +1,8 @@
+@import 'tailwindcss' source(none);
+@source "../Biblioteca/**/*.html";
+@source "../Biblioteca/**/*.js";
+@theme {
+  --color-qvc: #346786;
+  --color-qvc-dark: #234b65;
+  --color-qvc-soft: #e9f2f8;
+}

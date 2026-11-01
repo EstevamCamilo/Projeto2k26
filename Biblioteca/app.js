@@ -1,49 +1,30 @@
-filterSelection('all');
-function filterSelection(c) {
-  var x, i;
-  x = document.getElementsByClassName('filterDiv');
-  if (c == 'all') c = '';
-  // Add the "show" class (display:block) to the filtered elements, and remove the "show" class from the elements that are not selected
-  for (i = 0; i < x.length; i++) {
-    RemoveClass(x[i], 'show');
-    if (x[i].className.indexOf(c) > -1) AddClass(x[i], 'show');
-  }
+/* Filtros usados pelas páginas clássicas; seguro também fora do Hub. */
+function filterSelection(category) {
+    const selected = category === 'all' ? '' : String(category || '');
+    document.querySelectorAll('.filterDiv').forEach(element => {
+        element.classList.toggle('show', !selected || element.classList.contains(selected));
+    });
 }
-
-// Show filtered elements
-function AddClass(element, name) {
-  var i, arr1, arr2;
-  arr1 = element.className.split(' ');
-  arr2 = name.split(' ');
-  for (i = 0; i < arr2.length; i++) {
-    if (arr1.indexOf(arr2[i]) == -1) {
-      element.className += ' ' + arr2[i];
-    }
-  }
+function AddClass(element, names) {
+    String(names || '').split(/\s+/).filter(Boolean).forEach(name => element.classList.add(name));
 }
-
-// Hide elements that are not selected
-function RemoveClass(element, name) {
-  var i, arr1, arr2;
-  arr1 = element.className.split(' ');
-  arr2 = name.split(' ');
-  for (i = 0; i < arr2.length; i++) {
-    while (arr1.indexOf(arr2[i]) > -1) {
-      arr1.splice(arr1.indexOf(arr2[i]), 1);
-    }
-  }
-  element.className = arr1.join(' ');
+function RemoveClass(element, names) {
+    String(names || '').split(/\s+/).filter(Boolean).forEach(name => element.classList.remove(name));
 }
-
-// Add active class to the current control button (highlight it)
-var btnContainer = document.getElementById('myBtnContainer');
-var btns = document.getElementsByClassName('btn');
-for (var i = 0; i < btns.length; i++) {
-  btns[i].addEventListener('click', function () {
-    var current = document.getElementsByClassName('active');
-    current[0].className = current[0].className.replace(' active', '');
-    this.className += 'active';
-  });
+function initializeLegacyFilters() {
+    filterSelection('all');
+    const container = document.getElementById('myBtnContainer');
+    if (!container) return;
+    container.querySelectorAll('.btn').forEach(button => {
+        button.addEventListener('click', () => {
+            container.querySelectorAll('.btn.active').forEach(current => {
+                current.classList.remove('active');
+                current.setAttribute('aria-pressed', 'false');
+            });
+            button.classList.add('active');
+            button.setAttribute('aria-pressed', 'true');
+        });
+    });
 }
-
-window.onload = filterSelection('all');
+if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', initializeLegacyFilters, { once: true });
+else initializeLegacyFilters();

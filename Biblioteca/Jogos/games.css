@@ -1,0 +1,504 @@
+/* Jogos QVC: controles nativos, azul original e tabuleiros prontos para papel. */
+* {
+  box-sizing: border-box;
+}
+body {
+  margin: 0;
+  background: var(--qvc-bg, #f5f8fb);
+  color: var(--qvc-text, #1c3346);
+  font:
+    15px/1.7 Inter,
+    'Segoe UI',
+    system-ui,
+    sans-serif;
+}
+button,
+select {
+  font: inherit;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  cursor: pointer;
+}
+a {
+  color: var(--qvc-primary, #346786);
+}
+:focus-visible {
+  outline: 3px solid var(--qvc-focus, #1d77ad);
+  outline-offset: 4px;
+}
+.qvc-game-page {
+  width: min(1120px, calc(100% - 40px));
+  margin: 32px auto 48px;
+}
+.qvc-game-page > header {
+  margin-bottom: 25px;
+}
+.qvc-game-back {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: var(--qvc-primary, #346786);
+  text-decoration: none;
+  font-weight: 650;
+  font-size: 13px;
+  padding: 8px 0;
+  margin-bottom: 15px;
+}
+.qvc-game-eyebrow {
+  font-size: 10px;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  color: var(--qvc-primary, #346786);
+  font-weight: 700;
+}
+.qvc-game-page h1 {
+  font-size: clamp(28px, 4vw, 38px);
+  line-height: 1.2;
+  margin: 8px 0 14px;
+  letter-spacing: -1px;
+}
+.qvc-game-page > header p {
+  color: var(--qvc-muted, #556d80);
+  margin: 0;
+  max-width: 720px;
+}
+.qvc-game-layout {
+  display: grid;
+  grid-template-columns: 270px minmax(0, 1fr);
+  gap: 24px;
+  align-items: start;
+}
+.qvc-game-panel {
+  background: var(--qvc-surface, #fff);
+  border: 1px solid var(--qvc-border, #dce5ed);
+  border-radius: 16px;
+  padding: 24px;
+  box-shadow: var(--qvc-shadow, 0 8px 28px #173b5b0a);
+}
+.qvc-game-panel h2 {
+  font-size: 17px;
+  margin: 0 0 12px;
+}
+.qvc-game-panel p {
+  color: var(--qvc-muted, #556d80);
+  font-size: 13px;
+  margin: 12px 0;
+}
+.qvc-game-panel label {
+  display: block;
+  font-size: 13px;
+  font-weight: 650;
+  margin: 18px 0;
+}
+.qvc-game-panel select {
+  width: 100%;
+  border: 1px solid var(--qvc-border, #dce5ed);
+  border-radius: 9px;
+  background: var(--qvc-surface, #fff);
+  color: var(--qvc-text, #1c3346);
+  padding: 10px;
+  margin-top: 7px;
+}
+.qvc-game-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 44px;
+  padding: 10px 15px;
+  border: 1px solid var(--qvc-primary, #346786);
+  border-radius: 10px;
+  background: var(--qvc-primary, #346786);
+  color: white;
+  font-weight: 650;
+  font-size: 13px;
+  text-decoration: none;
+  transition:
+    background 0.15s,
+    transform 0.15s;
+}
+.qvc-game-button:hover {
+  background: var(--qvc-primary-hover, #254e68);
+}
+.qvc-game-button:active {
+  transform: translateY(1px);
+}
+.qvc-game-button-secondary {
+  color: var(--qvc-primary, #346786);
+  background: var(--qvc-surface, #fff);
+  border-color: var(--qvc-border, #dce5ed);
+  margin-top: 10px;
+}
+.qvc-game-button-secondary:hover {
+  background: var(--qvc-primary-soft, #eaf3f8);
+}
+.qvc-game-panel .qvc-game-button {
+  width: 100%;
+}
+.qvc-game-document {
+  min-width: 0;
+  background: #fff;
+  color: #1c3346;
+  border: 1px solid #dce5ed;
+  border-radius: 16px;
+  padding: 30px;
+  min-height: 550px;
+  box-shadow: 0 8px 28px #173b5b0a;
+}
+.qvc-game-document h2 {
+  font-size: 25px;
+  line-height: 1.25;
+  margin: 0 0 20px;
+}
+.qvc-game-status {
+  padding: 14px 17px;
+  margin: 0 0 24px;
+  background: #eaf3f8;
+  color: #254e68;
+  font-size: 14px;
+  font-weight: 650;
+  border: 1px solid #d6e7f1;
+  border-radius: 11px;
+}
+.qvc-game-status[data-complete] {
+  background: #e8f5ed;
+  color: #256345;
+  border-color: #cde8d8;
+}
+.qvc-game-footnote {
+  font-size: 11px;
+  color: #556d80;
+  text-align: center;
+  margin-top: 26px;
+  border-top: 1px solid #e5ecf1;
+  padding-top: 15px;
+}
+.qvc-tic-board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 9px;
+  max-width: 360px;
+  margin: 22px auto;
+}
+.qvc-tic-board button {
+  aspect-ratio: 1;
+  border: 1px solid #c5d8e7;
+  background: #f0f6fa;
+  color: #346786;
+  border-radius: 14px;
+  font-size: clamp(36px, 6vw, 55px);
+  font-weight: 750;
+}
+.qvc-tic-board button:hover:not(:disabled) {
+  background: #dfedf6;
+}
+.qvc-tic-board button[data-winning] {
+  background: #e1f1e8;
+  color: #256345;
+  border-color: #97c5ac;
+}
+.qvc-tic-board button:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.qvc-word-clue {
+  text-align: center;
+  margin: 12px 0;
+  color: #556d80;
+  font-size: 14px;
+}
+.qvc-word-reveal {
+  display: flex;
+  justify-content: center;
+  gap: 7px;
+  flex-wrap: wrap;
+  margin: 22px auto 28px;
+}
+.qvc-word-reveal span {
+  display: grid;
+  place-items: center;
+  font-size: 25px;
+  line-height: 1.2;
+  font-weight: 750;
+  width: 34px;
+  min-height: 43px;
+  border-bottom: 2px solid #81abc6;
+}
+.qvc-letter-keyboard {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px auto;
+}
+.qvc-letter-keyboard button {
+  width: 40px;
+  height: 43px;
+  background: #fff;
+  color: #346786;
+  border: 1px solid #b4cddd;
+  border-radius: 9px;
+  font-size: 16px;
+  font-weight: 700;
+}
+.qvc-letter-keyboard button:hover:not(:disabled) {
+  background: #eaf3f8;
+}
+.qvc-letter-keyboard button:disabled {
+  opacity: 0.55;
+  cursor: default;
+}
+.qvc-letter-keyboard button[data-correct] {
+  background: #e1f1e8;
+  color: #256345;
+  border-color: #a2cdb5;
+  opacity: 1;
+}
+.qvc-hangman-illustration {
+  display: block;
+  max-width: 180px;
+  width: 100%;
+  height: 165px;
+  margin: 0 auto;
+}
+.qvc-memory-board,
+.qvc-puzzle-board {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 11px;
+  max-width: 420px;
+  margin: 20px auto;
+}
+.qvc-memory-card {
+  position: relative;
+  display: grid;
+  place-items: center;
+  aspect-ratio: 1;
+  min-height: 68px;
+  border: 1px solid #b4cddd;
+  border-radius: 13px;
+  background: #eaf3f8;
+  color: #346786;
+  font-size: 30px;
+}
+.qvc-memory-card:hover:not(:disabled) {
+  background: #dfedf6;
+}
+.qvc-memory-card[data-matched] {
+  background: #e8f5ed;
+  border-color: #a2cdb5;
+}
+.qvc-memory-card:disabled {
+  cursor: default;
+  opacity: 1;
+}
+.qvc-memory-face {
+  display: none;
+  font-size: 34px;
+}
+.qvc-memory-card[data-revealed] .qvc-memory-face {
+  display: block;
+}
+.qvc-memory-card[data-revealed] .qvc-memory-back {
+  display: none;
+}
+.qvc-puzzle-board button {
+  aspect-ratio: 1;
+  border: 1px solid #b4cddd;
+  border-radius: 12px;
+  background: #eaf3f8;
+  color: #346786;
+  font-size: 26px;
+  font-weight: 700;
+}
+.qvc-puzzle-board button[data-neighbor] {
+  background: #dbeef9;
+  border-color: #74a4c5;
+  box-shadow: inset 0 0 0 1px #9bc2db;
+}
+.qvc-puzzle-board button[data-empty] {
+  background: #f9fbfd;
+  color: transparent;
+  border: 1px dashed #b9cbd8;
+  cursor: default;
+}
+.qvc-puzzle-board button:hover:not(:disabled) {
+  background: #d3e9f6;
+}
+.qvc-game-print-note {
+  display: none;
+}
+.qvc-game-catalog {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 22px;
+  margin-top: 30px;
+}
+.qvc-game-card {
+  position: relative;
+  border: 1px solid var(--qvc-border, #dce5ed);
+  background: var(--qvc-surface, #fff);
+  border-radius: 16px;
+  padding: 26px;
+  box-shadow: var(--qvc-shadow, 0 8px 28px #173b5b0a);
+  transition: transform 0.18s;
+}
+.qvc-game-card:hover {
+  transform: translateY(-3px);
+}
+.qvc-game-card-icon {
+  display: grid;
+  place-items: center;
+  width: 55px;
+  height: 55px;
+  border-radius: 16px;
+  background: var(--qvc-primary-soft, #eaf3f8);
+  color: var(--qvc-primary, #346786);
+  font-size: 27px;
+  margin-bottom: 18px;
+}
+.qvc-game-card h2 {
+  font-size: 20px;
+  line-height: 1.3;
+  margin: 0 0 12px;
+}
+.qvc-game-card p {
+  font-size: 13px;
+  color: var(--qvc-muted, #556d80);
+  margin: 0 0 20px;
+}
+.qvc-game-card a {
+  display: inline-flex;
+  gap: 7px;
+  align-items: center;
+  font-size: 13px;
+  font-weight: 700;
+  text-decoration: none;
+}
+.qvc-game-card a::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+}
+@media (max-width: 700px) {
+  .qvc-game-page {
+    width: calc(100% - 32px);
+    margin-top: 24px;
+  }
+  .qvc-game-layout {
+    grid-template-columns: 1fr;
+    gap: 18px;
+  }
+  .qvc-game-document {
+    padding: 23px 18px;
+    min-height: 460px;
+  }
+  .qvc-game-panel {
+    padding: 21px;
+  }
+  .qvc-game-panel .qvc-game-button {
+    width: auto;
+  }
+  .qvc-game-panel p {
+    margin: 7px 0;
+  }
+  .qvc-game-button-secondary {
+    margin: 0 0 0 6px;
+  }
+  .qvc-game-panel label {
+    margin: 14px 0;
+  }
+  .qvc-game-catalog {
+    gap: 14px;
+  }
+  .qvc-game-card {
+    padding: 22px;
+  }
+  .qvc-memory-board,
+  .qvc-puzzle-board {
+    gap: 8px;
+  }
+  .qvc-memory-card {
+    min-height: 55px;
+  }
+  .qvc-memory-face {
+    font-size: 28px;
+  }
+}
+@media (max-width: 420px) {
+  .qvc-game-button-secondary {
+    margin: 10px 0 0;
+  }
+  .qvc-game-catalog {
+    grid-template-columns: 1fr;
+  }
+  .qvc-word-reveal {
+    gap: 5px;
+  }
+  .qvc-word-reveal span {
+    width: 28px;
+    font-size: 21px;
+  }
+  .qvc-game-document h2 {
+    font-size: 22px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qvc-game-button,
+  .qvc-game-card {
+    transition: none;
+  }
+}
+@media print {
+  @page {
+    size: A4;
+    margin: 12mm;
+  }
+  body {
+    background: #fff;
+    color: #1c3346;
+  }
+  .qvc-game-page {
+    width: 100%;
+    margin: 0;
+  }
+  .qvc-game-page > header,
+  .qvc-game-panel,
+  .qvc-letter-keyboard {
+    display: none !important;
+  }
+  .qvc-game-layout {
+    display: block;
+  }
+  .qvc-game-document {
+    border: 0;
+    box-shadow: none;
+    padding: 0;
+    min-height: 0;
+    max-width: none;
+  }
+  .qvc-game-print-note {
+    display: block;
+    font-size: 12px;
+  }
+  .qvc-memory-face {
+    display: block !important;
+  }
+  .qvc-memory-back {
+    display: none !important;
+  }
+  .qvc-memory-board,
+  .qvc-puzzle-board,
+  .qvc-tic-board {
+    break-inside: avoid;
+  }
+  .qvc-game-document button {
+    opacity: 1;
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+}

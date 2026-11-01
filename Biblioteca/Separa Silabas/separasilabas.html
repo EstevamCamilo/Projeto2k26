@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="pt-BR">
     <head>
         <title>Separa - Sílabas
         </title>
@@ -141,31 +141,38 @@
                 font-size: 1.5rem;
             }
         </style>
-    </head>
-    <body>
+
+<link rel="stylesheet" href="../shared/platform.css">
+<script type="module" src="../shared/platform.js"></script>
+<script type="module" src="../shared/visit.js"></script>
+<link rel="manifest" href="../manifest.webmanifest">
+<script type="module" src="../shared/pwa.js"></script>
+</head>
+    <body data-qvc-legacy data-qvc-print-target="#conteudo">
         <div id="fundo">
             <a id="vt" href="../index.html"
                >
-                <button id="vb">
-                    <img src="../volta.png" />
+                <button id="vb" aria-label="Voltar ao Hub">
+                    <img alt="" src="../volta.png" />
                 </button
                     >
             </a>
             <div id="menu">
-                N° de Linhas
-                <input id="linhas" type="number" min="2" value="5" max="16" />
-                <input id="maximo" type="number" min="2" value="2" max="20" />
+                <label for="linhas">Quantidade de palavras</label>
+                <input id="linhas" type="number" min="1" value="5" max="16" />
+                <label for="maximo">Máximo de sílabas</label>
+                <input id="maximo" type="number" min="1" value="2" max="20" />
                 <button id="z" onclick="exibeLicao()">Criar Atividade
                 </button>
-                <button id="c" onclick="window.print()">
-                    <img src="printer.png" />
+                <button id="c" aria-label="Imprimir / Exportar PDF" onclick="window.QVC ? window.QVC.print() : window.print()">
+                    <img alt="" src="printer.png" />
                 </button>
             </div>
             <h1 id="mn">Separa - Sílabas
             </h1>
         </div>
-        <button id="b" onclick="sobre()">
-            <img src="info.png" />
+        <button id="b" aria-label="Sobre a Biblioteca QVC" onclick="sobre()">
+            <img alt="" src="info.png" />
         </button>
         <div id="conteudo">
         </div>
@@ -521,62 +528,44 @@
                 ,
             ];
             const exibeLicao = function () {
-                //Entrada de dados
-                let linhas = parseInt(document.querySelector('#linhas').value);
-                let maximo = parseInt(document.querySelector('#maximo').value);
-                if (linhas >= palavras.length) {
-                    linhas = palavras.length;
+                const syllableInput = document.getElementById('maximo');
+                const maximum = Number(syllableInput.value);
+                if (!Number.isInteger(maximum) || maximum < 1 || maximum > 20) {
+                    syllableInput.setAttribute('aria-invalid', 'true');
+                    QVCLegacy.status('Informe um limite inteiro de sílabas entre 1 e 20.', true);
+                    return;
                 }
-                //Saída de dados
-                let conteudo = document.querySelector('#conteudo');
-                //Sorteia as palavras da lição
-                let sorteadas = [];
-                for (let i = 0; i < linhas; i++) {
-                    let n;
-                    do {
-                        n = parseInt(Math.random() * palavras.length);
-                    }
-                    while (
-                        sorteadas.indexOf(n) > -1 ||
-                        palavras[n].silabas > maximo
-                    );
-                    sorteadas.push(n);
+                syllableInput.removeAttribute('aria-invalid');
+                const candidates = palavras.filter(item => item && typeof item.palavra === 'string' && Number.isInteger(item.silabas) && item.silabas >= 1 && item.silabas <= maximum);
+                const quantity = QVCLegacy.count('linhas', candidates.length, 16);
+                if (quantity === null) return;
+                const selected = QVCLegacy.shuffle(candidates).slice(0, quantity);
+                const content = QVCLegacy.prepare(document.getElementById('conteudo'), 'Separe as sílabas');
+                const instruction = document.createElement('p');
+                instruction.textContent = 'Diga cada palavra devagar. Depois, escreva uma sílaba em cada espaço.';
+                content.append(instruction);
+                const list = document.createElement('div');
+                list.className = 'qvc-exercise-list';
+                for (const item of selected) {
+                    const row = document.createElement('div');
+                    row.className = 'qvc-exercise-row';
+                    row.dataset.qvcWord = item.palavra;
+                    row.dataset.qvcSyllables = String(item.silabas);
+                    const picture = document.createElement('span');
+                    picture.className = 'qvc-exercise-image';
+                    picture.setAttribute('aria-hidden', 'true');
+                    picture.textContent = item.imagem || '✦';
+                    const word = document.createElement('strong');
+                    word.textContent = item.palavra;
+                    const blanks = document.createElement('span');
+                    blanks.className = 'qvc-answer-space';
+                    blanks.textContent = Array.from({ length: item.silabas }, () => '____').join('  ');
+                    row.append(picture, word, blanks);
+                    list.append(row);
                 }
-                //Cria cabeçalho
-                let cabe = '';
-                let ti = '';
-                cabe += "<br/> <table id='cabecalho' align='center'>";
-                cabe += '<tr>';
-                cabe += '<td> Escola:';
-                cabe += '<td>__________________________';
-                cabe += '<td>&nbsp;Data:__/__/____';
-                cabe += '</tr>';
-                cabe += '<tr>';
-                cabe += '<td>Nome:';
-                cabe += '<td>___________________________';
-                cabe += '<td>&nbsp;Série:_________';
-                cabe += '</tr>';
-                cabe += '</table>';
-                //cria o conteúdo
-                let html = "<h1 id='ca'>Separe as Sílabas</h1><br>";
-                html += "<table id='silabas' cellspacing='50' align='center'>";
-                html += '<tr>';
-                for (let i = 0; i < linhas; i++) {
-                    let palavra = palavras[sorteadas[i]];
-                    html += "<td style='text-align:left'>";
-                    html += palavra.imagem + ' ';
-                    html += palavra.palavra + ' ';
-                    for (let j = 0; j < palavra.silabas; j++) {
-                        html += '____&nbsp;&nbsp;';
-                    }
-                    if (i % 2 === 1) {
-                        html += '<tr>';
-                    }
-                }
-                html += '</table>';
-                conteudo.innerHTML = cabe;
-                conteudo.innerHTML += html;
+                content.append(list);
             };
+            exibeLicao();
         </script>
     </body>
 </html>
