@@ -300,7 +300,7 @@ function printableClone(source) {
 
 const PRINT_RULES = `
 @page { size: A4 portrait; margin: 12mm; }
-:root { color-scheme: light !important; --text:#172b3a!important; --text-soft:#42576a!important; --muted:#526575!important; --bg:#fff!important; --panel:#fff!important; --panel-2:#fff!important; --form-bg:#fff!important; --primary:#346786!important; --border:#ced9e2!important; --border-subtle:#dce3e9!important; }
+:root { --qvc-bg:#fff!important; --qvc-surface:#fff!important; --qvc-surface-inset:#fff!important; --qvc-text:#172b3a!important; --qvc-muted:#42576a!important; --qvc-primary:#346786!important; --qvc-primary-soft:#eef3f7!important; --qvc-border:#ced9e2!important; color-scheme: light !important; --text:#172b3a!important; --text-soft:#42576a!important; --muted:#526575!important; --bg:#fff!important; --panel:#fff!important; --panel-2:#fff!important; --form-bg:#fff!important; --primary:#346786!important; --border:#ced9e2!important; --border-subtle:#dce3e9!important; }
 * { box-sizing:border-box; }
 html,body { margin:0!important; padding:0!important; width:100%!important; min-width:0!important; background:#fff!important; color:#172b3a!important; font-family:Arial,Helvetica,sans-serif!important; overflow:visible!important; }
 body { display:block!important; font-size:11pt; line-height:1.55; }

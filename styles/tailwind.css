@@ -4,5 +4,8 @@
 @theme {
   --color-qvc: #346786;
   --color-qvc-dark: #234b65;
-  --color-qvc-soft: #e9f2f8;
+  --color-qvc-soft: #203d52;
+  --color-qvc-canvas: #111c27;
+  --color-qvc-panel: #1a2b3b;
+  --color-qvc-text: #eaf2f8;
 }

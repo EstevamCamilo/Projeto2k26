@@ -1,125 +1,153 @@
 body {
-    margin: 0px;
+  margin: 0px;
 }
 #cabecalho {
-    border: 1px solid rgb(0, 0, 0);
-    background-color: rgb(52, 103, 134);
-    display: flex;
+  border: 1px solid rgb(0, 0, 0);
+  background-color: var(--qvc-surface);
+  display: flex;
 }
 #lg {
-    margin-top: 0px;
-    margin-left: 14rem;
-    width: 33%;
-    font-family: sans-serif;
+  margin-top: 0px;
+  margin-left: 14rem;
+  width: 33%;
+  font-family: sans-serif;
 }
 #n {
-    text-align: center;
-    font-family: sans-serif;
-    font-size: 1rem;
+  text-align: center;
+  font-family: sans-serif;
+  font-size: 1rem;
 }
 .s {
-    font-size: 1.2rem;
+  font-size: 1.2rem;
 }
 #b {
-    padding: 0.1rem;
-    border: 1px solid rgb(100, 100, 100);
-    background-color: rgb(255, 255, 255);
-    border-radius: 0.5rem;
-    cursor: pointer;
-    top: 0.5rem;
+  padding: 0.1rem;
+  border: 1px solid rgb(100, 100, 100);
+  background-color: rgb(255, 255, 255);
+  border-radius: 0.5rem;
+  cursor: pointer;
+  top: 0.5rem;
 }
 #vb {
-    position: absolute;
-    top: 0.5rem;
-    left: 0.5rem;
-    padding: 0.1rem;
-    border-radius: 0.5rem;
-    border: 1px solid rgb(100, 100, 100);
-    background-color: white;
-    cursor: pointer;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.5rem;
+  padding: 0.1rem;
+  border-radius: 0.5rem;
+  border: 1px solid rgb(100, 100, 100);
+  background-color: white;
+  cursor: pointer;
 }
 #vt {
-    margin-right: 2rem;
+  margin-right: 2rem;
 }
 #b {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
+  position: absolute;
+  top: 0.5rem;
+  right: 0.5rem;
 }
 #mn {
-    color: white;
-    margin-top: 0.5rem;
-    margin-bottom: 0.5rem;
-    margin-left: 41%;
-    margin-right: auto;
-    text-shadow: 1px 1px black;
-    font-size: 2rem;
+  color: white;
+  margin-top: 0.5rem;
+  margin-bottom: 0.5rem;
+  margin-left: 41%;
+  margin-right: auto;
+  text-shadow: 1px 1px black;
+  font-size: 2rem;
 }
 * {
-    font-family: sans-serif;
+  font-family: sans-serif;
 }
 
 h2 {
-    margin:0;
+  margin: 0;
 }
 
 th {
-    border: 1px solid black;
-    width: 80px;
+  border: 1px solid var(--qvc-border);
+  width: 80px;
 }
 th:hover {
-    cursor: pointer;
+  cursor: pointer;
 }
 .naometais {
-    background-color: greenyellow;
+  background-color: #263c31;
+  color: #bcdfb8;
 }
 
 .metaisalcalinos {
-    background-color: orange;
+  background-color: #403126;
+  color: #f2c79f;
 }
 
 .semimetais {
-    background-color: cadetblue;
+  background-color: #214044;
+  color: #a6d8d9;
 }
 
 .outrosmetais {
-    background-color: cornflowerblue;
+  background-color: #243b53;
+  color: #bad9ee;
 }
 
 .gasesnobres {
-    background-color: royalblue;
+  background-color: #302e4c;
+  color: #d3c4f6;
 }
 
 .metaisalcalinosterrosos {
-    background-color: yellow;
+  background-color: #3e3924;
+  color: #e5da9c;
 }
 
 .halogenios {
-    background-color: aqua;
+  background-color: #1f3e4b;
+  color: #a8d7eb;
 }
 
 .metaisdetransicao {
-    background-color: pink;
+  background-color: #402e3d;
+  color: #e9bfd6;
 }
 
 .lantanideos {
-    background-color: lightblue;
+  background-color: #263951;
+  color: #c0d8f0;
 }
 
 .actinidios {
-    background-color: mediumorchid;
+  background-color: #3a2d4c;
+  color: #d7c1ed;
 }
 #janela {
-    padding: 10px;
-    border: 0;
-    border-radius: 10px 10px;
+  padding: 10px;
+  border: 0;
+  border-radius: 10px 10px;
 }
 #janela > button {
-    position: absolute;
-    float: left;
+  position: absolute;
+  float: left;
 }
 #frame {
-    width: 80vw;
-    height: 80vh;
-    border: 0;
+  width: 80vw;
+  height: 80vh;
+  border: 0;
+}
+#janela {
+  background: var(--qvc-surface);
+  color: var(--qvc-text);
+  border: 1px solid var(--qvc-border);
+}
+#janela > button {
+  background: var(--qvc-surface-inset);
+  color: var(--qvc-text);
+  border: 1px solid var(--qvc-border);
+  border-radius: 8px;
+}
+@media print {
+  th {
+    background: white !important;
+    color: #172b3a !important;
+    border-color: #a7bbc9 !important;
+  }
 }

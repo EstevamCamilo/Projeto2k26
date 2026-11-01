@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { readdir, readFile } from 'node:fs/promises';
 import { tools } from '../../Biblioteca/shared/catalog.js';
 
-test('Hub: busca sem acentos, favoritos, temas e acessibilidade', async ({ page }) => {
+test('Hub: busca sem acentos, favoritos e acessibilidade', async ({ page }) => {
   await page.goto('/Biblioteca/index.html');
   await expect(page.locator('#hub-tools .hub-tool-card')).toHaveCount(tools.length);
   await page

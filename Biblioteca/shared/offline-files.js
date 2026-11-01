@@ -1,4 +1,4 @@
-self.QVC_CACHE_VERSION="f430983d3d3e";
+self.QVC_CACHE_VERSION="c897df83ed46";
 self.QVC_OFFLINE_FILES=[
   "./Atividades/atividades.css",
   "./Atividades/atividades.js",
@@ -62,6 +62,7 @@ self.QVC_OFFLINE_FILES=[
   "./Tabela%20Periodica/main.js",
   "./TutoriaisCode/Abas%20Claro.html",
   "./TutoriaisCode/Abas%20Escuro.html",
+  "./TutoriaisCode/tutorial.css",
   "./app.js",
   "./index.html",
   "./manifest.webmanifest",

@@ -1,11 +1,11 @@
 :root {
-  --exam-blue: #346786;
-  --exam-blue-dark: #244d67;
-  --exam-ink: #22384a;
-  --exam-muted: #607384;
-  --exam-line: #dce5ec;
-  --exam-background: #f3f7fa;
-  --exam-soft: #eaf3f8;
+  --exam-blue: var(--qvc-primary, #9bc6e1);
+  --exam-blue-dark: var(--qvc-button-hover, #3b7394);
+  --exam-ink: var(--qvc-text, #eaf2f8);
+  --exam-muted: var(--qvc-muted, #b2c4d2);
+  --exam-line: var(--qvc-border, #30485b);
+  --exam-background: var(--qvc-bg, #111c27);
+  --exam-soft: var(--qvc-primary-soft, #203d52);
 }
 * {
   box-sizing: border-box;
@@ -71,8 +71,8 @@ textarea:focus-visible {
   left: 14px;
   top: -80px;
   z-index: 1000;
-  background: var(--exam-blue);
-  color: white;
+  background: var(--qvc-button, #346786);
+  color: #fff;
   padding: 12px 18px;
   border-radius: 10px;
 }
@@ -141,7 +141,7 @@ textarea:focus-visible {
     background 0.15s,
     transform 0.15s;
   color: var(--exam-ink);
-  background: white;
+  background: var(--qvc-surface, #1a2b3b);
 }
 .exam-button svg {
   width: 18px;
@@ -152,7 +152,7 @@ textarea:focus-visible {
   transform: translateY(-1px);
 }
 .exam-button-primary {
-  background: var(--exam-blue);
+  background: var(--qvc-button, #346786);
   color: #fff;
 }
 .exam-button-primary:hover:not(:disabled) {
@@ -160,7 +160,7 @@ textarea:focus-visible {
 }
 .exam-button-outline {
   border-color: var(--exam-line);
-  background: #fff;
+  background: var(--qvc-surface, #1a2b3b);
 }
 .exam-button-outline:hover:not(:disabled) {
   border-color: var(--exam-blue);
@@ -174,7 +174,7 @@ textarea:focus-visible {
   display: flex;
   align-items: center;
   gap: 35px;
-  background: #fff;
+  background: var(--qvc-surface, #1a2b3b);
   border: 1px solid var(--exam-line);
   border-radius: 18px;
   padding: 19px 24px;
@@ -217,7 +217,7 @@ textarea:focus-visible {
 }
 .exam-panel {
   border: 1px solid var(--exam-line);
-  background: #fff;
+  background: var(--qvc-surface, #1a2b3b);
   border-radius: 18px;
   padding: 23px;
   box-shadow: 0 4px 20px #22384a04;
@@ -268,7 +268,7 @@ textarea:focus-visible {
   min-height: 42px;
   border: 1px solid var(--exam-line);
   border-radius: 9px;
-  background: #fff;
+  background: var(--qvc-surface-inset, #142431);
   color: var(--exam-ink);
   padding: 10px 11px;
   line-height: 1.5;
@@ -280,7 +280,7 @@ textarea:focus-visible {
 }
 .exam-fields input::placeholder,
 .exam-fields textarea::placeholder {
-  color: #697f8f;
+  color: var(--qvc-muted, #b2c4d2);
   font-weight: 400;
   opacity: 1;
 }
@@ -382,9 +382,9 @@ textarea:focus-visible {
 }
 .exam-error {
   padding: 11px 13px;
-  border: 1px solid #e5bbc0;
-  background: #fff2f4;
-  color: #943d4a;
+  border: 1px solid #744653;
+  background: #38242f;
+  color: #ffc3ce;
   font-size: 12px;
   border-radius: 8px;
 }
@@ -444,7 +444,7 @@ textarea:focus-visible {
   padding: 12px;
   border: 1px solid var(--exam-line);
   border-radius: 10px;
-  background: #fbfcfe;
+  background: var(--qvc-bg, #111c27);
 }
 .exam-list-number {
   width: 27px;
@@ -711,15 +711,15 @@ textarea:focus-visible {
   padding: 14px 18px;
   border-radius: 12px;
   border: 1px solid var(--exam-line);
-  background: white;
+  background: var(--qvc-surface, #1a2b3b);
   color: var(--exam-ink);
   box-shadow: 0 7px 35px #1d3b5525;
   font-size: 12px;
 }
 .exam-notice[data-kind='error'] {
-  border-color: #e3bcc3;
-  color: #943d4a;
-  background: #fff7f8;
+  border-color: #744653;
+  color: #ffc3ce;
+  background: #38242f;
 }
 @media (max-width: 1200px) {
   .exam-app {

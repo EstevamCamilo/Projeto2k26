@@ -3,7 +3,6 @@ const PREFIX='calchub:v1:';
 function get(key, fallback){try{const raw=localStorage.getItem(PREFIX+key);return raw===null?fallback:JSON.parse(raw)}catch{return fallback}}
 function set(key,value){try{localStorage.setItem(PREFIX+key,JSON.stringify(value));return true}catch{return false}}
 export const storage={
- getTheme:()=>get('theme',null),setTheme:v=>set('theme',v),
  favorites:()=>get('favorites',[]),setFavorites:v=>set('favorites',v),
  history:()=>get('history',[]),clearHistory:()=>set('history',[]),
  stats:()=>get('stats',{}),memory:()=>get('memory',0),setMemory:v=>set('memory',v),

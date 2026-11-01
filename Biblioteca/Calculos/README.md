@@ -1,6 +1,6 @@
 # CalcHub Pro
 
-Uma central responsiva de **20 ferramentas de cálculo**, com dashboard, busca global (Ctrl+K), favoritos, histórico local, tema claro/escuro, gráficos, exportação e passos de resolução.
+Uma central responsiva de **20 ferramentas de cálculo**, com dashboard, busca global (Ctrl+K), favoritos, histórico local, visual escuro único em azul-marinho, gráficos, exportação e passos de resolução.
 
 ## Executar
 

@@ -1,0 +1,90 @@
+/* Ambos os endereços históricos usam o mesmo visual oficial da plataforma. */
+body {
+  margin: 0;
+  background: var(--qvc-bg);
+  color: var(--qvc-text);
+}
+td {
+  padding-inline: 0.5rem;
+}
+#abas {
+  padding: 16px 22px;
+  background: var(--qvc-surface);
+  color: var(--qvc-text);
+  border-bottom: 1px solid var(--qvc-border);
+}
+.aba,
+.abaSel {
+  display: inline-block;
+  padding: 10px 14px;
+  border: 1px solid var(--qvc-border);
+  border-radius: 10px;
+  margin: 3px;
+  cursor: pointer;
+  color: var(--qvc-muted);
+  background: var(--qvc-surface-inset);
+}
+.aba:hover,
+.abaSel {
+  background: var(--qvc-primary-soft);
+  color: var(--qvc-primary);
+}
+#conteudo {
+  padding: 24px;
+}
+#inicio {
+  padding: 25px;
+  background: var(--qvc-surface);
+  color: var(--qvc-text);
+}
+#nome {
+  color: var(--qvc-text);
+}
+.codigo {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  width: min(90vw, 100%);
+}
+.cod,
+pre,
+code {
+  font-family: ui-monospace, SFMono-Regular, Consolas, monospace;
+  background: var(--qvc-surface-inset);
+  color: var(--qvc-text);
+  border: 1px solid var(--qvc-border);
+  border-radius: 6px;
+}
+input,
+select,
+textarea {
+  background: var(--qvc-surface-inset);
+  color: var(--qvc-text);
+  border: 1px solid var(--qvc-border);
+  border-radius: 8px;
+  padding: 8px;
+}
+button {
+  background: var(--qvc-button);
+  color: #fff;
+  border: 1px solid var(--qvc-border);
+  border-radius: 8px;
+  padding: 8px 12px;
+}
+a {
+  color: var(--qvc-primary);
+}
+hr {
+  border: 0;
+  border-top: 1px solid var(--qvc-border);
+}
+@media print {
+  .codigo,
+  .cod,
+  pre,
+  code {
+    background: #fff;
+    color: #172b3a;
+  }
+  #abas {
+    display: none;
+  }
+}

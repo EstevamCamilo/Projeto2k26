@@ -1,11 +1,11 @@
 body[data-qvc-hub] {
-  --hub-bg: #f7f9fc;
-  --hub-surface: #fff;
-  --hub-text: #233749;
-  --hub-muted: #5c7080;
-  --hub-border: #e2eaf0;
-  --hub-primary: #346786;
-  --hub-soft: #eaf2f8;
+  --hub-bg: var(--qvc-bg);
+  --hub-surface: var(--qvc-surface);
+  --hub-text: var(--qvc-text);
+  --hub-muted: var(--qvc-muted);
+  --hub-border: var(--qvc-border);
+  --hub-primary: var(--qvc-primary);
+  --hub-soft: var(--qvc-primary-soft);
   margin: 0;
   background: var(--hub-bg);
   color: var(--hub-text);
@@ -15,21 +15,6 @@ body[data-qvc-hub] {
     'Segoe UI',
     sans-serif;
   min-height: 100vh;
-}
-html[data-qvc-theme='dark'] body[data-qvc-hub] {
-  --hub-bg: #111c27;
-  --hub-surface: #1a2b3b;
-  --hub-text: #eaf2f8;
-  --hub-muted: #b2c4d2;
-  --hub-border: #30485b;
-  --hub-primary: #9bc6e1;
-  --hub-soft: #203d52;
-}
-html[data-qvc-theme='kids'] body[data-qvc-hub] {
-  --hub-bg: #fffbf2;
-  --hub-surface: #fffef9;
-  --hub-soft: #eaf2e8;
-  --hub-primary: #376b60;
 }
 body[data-qvc-hub] * {
   box-sizing: border-box;
@@ -78,7 +63,7 @@ body[data-qvc-hub] select:focus-visible {
   position: fixed;
   top: -80px;
   left: 15px;
-  background: var(--hub-primary);
+  background: var(--qvc-button);
   color: white !important;
   padding: 12px;
   z-index: 200;
@@ -462,46 +447,46 @@ body[data-qvc-hub] select:focus-visible {
   margin-top: 3px;
 }
 .tone-blue {
-  background: #e5eef8;
-  color: #346786;
+  background: #1e3c54;
+  color: #a3cce8;
 }
 .tone-teal {
-  background: #e3f0f1;
-  color: #307277;
+  background: #1b3c43;
+  color: #a3d8da;
 }
 .tone-orange {
-  background: #faeddc;
-  color: #935e29;
+  background: #403224;
+  color: #f2c794;
 }
 .tone-green {
-  background: #e6f0e4;
-  color: #477342;
+  background: #253c30;
+  color: #b0d8ae;
 }
 .tone-violet {
-  background: #eee9f8;
-  color: #6f5996;
+  background: #322d47;
+  color: #d0bdf4;
 }
 .tone-rose {
-  background: #f7e8ee;
-  color: #945975;
+  background: #422c3b;
+  color: #efbfd4;
 }
 .text-blue {
-  color: #346786;
+  color: #a3cce8;
 }
 .text-teal {
-  color: #307277;
+  color: #a3d8da;
 }
 .text-orange {
-  color: #89551e;
+  color: #f2c794;
 }
 .text-green {
-  color: #3e6e3a;
+  color: #b0d8ae;
 }
 .text-violet {
-  color: #6f5996;
+  color: #d0bdf4;
 }
 .text-rose {
-  color: #945975;
+  color: #efbfd4;
 }
 .hub-section {
   margin-top: 33px;
@@ -641,10 +626,10 @@ body[data-qvc-hub] select:focus-visible {
   place-items: center;
   width: 32px;
   height: 32px;
-  border: 1px solid #fff;
+  border: 1px solid var(--hub-border);
   border-radius: 50%;
-  background: #ffffffe6;
-  color: #637482;
+  background: var(--qvc-surface-inset);
+  color: var(--hub-muted);
   z-index: 2;
 }
 .hub-favorite svg {
@@ -652,7 +637,7 @@ body[data-qvc-hub] select:focus-visible {
   height: 18px !important;
 }
 .hub-favorite.is-favorite {
-  color: #93701d;
+  color: #f4cf70;
 }
 .hub-favorite.is-favorite svg {
   fill: #f4cf70;
@@ -699,8 +684,8 @@ body[data-qvc-hub] select:focus-visible {
   color: var(--hub-muted);
 }
 .hub-free {
-  background: #edf4e9;
-  color: #466a3c;
+  background: #253c30;
+  color: #b0d8ae;
   border-radius: 5px;
   padding: 2px 6px;
   font-size: 9px;

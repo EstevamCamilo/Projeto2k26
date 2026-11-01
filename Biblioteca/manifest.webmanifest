@@ -1,6 +1,24 @@
 {
-  "name":"QVC — Biblioteca educacional", "short_name":"QVC Educação", "lang":"pt-BR",
-  "description":"Atividades escolares, calculadoras e ferramentas para professores.",
-  "start_url":"./index.html", "scope":"./", "display":"standalone", "theme_color":"#346786", "background_color":"#f7f9fc",
-  "icons":[{"src":"shared/app-icon-192.png","sizes":"192x192","type":"image/png"},{"src":"shared/app-icon-512.png","sizes":"512x512","type":"image/png","purpose":"any maskable"}]
+  "name": "QVC — Biblioteca educacional",
+  "short_name": "QVC Educação",
+  "lang": "pt-BR",
+  "description": "Atividades escolares, calculadoras e ferramentas para professores.",
+  "start_url": "./index.html",
+  "scope": "./",
+  "display": "standalone",
+  "theme_color": "#111c27",
+  "background_color": "#111c27",
+  "icons": [
+    {
+      "src": "shared/app-icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "shared/app-icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
+    }
+  ]
 }

@@ -16,5 +16,5 @@
 <symbol id="history" viewBox="0 0 24 24"><path d="M3 11a9 9 0 1 1 2 7M3 4v7h7m2-5v6l4 2"/></symbol>
 <symbol id="heart" viewBox="0 0 24 24"><path d="M12 21 3 12a6 6 0 0 1 9-8 6 6 0 0 1 9 8Z"/></symbol>
 <symbol id="print" viewBox="0 0 24 24"><path d="M6 8V2h12v6M6 17H2V8h20v9h-4M6 14h12v8H6Z"/></symbol>
-<symbol id="sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 1v2m0 18v2M1 12h2m18 0h2M4 4l2 2m12 12 2 2M4 20l2-2M18 6l2-2"/></symbol>
+
 </svg>

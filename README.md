@@ -28,7 +28,7 @@ Use um servidor HTTP: módulos JavaScript e a impressão não são compatíveis 
 
 ## Recursos
 
-- Hub responsivo com busca sem acentos, filtros, favoritos, visitas e temas claro/escuro/infantil.
+- Hub responsivo com busca sem acentos, filtros, favoritos, visitas e visual escuro único em azul-marinho.
 - “Voltar ao Hub” e “Imprimir / Exportar PDF” em todas as páginas internas.
 - Impressão A4 com Escola, Nome do Aluno, Turma e Data, sem menus ou botões.
 - Gera Provas com múltipla escolha, dissertativas, V/F, pontos, total, edição e ordenação.
@@ -40,6 +40,14 @@ Use um servidor HTTP: módulos JavaScript e a impressão não são compatíveis 
 - Jogos com regras corrigidas, memória sem cronômetro e puzzles que sempre têm solução.
 - Sugestões pedagógicas locais por modelos, sem IA generativa ou envio de dados.
 - PWA com arquivos essenciais disponíveis offline após o primeiro carregamento com rede.
+
+## Identidade visual
+
+A plataforma usa um único visual oficial: fundo azul-marinho `#111c27`, painéis `#1a2b3b`,
+bordas `#30485b` e texto claro `#eaf2f8`. Os tokens compartilhados estão em
+`Biblioteca/shared/platform.css`; os módulos e o Hub consomem a mesma paleta.
+O visual é fixo e independe da preferência de cores do sistema e de configurações antigas.
+Folhas escolares mantêm fundo de papel e a impressão usa texto escuro para uma boa leitura.
 
 ## Impressão e dados
 

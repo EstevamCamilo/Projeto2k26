@@ -1,10 +1,10 @@
 :root {
-  --early-blue: #346786;
-  --early-blue-dark: #234d68;
-  --early-ink: #23384a;
-  --early-muted: #617586;
-  --early-line: #dbe5ed;
-  --early-canvas: #f4f8fb;
+  --early-blue: var(--qvc-primary, #9bc6e1);
+  --early-blue-dark: var(--qvc-button-hover, #3b7394);
+  --early-ink: var(--qvc-text, #eaf2f8);
+  --early-muted: var(--qvc-muted, #b2c4d2);
+  --early-line: var(--qvc-border, #30485b);
+  --early-canvas: var(--qvc-bg, #111c27);
 }
 * {
   box-sizing: border-box;
@@ -37,7 +37,7 @@ button:disabled {
   opacity: 0.6;
 }
 *:focus-visible {
-  outline: 3px solid #346786;
+  outline: 3px solid var(--qvc-primary, #9bc6e1);
   outline-offset: 4px;
 }
 .early-page {
@@ -62,8 +62,8 @@ button:disabled {
   top: -80px;
   left: 15px;
   z-index: 999;
-  background: var(--early-blue);
-  color: white;
+  background: var(--qvc-button, #346786);
+  color: #fff;
   padding: 12px;
   border-radius: 8px;
 }
@@ -97,7 +97,7 @@ button:disabled {
   gap: 25px;
 }
 .early-controls {
-  background: #fff;
+  background: var(--qvc-surface, #1a2b3b);
   border: 1px solid var(--early-line);
   border-radius: 20px;
   padding: 23px;
@@ -128,11 +128,11 @@ button:disabled {
 .early-controls textarea {
   width: 100%;
   min-height: 42px;
-  border: 1px solid #cad9e4;
+  border: 1px solid var(--qvc-border, #30485b);
   border-radius: 9px;
   padding: 9px 11px;
-  color: #23384a;
-  background: white;
+  color: var(--qvc-text, #eaf2f8);
+  background: var(--qvc-surface-inset, #142431);
 }
 .early-controls textarea {
   min-height: 90px;
@@ -187,8 +187,8 @@ button:disabled {
   gap: 8px;
   min-height: 42px;
   padding: 10px 15px;
-  background: var(--early-blue);
-  border: 1px solid var(--early-blue);
+  background: var(--qvc-button, #346786);
+  border: 1px solid var(--qvc-button, #346786);
   border-radius: 10px;
   color: #fff;
   font-size: 12px;
@@ -205,11 +205,11 @@ button:disabled {
 }
 .early-button-secondary {
   color: var(--early-blue);
-  background: #edf4f8;
-  border-color: #d6e3ec;
+  background: var(--qvc-primary-soft, #203d52);
+  border-color: var(--qvc-border, #30485b);
 }
 .early-button-secondary:hover {
-  background: #dfeef6;
+  background: var(--qvc-primary-soft, #203d52);
 }
 .early-control-actions {
   display: grid;
@@ -231,7 +231,7 @@ button:disabled {
   align-items: center;
   justify-content: space-between;
   border: 1px solid var(--early-line);
-  background: #fff;
+  background: var(--qvc-surface, #1a2b3b);
   border-radius: 14px;
   padding: 12px 15px;
   margin-bottom: 18px;
@@ -332,7 +332,7 @@ button:disabled {
 .early-palette-bar {
   border: 1px solid var(--early-line);
   border-radius: 13px;
-  background: #fff;
+  background: var(--qvc-surface, #1a2b3b);
   padding: 15px;
   margin-bottom: 18px;
 }
@@ -419,7 +419,7 @@ button:disabled {
 }
 .early-status {
   min-height: 1.6em;
-  color: #346786;
+  color: var(--qvc-primary, #9bc6e1);
 }
 .early-footer {
   color: var(--early-muted);

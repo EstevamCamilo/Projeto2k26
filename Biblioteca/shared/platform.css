@@ -1,32 +1,23 @@
-/* QVC: azul original #346786, componentes locais e compatibilidade progressiva. */
+/* Tema oficial único QVC: azul-marinho, superfícies suaves e contraste acessível. */
 :root {
-  --qvc-primary: #346786;
-  --qvc-primary-hover: #254e68;
-  --qvc-primary-soft: #eaf3f8;
-  --qvc-bg: #f5f8fb;
-  --qvc-surface: #fff;
-  --qvc-text: #1c3346;
-  --qvc-muted: #556d80;
-  --qvc-border: #dce5ed;
-  --qvc-radius: 16px;
-  --qvc-shadow: 0 8px 28px #173b5b0a;
-  --qvc-focus: #1d77ad;
-}
-[data-qvc-theme='dark'] {
-  --qvc-bg: #111d28;
+  color-scheme: dark;
+  --qvc-bg: #111c27;
   --qvc-surface: #1a2b3b;
-  --qvc-text: #edf5fb;
-  --qvc-muted: #b2c6d6;
-  --qvc-border: #354b60;
-  --qvc-primary: #8bc3e7;
-  --qvc-primary-hover: #b1d8f0;
-  --qvc-primary-soft: #223e52;
-}
-[data-qvc-theme='kids'] {
-  --qvc-bg: #fbfaf2;
-  --qvc-surface: #fffef8;
-  --qvc-primary-soft: #e7f3f6;
-  --qvc-radius: 22px;
+  --qvc-surface-inset: #142431;
+  --qvc-primary-soft: #203d52;
+  --qvc-text: #eaf2f8;
+  --qvc-muted: #b2c4d2;
+  --qvc-border: #30485b;
+  --qvc-primary: #9bc6e1;
+  --qvc-primary-hover: #c3e1f1;
+  --qvc-button: #346786;
+  --qvc-button-hover: #3b7394;
+  --qvc-success: #a8d9b4;
+  --qvc-error: #f1b1bf;
+  --qvc-warning: #f0cc9c;
+  --qvc-radius: 16px;
+  --qvc-shadow: 0 8px 28px #00000024;
+  --qvc-focus: #9bc6e1;
 }
 .qvc-platform-bar,
 .qvc-dialog,
@@ -93,7 +84,7 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  background: var(--qvc-primary);
+  background: var(--qvc-button);
   color: #fff;
   border: 1px solid transparent;
   border-radius: 10px;
@@ -115,7 +106,7 @@
   text-align: center;
 }
 .qvc-button:hover:not(:disabled) {
-  background: var(--qvc-primary-hover);
+  background: var(--qvc-button-hover);
   color: #fff;
 }
 .qvc-button:active:not(:disabled) {
@@ -381,7 +372,7 @@ body[data-qvc-modern] textarea {
   top: -70px;
   z-index: 1000;
   padding: 12px 18px;
-  background: var(--qvc-primary);
+  background: var(--qvc-button);
   color: #fff;
   border-radius: 8px;
 }
@@ -394,7 +385,7 @@ body[data-qvc-legacy] {
 }
 body[data-qvc-legacy] #fundo {
   position: relative !important;
-  background: var(--qvc-primary) !important;
+  background: var(--qvc-surface) !important;
   display: flex !important;
   align-items: center !important;
   gap: 15px !important;
@@ -422,11 +413,11 @@ body[data-qvc-legacy] #menu select {
   min-height: 41px;
   margin: 0 !important;
   padding: 8px 12px;
-  border: 1px solid #c6d6e2;
+  border: 1px solid var(--qvc-border);
   border-radius: 9px;
   font-size: 14px;
-  background: #fff;
-  color: #1c3346;
+  background: var(--qvc-surface-inset);
+  color: var(--qvc-text);
   max-width: 100%;
 }
 body[data-qvc-legacy] #menu button:not(#vb):not(#b):not(#c) {
@@ -436,8 +427,8 @@ body[data-qvc-legacy] #menu button:not(#vb):not(#b):not(#c) {
   margin: 0 !important;
   border: 1px solid #ffffff80 !important;
   border-radius: 9px !important;
-  color: #1b3f57 !important;
-  background: #fff !important;
+  color: var(--qvc-text) !important;
+  background: var(--qvc-button) !important;
   font-size: 14px !important;
   font-weight: 650;
 }
@@ -460,7 +451,7 @@ body[data-qvc-legacy] #c {
 }
 body[data-qvc-legacy] > #cabecalho,
 body[data-qvc-legacy] > #b5 {
-  background: var(--qvc-primary) !important;
+  background: var(--qvc-surface) !important;
   color: #fff !important;
   border: 0 !important;
   padding: 24px 28px !important;
@@ -548,7 +539,7 @@ body[data-qvc-legacy] #rodape {
   padding: 18px !important;
   font-size: 12px !important;
   line-height: 1.8 !important;
-  background: var(--qvc-primary) !important;
+  background: var(--qvc-surface) !important;
   border-radius: 12px !important;
   color: white !important;
 }
@@ -586,16 +577,11 @@ body[data-qvc-legacy] #conteudo td {
 }
 /* CalcHub possui layout próprio: só desloca a navegação fixa pela barra global. */
 body[data-qvc-legacy]:has(.app-shell) {
-  background: var(--bg, #f5f8fb);
-  color: var(--text, #1c3346);
+  background: var(--bg, var(--qvc-bg));
+  color: var(--text, var(--qvc-text));
   --primary: #76b4da;
   --primary-2: #4b93be;
   --blue: #8bbfe0;
-}
-html[data-theme='light'] body[data-qvc-legacy]:has(.app-shell) {
-  --primary: #346786;
-  --primary-2: #4186af;
-  --blue: #346786;
 }
 body[data-qvc-legacy] .app-shell .sidebar {
   top: var(--qvc-toolbar-height, 71px) !important;
@@ -720,6 +706,17 @@ body[data-qvc-legacy] > table {
   }
 }
 @media print {
+  :root {
+    color-scheme: light;
+    --qvc-bg: #fff;
+    --qvc-surface: #fff;
+    --qvc-surface-inset: #fff;
+    --qvc-text: #172b3a;
+    --qvc-muted: #42576a;
+    --qvc-primary: #346786;
+    --qvc-primary-soft: #eef3f7;
+    --qvc-border: #ced9e2;
+  }
   @page {
     size: A4 portrait;
     margin: 12mm;

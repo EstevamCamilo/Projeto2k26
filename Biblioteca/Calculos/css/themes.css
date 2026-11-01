@@ -1,2 +1,26 @@
-:root{color-scheme:dark;--bg:#0b0f1c;--sidebar:#101525;--panel:#141a2a;--panel-2:#171f31;--panel-hover:#20293c;--border:#263044;--border-subtle:#202a3b;--text:#eff2fc;--text-soft:#abb6cc;--muted:#77859e;--blue:#7798ff;--primary:#8177ff;--primary-2:#4e9aff;--cyan:#52d9e9;--green:#61d9a3;--amber:#f8bd69;--red:#f27d9a;--shadow:0 15px 45px rgba(0,0,0,.18);--surface-glow:rgba(115,100,255,.095);--form-bg:#101626;--chart-grid:#2a3447;--scroll-thumb:#39465c}
-:root[data-theme="light"]{color-scheme:light;--bg:#f6f8fd;--sidebar:#ffffff;--panel:#ffffff;--panel-2:#f7f8fd;--panel-hover:#f0f3fb;--border:#e3e9f3;--border-subtle:#edf0f6;--text:#202944;--text-soft:#57637a;--muted:#8690a5;--blue:#4a71dc;--primary:#695ce9;--primary-2:#3476eb;--cyan:#0a9fb6;--green:#209a70;--amber:#bb7f21;--red:#d95877;--shadow:0 12px 32px rgba(34,54,93,.055);--surface-glow:rgba(115,100,255,.06);--form-bg:#f8faff;--chart-grid:#e8ecf3;--scroll-thumb:#c5cfe0}
+/* Paleta oficial única: azul-marinho, superfícies suaves e texto de alto contraste. */
+:root {
+  color-scheme: dark;
+  --bg: #111c27;
+  --sidebar: #1a2b3b;
+  --panel: #1a2b3b;
+  --panel-2: #203d52;
+  --panel-hover: #294c64;
+  --border: #30485b;
+  --border-subtle: #2b4154;
+  --text: #eaf2f8;
+  --text-soft: #c5d5e1;
+  --muted: #b2c4d2;
+  --blue: #9bc6e1;
+  --primary: #9bc6e1;
+  --primary-2: #6da9ca;
+  --cyan: #83d7e1;
+  --green: #88d6b0;
+  --amber: #f0c483;
+  --red: #f2a0b1;
+  --shadow: 0 15px 45px rgb(0 0 0 / 18%);
+  --surface-glow: rgb(112 171 205 / 12%);
+  --form-bg: #142534;
+  --chart-grid: #30485b;
+  --scroll-thumb: #486a81;
+}

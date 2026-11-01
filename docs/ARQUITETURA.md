@@ -1,14 +1,14 @@
 # Arquitetura e validação
 
 O checkout restaurado tinha 35 páginas HTML e o acervo em `Biblioteca/`. A atualização mantém
-as URLs e usa módulos nativos, sem impor uma migração para React. O azul original `#346786`
-permanece como cor principal. Cartões, espaçamentos, foco e controles foram harmonizados.
+as URLs e usa módulos nativos, sem impor uma migração para React. O visual oficial é escuro em azul-marinho `#111c27`, com painéis `#1a2b3b` e
+acentos na família azul original `#346786`. Cartões, espaçamentos, foco e controles foram harmonizados.
 
 ## Organização
 
 - `Biblioteca/index.html`: Hub e descoberta de ferramentas.
 - `Biblioteca/shared/catalog.js`: fonte dos 38 destinos e categorias.
-- `shared/hub.js`, `hub-state.js` e `hub.css`: navegação, pesquisa, favoritos e preferências.
+- `shared/hub.js`, `hub-state.js` e `hub.css`: navegação, pesquisa, favoritos e visitas.
 - `shared/platform.js` e `platform.css`: navegação universal, cabeçalho e impressão segura.
 - `Gera Provas/exam-model.mjs`: validação pura, pontos e ordenação; `exams.js` controla a interface.
 - `HorarioEscolar/agenda-model.js`: cadastros, referências, importação e conflitos temporais.
@@ -59,3 +59,10 @@ O PDF usa o mecanismo nativo do navegador; escolha a opção de salvar no diálo
 A aplicação não inclui um backend de IA, contas ou sincronização entre aparelhos. As sugestões
 do Hub são modelos locais explicitamente identificados. O PWA guarda recursos essenciais; as
 ilustrações grandes dos contos não são baixadas em massa durante a instalação inicial.
+
+## Paleta única
+
+Os tokens da interface são definidos em shared/platform.css e reaproveitados por Hub,
+calculadoras, professores, jogos e atividades. Não há escolha visual nem detecção da preferência
+de cores do sistema. Os endereços históricos dos tutoriais compartilham o mesmo tutorial.css.
+As folhas e regras de impressão conservam cores de papel; isso não representa outro visual da interface.

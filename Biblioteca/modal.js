@@ -8,12 +8,12 @@ var modal = {
         dialog.id = dialogId;
         dialog.setAttribute('aria-label', 'Informações da Biblioteca QVC');
         dialog.className = 'qvc-legacy-dialog';
-        dialog.style.cssText = 'max-width:min(92vw,560px);border:1px solid #d9e4ed;border-radius:20px;padding:28px;color:#24364b;background:white;box-shadow:0 24px 70px #17384930;';
+        dialog.style.cssText = 'max-width:min(92vw,560px);border:1px solid var(--qvc-border);border-radius:20px;padding:28px;color:var(--qvc-text);background:var(--qvc-surface);box-shadow:0 24px 70px #00000050;';
         const close = document.createElement('button');
         close.type = 'button';
         close.textContent = 'Fechar ×';
         close.setAttribute('aria-label', 'Fechar informações');
-        close.style.cssText = 'display:block;margin:0 0 16px auto;padding:8px 12px;border:1px solid #d9e4ed;border-radius:8px;background:white;color:#346786;cursor:pointer;';
+        close.style.cssText = 'display:block;margin:0 0 16px auto;padding:8px 12px;border:1px solid var(--qvc-border);border-radius:8px;background:var(--qvc-surface-inset);color:var(--qvc-primary);cursor:pointer;';
         close.addEventListener('click', () => dialog.close());
         dialog.append(close);
         if (content instanceof Node) dialog.append(content);
@@ -76,7 +76,7 @@ window.QVCLegacy = {
         }
         status.setAttribute('role', error ? 'alert' : 'status');
         status.textContent = message;
-        status.style.cssText = 'margin:16px auto;max-width:900px;padding:10px 16px;color:' + (error ? '#9f2d3c' : '#346786') + ';font:14px/1.6 system-ui,sans-serif;';
+        status.style.cssText = 'margin:16px auto;max-width:900px;padding:10px 16px;color:' + (error ? 'var(--qvc-error)' : 'var(--qvc-primary)') + ';font:14px/1.6 system-ui,sans-serif;';
     },
     count: function (id, available, maximum) {
         const input = document.getElementById(id);

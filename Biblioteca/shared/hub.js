@@ -250,23 +250,6 @@ $('#hub-about').addEventListener('click', openAbout);
 $('#about-footer').addEventListener('click', openAbout);
 $('#close-about').addEventListener('click', () => about.close());
 about.addEventListener('close', () => aboutTrigger?.focus());
-let theme;
-try {
-  theme = localStorage.getItem('qvc-hub-theme');
-} catch {}
-if (['light', 'dark', 'kids'].includes(theme)) document.documentElement.dataset.qvcTheme = theme;
-$('#theme-toggle').addEventListener('click', () => {
-  const themes = ['light', 'dark', 'kids'];
-  const next =
-    themes[(themes.indexOf(document.documentElement.dataset.qvcTheme || 'light') + 1) % 3];
-  document.documentElement.dataset.qvcTheme = next;
-  try {
-    localStorage.setItem('qvc-hub-theme', next);
-  } catch {}
-  window.QVC?.announce(
-    `Tema ${next === 'dark' ? 'escuro' : next === 'kids' ? 'infantil' : 'claro'} ativado.`
-  );
-});
 $('#clear-history').addEventListener('click', () => {
   profile.history = [];
   saveProfile(profile);
