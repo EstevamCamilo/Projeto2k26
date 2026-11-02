@@ -8,6 +8,7 @@ import {
   QUESTION_TYPES,
   MAX_QUESTIONS,
 } from './exam-model.mjs';
+import { registerAIAdapter } from '../shared/ai.js';
 
 const STORAGE_KEY = 'qvc:exams:v2';
 const BACKUP_KEY = 'qvc:exams:v2:before-import';
@@ -644,3 +645,40 @@ resetQuestionEditor();
 render();
 $('#exam-undo-import').hidden = !previousExam;
 if (startupMessage) notice(startupMessage, 'error');
+
+registerAIAdapter({
+  kind: 'exam',
+  label: 'Gera Provas',
+  description:
+    'As questões serão acrescentadas ao fim da prova, preservando o cabeçalho e as questões existentes. Confira os gabaritos e a pontuação.',
+  maxCount: () => Math.min(20, MAX_QUESTIONS - state.questions.length),
+  apply(data) {
+    const questions = data.questions.map((question) =>
+      validateQuestion({ ...question, id: 'ai-' + crypto.randomUUID() })
+    );
+    const next = validateExam({
+      ...state,
+      metadata: state.questions.length
+        ? { ...state.metadata }
+        : { ...state.metadata, title: data.title, instructions: data.instructions },
+      questions: [...state.questions, ...questions],
+    });
+    previousExam = validateExam({
+      ...structuredClone(state),
+      metadata: { ...state.metadata, title: state.metadata.title.trim() || 'Avaliação escolar' },
+    });
+    try {
+      localStorage.setItem(BACKUP_KEY, JSON.stringify(previousExam));
+    } catch {}
+    state = next;
+    previousRemoval = null;
+    fillMetadata();
+    resetQuestionEditor();
+    render();
+    persist();
+    $('#exam-undo-import').hidden = false;
+    notice(
+      'Questões acrescentadas. Revise o gabarito e a pontuação; você pode desfazer esta aplicação.'
+    );
+  },
+});

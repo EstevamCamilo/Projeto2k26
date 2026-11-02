@@ -553,6 +553,7 @@
                     }
                 ]
             };
+            let aiWordsMetadata = null;
             const crialicao = function () {
                 const category = document.getElementById('categorias').value;
                 const candidates = Array.isArray(palavras[category]) ? palavras[category].filter(item => item && typeof item.palavra === 'string' && item.palavra.trim()) : [];
@@ -591,10 +592,11 @@
                     });
                 }
                 grid.forEach(row => row.forEach((letter, i) => { if (!letter) row[i] = String.fromCharCode(65 + Math.floor(Math.random() * 26)); }));
-                const content = QVCLegacy.prepare(document.getElementById('conteudo'), 'Caça-palavras');
+                const generated = category === 'chatgpt' ? aiWordsMetadata : null;
+                const content = QVCLegacy.prepare(document.getElementById('conteudo'), generated?.title || 'Caça-palavras');
                 const instruction = document.createElement('p');
                 instruction.className = 'qvc-wordsearch-instruction';
-                instruction.textContent = 'Encontre e circule as palavras. As letras da grade aparecem sem acentos.';
+                instruction.textContent = generated?.instructions ? generated.instructions + ' As letras da grade aparecem sem acentos.' : 'Encontre e circule as palavras. As letras da grade aparecem sem acentos.';
                 const table = document.createElement('table');
                 table.id = 'tabela';
                 table.className = 'qvc-wordsearch-grid';
@@ -622,7 +624,31 @@
                 content.append(instruction, table, list);
                 document.getElementById('Id1').replaceChildren();
             };
+            window.QVCApplyAIWords = function (data) {
+                palavras.chatgpt = data.words.map(palavra => ({ palavra, imagem: '' }));
+                aiWordsMetadata = { title: data.title, instructions: data.instructions };
+                const categories = document.getElementById('categorias');
+                if (!categories.querySelector('option[value="chatgpt"]')) {
+                    const option = document.createElement('option');
+                    option.value = 'chatgpt';
+                    option.textContent = 'Meu tema · ChatGPT';
+                    categories.append(option);
+                }
+                categories.value = 'chatgpt';
+                document.getElementById('npalavras').value = String(data.words.length);
+                crialicao();
+            };
             crialicao();
+        </script>
+        <script type="module">
+            import { registerAIAdapter } from '../shared/ai.js';
+            registerAIAdapter({
+                kind: 'words',
+                label: 'Caça-palavras',
+                description: 'Crie uma lista temática de palavras. Ao aplicar, a categoria “Meu tema · ChatGPT” será selecionada e uma nova grade será montada.',
+                maxCount: 24,
+                apply: data => window.QVCApplyAIWords(data),
+            });
         </script>
         </body>
 </html>

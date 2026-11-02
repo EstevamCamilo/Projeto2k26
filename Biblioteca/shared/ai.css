@@ -1,0 +1,227 @@
+.qvc-ai-dialog {
+  width: min(900px, calc(100vw - 28px));
+  max-height: min(90vh, 1000px);
+  margin: auto;
+  padding: 26px;
+  overflow: auto;
+  color: var(--qvc-text);
+  background: var(--qvc-surface);
+  border: 1px solid var(--qvc-border);
+  border-radius: 20px;
+  box-shadow: 0 24px 90px #0008;
+  font:
+    14px/1.6 Inter,
+    system-ui,
+    sans-serif;
+  scrollbar-width: thin;
+  scrollbar-color: #486a81 var(--qvc-surface);
+}
+.qvc-ai-dialog::backdrop {
+  background: #06101dc9;
+  backdrop-filter: blur(4px);
+}
+.qvc-ai-dialog [hidden],
+.qvc-ai-spinner[hidden] {
+  display: none !important;
+}
+.qvc-ai-dialog h2 {
+  margin: 0;
+  font-size: 23px;
+  line-height: 1.3;
+}
+.qvc-ai-dialog h3 {
+  margin: 0 0 10px;
+  font-size: 18px;
+}
+.qvc-ai-heading-row,
+.qvc-ai-actions {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+.qvc-ai-heading-row {
+  justify-content: space-between;
+  margin-bottom: 14px;
+}
+.qvc-ai-muted {
+  color: var(--qvc-muted);
+}
+.qvc-ai-context {
+  padding: 12px 15px;
+  background: var(--qvc-primary-soft);
+  border-radius: 12px;
+}
+.qvc-ai-status {
+  min-height: 1.6em;
+  color: var(--qvc-primary);
+  overflow-wrap: anywhere;
+}
+.qvc-ai-status[data-error='true'] {
+  color: var(--qvc-error);
+}
+.qvc-ai-field {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  margin-bottom: 14px;
+  font-size: 13px;
+  font-weight: 600;
+}
+.qvc-ai-dialog input,
+.qvc-ai-dialog textarea,
+.qvc-ai-dialog select {
+  width: 100%;
+  max-width: 100%;
+  min-height: 42px;
+  box-sizing: border-box;
+  padding: 10px 12px;
+  border: 1px solid var(--qvc-border);
+  border-radius: 9px;
+  background: var(--qvc-surface-inset);
+  color: var(--qvc-text);
+  font: inherit;
+}
+.qvc-ai-dialog textarea {
+  resize: vertical;
+}
+.qvc-ai-dialog input::placeholder,
+.qvc-ai-dialog textarea::placeholder {
+  color: var(--qvc-muted);
+  opacity: 1;
+}
+.qvc-ai-dialog :focus-visible,
+.qvc-ai-launcher:focus-visible {
+  outline: 3px solid var(--qvc-focus);
+  outline-offset: 3px;
+}
+.qvc-ai-request-fields {
+  padding: 18px;
+  border: 1px solid var(--qvc-border);
+  border-radius: 14px;
+  margin: 0 0 16px;
+  min-width: 0;
+}
+.qvc-ai-dialog legend {
+  padding: 0 8px;
+  font-weight: 700;
+  color: var(--qvc-text);
+}
+.qvc-ai-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 14px;
+}
+.qvc-ai-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 9px;
+  min-height: 42px;
+  padding: 10px 15px;
+  border: 1px solid transparent;
+  border-radius: 10px;
+  background: var(--qvc-button);
+  color: white;
+  font:
+    650 13px/1.4 Inter,
+    system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+.qvc-ai-button:hover:not(:disabled) {
+  background: var(--qvc-button-hover);
+}
+.qvc-ai-button-secondary {
+  border-color: var(--qvc-border);
+  color: var(--qvc-primary);
+  background: var(--qvc-surface-inset);
+}
+.qvc-ai-button-secondary:hover:not(:disabled) {
+  background: var(--qvc-primary-soft);
+}
+.qvc-ai-button:disabled {
+  cursor: not-allowed;
+  opacity: 0.6;
+}
+.qvc-ai-launcher {
+  font-size: 12px;
+}
+.qvc-ai-preview {
+  margin-top: 24px;
+  padding-top: 23px;
+  border-top: 1px solid var(--qvc-border);
+}
+.qvc-ai-question {
+  border: 1px solid var(--qvc-border);
+  border-radius: 12px;
+  padding: 16px;
+  margin: 18px 0;
+  min-width: 0;
+}
+.qvc-ai-lesson {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 14px;
+}
+.qvc-ai-review-check {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin: 18px 0;
+  cursor: pointer;
+}
+.qvc-ai-dialog .qvc-ai-review-check input {
+  width: 19px;
+  min-height: 19px;
+  height: 19px;
+  flex-shrink: 0;
+  margin: 3px 0 0;
+  accent-color: var(--qvc-primary);
+}
+.qvc-ai-login-form {
+  padding: 16px;
+  border: 1px solid var(--qvc-border);
+  border-radius: 14px;
+  margin-bottom: 20px;
+  background: var(--qvc-bg);
+}
+.qvc-ai-spinner {
+  width: 15px;
+  height: 15px;
+  border: 2px solid #ffffff65;
+  border-top-color: white;
+  border-radius: 50%;
+  animation: qvc-ai-spin 0.8s linear infinite;
+}
+@keyframes qvc-ai-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+@media (max-width: 600px) {
+  .qvc-ai-dialog {
+    padding: 18px;
+  }
+  .qvc-ai-grid,
+  .qvc-ai-lesson {
+    grid-template-columns: 1fr;
+  }
+  .qvc-ai-actions .qvc-ai-button {
+    flex: 1 1 auto;
+  }
+  .qvc-ai-launcher {
+    padding: 9px 11px;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .qvc-ai-spinner {
+    animation: none;
+  }
+}
+@media print {
+  .qvc-ai-dialog,
+  .qvc-ai-launcher {
+    display: none !important;
+  }
+}

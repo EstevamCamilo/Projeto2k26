@@ -6,6 +6,7 @@ import {
   parsePracticeWords,
   validateDraft,
 } from './generators.mjs';
+import { registerAIAdapter } from '../shared/ai.js';
 
 const storagePrefix = 'qvc:early-education:v1:';
 const svgNamespace = 'http://www.w3.org/2000/svg';
@@ -31,6 +32,7 @@ function defaults(type) {
   return {
     type,
     title: activityNames[type],
+    instructions: '',
     words: 'CASA, BOLA, ESCOLA, AMIGO, FLOR, SOL',
     count: 6,
     complexity: 6,
@@ -48,10 +50,16 @@ function defaults(type) {
 
 function loadDraft(type) {
   try {
-    return (
-      validateDraft(JSON.parse(localStorage.getItem(storagePrefix + type) || 'null'), type) ||
-      defaults(type)
-    );
+    const raw = JSON.parse(localStorage.getItem(storagePrefix + type) || 'null');
+    const valid = validateDraft(raw, type);
+    if (!valid) return defaults(type);
+    return {
+      ...valid,
+      instructions:
+        typeof raw.instructions === 'string' && raw.instructions.length <= 1500
+          ? raw.instructions
+          : '',
+    };
   } catch {
     return defaults(type);
   }
@@ -164,7 +172,7 @@ function header() {
       'Ligue os números em ordem. Ao terminar, ligue o último ponto ao primeiro e descubra a figura.',
     coordenacao: 'Siga cada caminho pontilhado com o lápis, indo do círculo até a estrela.',
   };
-  node.append(element('p', 'early-instruction', instructions[state.type]));
+  node.append(element('p', 'early-instruction', state.instructions || instructions[state.type]));
   return node;
 }
 
@@ -502,3 +510,32 @@ document.querySelector('#print-activity').addEventListener('click', () => {
 initializePalette();
 syncForm();
 render();
+
+registerAIAdapter({
+  kind: 'handwriting',
+  label: 'Caligrafia',
+  description:
+    'Crie palavras e frases curtas para uma folha de caligrafia. A aplicação atualiza o título e as palavras, preservando os dados escolares.',
+  maxCount: 12,
+  apply(data) {
+    const next = {
+      ...state,
+      type: 'caligrafia',
+      title: data.title,
+      words: data.sentences.join('\n'),
+      count: data.sentences.length,
+      fills: {},
+    };
+    const valid = validateDraft(next, 'caligrafia');
+    if (!valid) throw new Error('Confira as frases antes de aplicar à caligrafia.');
+    if (state.type !== 'caligrafia') persist();
+    state = { ...valid, instructions: data.instructions };
+    const url = new URL(location.href);
+    url.searchParams.set('tipo', state.type);
+    history.replaceState(null, '', url);
+    syncForm();
+    render();
+    persist();
+    announce('Caligrafia atualizada. Confira as palavras e a folha antes de imprimir.');
+  },
+});

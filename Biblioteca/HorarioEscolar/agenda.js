@@ -1,4 +1,5 @@
 import { createState, validateState, findConflicts, importSchedule } from './agenda-model.js';
+import { registerAIAdapter } from '../shared/ai.js';
 
 const STORAGE_KEY = 'qvc-schedule-v2';
 const DAYS = ['Segunda-feira', 'Terça-feira', 'Quarta-feira', 'Quinta-feira', 'Sexta-feira'];
@@ -532,3 +533,148 @@ resetLesson();
 const requestedTab = new URLSearchParams(location.search).get('aba');
 if (['registry', 'periods'].includes(requestedTab))
   document.getElementById('tab-' + requestedTab)?.click();
+
+function applyAISchedule(data) {
+  if (!data || data.kind !== 'schedule' || !Array.isArray(data.lessons) || !data.lessons.length)
+    throw new Error('A proposta de horário não contém aulas válidas. Gere uma nova proposta.');
+  // Validate a copy first so refusing a proposal never changes the current work.
+  const next = validateState(structuredClone(state));
+  const classroom = next.classes.find((item) => item.id === selectedClass);
+  if (!classroom) throw new Error('Cadastre e selecione uma turma antes de aplicar a proposta.');
+  const periods = [...next.periods].sort((a, b) => a.start.localeCompare(b.start)).slice(0, 8);
+  if (!periods.length)
+    throw new Error('Cadastre os períodos reais da escola antes de aplicar a proposta.');
+  const normalize = (value) =>
+    value
+      .trim()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .toLocaleLowerCase('pt-BR');
+  const uid = (prefix) => `${prefix}-${crypto.randomUUID()}`;
+  const newLessons = [];
+  let unassigned = false;
+  const placeholderName = `Professor a definir · ${classroom.name}`.slice(0, 120);
+  const timeMinutes = (time) => Number(time.slice(0, 2)) * 60 + Number(time.slice(3));
+
+  for (const suggestion of data.lessons) {
+    if (
+      !suggestion ||
+      !Number.isInteger(suggestion.day) ||
+      suggestion.day < 0 ||
+      suggestion.day > 4 ||
+      !Number.isInteger(suggestion.period) ||
+      suggestion.period < 1 ||
+      suggestion.period > periods.length ||
+      typeof suggestion.subject !== 'string' ||
+      !suggestion.subject.trim() ||
+      suggestion.subject.trim().length > 120 ||
+      typeof suggestion.teacher !== 'string' ||
+      suggestion.teacher.trim().length > 120
+    )
+      throw new Error(
+        `Revise os dias, disciplinas e períodos da proposta. Esta escola permite ${periods.length} período(s) na geração, numerados de 1 a ${periods.length}.`
+      );
+    const period = periods[suggestion.period - 1];
+    let teacher;
+    if (suggestion.teacher.trim()) {
+      teacher = next.teachers.find(
+        (item) => normalize(item.name) === normalize(suggestion.teacher)
+      );
+      if (!teacher)
+        throw new Error(
+          `O professor “${suggestion.teacher.trim()}” não está cadastrado. Revise o nome na proposta ou deixe o campo vazio para definir depois.`
+        );
+    } else {
+      unassigned = true;
+      teacher = next.teachers.find((item) => item.name === placeholderName);
+      if (!teacher) {
+        teacher = { id: uid('teacher-unassigned'), name: placeholderName, email: '' };
+        next.teachers.push(teacher);
+      }
+    }
+    let subject = next.subjects.find(
+      (item) => normalize(item.name) === normalize(suggestion.subject)
+    );
+    if (!subject) {
+      subject = { id: uid('subject'), name: suggestion.subject.trim(), color: '#346786' };
+      next.subjects.push(subject);
+    }
+    const lesson = {
+      id: uid('lesson'),
+      classId: classroom.id,
+      periodId: period.id,
+      day: suggestion.day,
+      subjectId: subject.id,
+      teacherId: teacher.id,
+      room: '',
+    };
+    // Compare every inserted lesson to saved lessons and earlier proposal rows.
+    // A preexisting conflict cannot hide a new collision behind a repeated summary.
+    for (const other of [...next.lessons, ...newLessons]) {
+      if (other.day !== lesson.day) continue;
+      const otherPeriod = next.periods.find((item) => item.id === other.periodId);
+      const overlap =
+        timeMinutes(period.start) < timeMinutes(otherPeriod.end) &&
+        timeMinutes(otherPeriod.start) < timeMinutes(period.end);
+      if (!overlap) continue;
+      if (other.classId === lesson.classId)
+        throw new Error(
+          `A turma já tem uma aula na ${DAYS[lesson.day]}, ${period.label}. Ajuste a proposta para preencher somente períodos livres.`
+        );
+      if (other.teacherId === lesson.teacherId)
+        throw new Error(
+          `${teacher.name} já está em outra turma na ${DAYS[lesson.day]}, ${period.start}–${period.end}. Escolha outro professor ou período.`
+        );
+    }
+    newLessons.push(lesson);
+  }
+  next.lessons.push(...newLessons);
+  const validated = validateState(next);
+  const previousConflicts = new Set(findConflicts(state));
+  if (findConflicts(validated).some((conflict) => !previousConflicts.has(conflict)))
+    throw new Error('A proposta cria conflitos na grade. Revise os professores e períodos.');
+  clearTimeout(metadataTimer);
+  if (
+    !store(
+      validated,
+      `${newLessons.length} aula(s) adicionada(s) aos períodos livres. ${unassigned ? 'Professor a definir é um marcador: associe os docentes reais antes de usar o horário.' : 'Revise o planejamento antes de usar.'}`
+    )
+  )
+    throw new Error('Não foi possível aplicar a proposta. Revise os dados da grade.');
+  resetLesson();
+  activateTab('week');
+}
+
+function availableAIScheduleSlots() {
+  const minutes = (value) => Number(value.slice(0, 2)) * 60 + Number(value.slice(3));
+  const periods = [...state.periods].sort((a, b) => a.start.localeCompare(b.start)).slice(0, 8);
+  return periods.reduce((count, period) => {
+    for (let day = 0; day < 5; day++) {
+      const occupied = state.lessons.some((lesson) => {
+        if (lesson.classId !== selectedClass || lesson.day !== day) return false;
+        const existing = state.periods.find((item) => item.id === lesson.periodId);
+        return (
+          minutes(period.start) < minutes(existing.end) &&
+          minutes(existing.start) < minutes(period.end)
+        );
+      });
+      if (!occupied) count++;
+    }
+    return count;
+  }, 0);
+}
+
+registerAIAdapter({
+  kind: 'schedule',
+  label: 'Horário escolar',
+  description:
+    'A proposta preenche somente períodos livres da turma ativa, mantendo suas aulas. A IA usa até os oito primeiros períodos, em ordem de início. Use nomes de professores já cadastrados ou deixe o campo vazio para definir depois.',
+  maxCount: () => Math.min(40, availableAIScheduleSlots()),
+  defaultCount: () => Math.min(5, availableAIScheduleSlots()),
+  requestDetails: () => ({ periodCount: Math.min(state.periods.length, 8) }),
+  getContext: () =>
+    state.periods.length
+      ? `A proposta pode usar ${Math.min(state.periods.length, 8)} período(s) por dia e ${availableAIScheduleSlots()} célula(s) livre(s) na semana. Numere os períodos de 1 a ${Math.min(state.periods.length, 8)}, pela ordem de início. Se a escola tiver mais de oito períodos, organize os restantes diretamente na grade.`
+      : 'Cadastre os períodos reais da escola antes de gerar a proposta.',
+  apply: applyAISchedule,
+});
