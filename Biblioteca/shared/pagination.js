@@ -8,7 +8,7 @@ html,body { margin:0!important; padding:0!important; max-width:none!important; w
 .qvc-a4-inner { height:100%; display:flex; flex-direction:column; }
 .qvc-a4-header { flex:0 0 auto; margin-bottom:5mm; }
 .qvc-a4-header>[data-qvc-school-header] { margin:0!important; padding-top:0!important; }
-.qvc-a4-body { flex:1 1 0; min-height:0; width:100%; position:relative; }
+.qvc-a4-body { flex:1 1 0; min-height:0; width:100%; position:relative; overflow-wrap:anywhere; }
 .qvc-a4-flow { display:flow-root; width:100%; }
 .qvc-a4-number { flex:0 0 auto; font:8pt Arial,sans-serif; color:#526575; border-top:1px solid #dce3e9; padding-top:2mm; margin-top:3mm; text-align:right; }
 .qvc-a4-page [data-qvc-fragment] { min-height:0!important; max-height:none!important; height:auto!important; }
@@ -18,6 +18,7 @@ html,body { margin:0!important; padding:0!important; max-width:none!important; w
 .qvc-a4-page table { width:100%!important; min-width:0!important; max-width:100%!important; table-layout:fixed!important; }
 .qvc-a4-page table th,.qvc-a4-page table td { min-width:0!important; width:auto!important; overflow-wrap:anywhere; }
 .qvc-a4-page img,.qvc-a4-page svg { max-width:100%!important; height:auto; }
+.qvc-a4-page pre,.qvc-a4-page code { white-space:pre-wrap!important; overflow-wrap:anywhere; }
 .qvc-scaled-block { position:relative; width:100%; overflow:clip; }
 .qvc-scaled-inner { display:flow-root; transform-origin:top left; }
 @media screen {
@@ -220,7 +221,12 @@ export function paginateA4({ document: doc, source, header, orientation = 'portr
 
   function process(node, ancestors = []) {
     if (node.nodeType === 3) {
-      if (!node.textContent.trim()) return;
+      if (!node.textContent.trim()) {
+        // Inline word separators matter; indentation alone must never create an empty page.
+        const whitespace = insert(node.cloneNode(), ancestors);
+        if (!whitespace.fits) whitespace.rollback();
+        return;
+      }
       if (place(node, ancestors)) return;
       splitText(node, ancestors);
       return;

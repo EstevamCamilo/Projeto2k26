@@ -139,15 +139,22 @@ test('Um parágrafo maior que a folha é dividido sem perder texto; desenhos con
     article.id = 'text-fixture';
     const paragraph = document.createElement('p');
     paragraph.textContent = Array.from({ length: 7000 }, (_, i) => `palavra${i}`).join(' ');
+    const first = document.createElement('span');
+    first.textContent = 'Antes';
+    const last = document.createElement('strong');
+    last.textContent = 'depois';
+    paragraph.append(' ', first, ' ', last);
     article.append(paragraph);
     document.body.append(article);
   });
   await page.evaluate(() => window.QVC.print({ target: '#text-fixture' }));
   let frame = page.frames().find((candidate) => candidate.parentFrame());
   const text = await frame.locator('.qvc-a4-flow').allTextContents();
-  expect(text.join('').trim().split(/\s+/)).toEqual(
-    Array.from({ length: 7000 }, (_, i) => `palavra${i}`)
-  );
+  expect(text.join('').trim().split(/\s+/)).toEqual([
+    ...Array.from({ length: 7000 }, (_, i) => `palavra${i}`),
+    'Antes',
+    'depois',
+  ]);
   for (const item of await geometry(frame)) expect(item.overflow).toBeLessThanOrEqual(1);
   await page.evaluate(() => window.QVC.print());
   frame = page.frames().find((candidate) => candidate.parentFrame());
