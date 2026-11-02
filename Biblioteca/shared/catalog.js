@@ -359,7 +359,7 @@ export const tools = [
     path: 'Calculos/index.html#tool/mmc',
     keywords: ['Matemática', 'cálculos', 'estudantes'],
   },
-];
+].map((tool) => ({ ...tool, art: `shared/tool-art/${tool.id}.svg` }));
 export const categories = [
   { name: 'Alfabetização', icon: 'book', color: 'blue', description: 'Ler, escrever e descobrir' },
   {

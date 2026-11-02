@@ -118,6 +118,28 @@ body[data-qvc-hub] select:focus-visible {
   overflow: auto;
   padding: 12px 17px;
   flex: 1;
+  min-height: 0;
+  scrollbar-width: thin;
+  scrollbar-color: #405d72 var(--hub-surface);
+  scrollbar-gutter: stable;
+}
+.hub-sidebar-scroll::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+.hub-sidebar-scroll::-webkit-scrollbar-track {
+  background: var(--hub-surface);
+}
+.hub-sidebar-scroll::-webkit-scrollbar-thumb {
+  background: #405d72;
+  border: 1px solid var(--hub-surface);
+  border-radius: 20px;
+}
+.hub-sidebar-scroll::-webkit-scrollbar-thumb:hover {
+  background: #587b93;
+}
+.hub-sidebar-scroll::-webkit-scrollbar-corner {
+  background: var(--hub-surface);
 }
 .hub-nav-label {
   font-size: 9px;
@@ -597,26 +619,16 @@ body[data-qvc-hub] select:focus-visible {
   border-radius: 11px;
   margin: 8px 8px 0;
 }
-.hub-card-art > svg {
-  width: 49px !important;
-  height: 49px !important;
-  transform: rotate(-9deg);
-  z-index: 1;
+.hub-tool-illustration {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  background: var(--qvc-surface-inset);
+  transition: transform 0.25s ease;
 }
-.hub-art-ring {
-  position: absolute;
-  width: 103px;
-  height: 103px;
-  border: 1px dashed currentColor;
-  opacity: 0.23;
-  border-radius: 50%;
-}
-.hub-art-plus {
-  position: absolute;
-  font-size: 23px;
-  bottom: 15px;
-  left: 28px;
-  opacity: 0.5;
+.hub-tool-card:hover .hub-tool-illustration {
+  transform: scale(1.04);
 }
 .hub-favorite {
   position: absolute;
@@ -658,8 +670,13 @@ body[data-qvc-hub] select:focus-visible {
   gap: 6px;
 }
 .hub-card-arrow {
-  font-size: 17px;
+  display: inline-flex;
   color: var(--hub-muted);
+}
+.hub-card-arrow > svg {
+  width: 17px !important;
+  height: 17px !important;
+  transform: rotate(-45deg);
 }
 .hub-card-link:after {
   content: '';
@@ -1169,10 +1186,6 @@ body[data-qvc-hub] svg:has(use) {
   }
   .hub-card-art {
     height: 110px;
-  }
-  .hub-card-art > svg {
-    width: 42px !important;
-    height: 42px !important;
   }
   .hub-card-body {
     padding: 12px;

@@ -54,7 +54,14 @@ function cardFor(tool) {
   card.dataset.toolId = tool.id;
   const art = create('div', `hub-card-art tone-${color}`);
   art.setAttribute('aria-hidden', 'true');
-  art.append(icon(tool.icon), create('span', 'hub-art-ring'), create('span', 'hub-art-plus', '+'));
+  const image = create('img', 'hub-tool-illustration');
+  image.src = new URL(tool.art, base).href;
+  image.alt = '';
+  image.width = 360;
+  image.height = 180;
+  image.loading = 'lazy';
+  image.decoding = 'async';
+  art.append(image);
   const favorite = create('button', 'hub-favorite');
   const saved = profile.favorites.includes(tool.id);
   favorite.setAttribute(
@@ -76,7 +83,10 @@ function cardFor(tool) {
   const heading = create('h3');
   const link = create('a', 'hub-card-link', tool.name);
   link.href = new URL(tool.path, base).href;
-  heading.append(link, create('span', 'hub-card-arrow', '↗'));
+  const arrow = create('span', 'hub-card-arrow');
+  arrow.setAttribute('aria-hidden', 'true');
+  arrow.append(icon('arrow'));
+  heading.append(link, arrow);
   const footer = create('div', 'hub-card-footer');
   footer.append(
     create(
