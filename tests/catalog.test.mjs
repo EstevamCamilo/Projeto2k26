@@ -22,6 +22,9 @@ test('servidor rejeita caminhos privados e resolve arquivos públicos', () => {
   assert.equal(resolveRequest('/workspace/Projeto2k26', '/.git/config'), null);
   assert.equal(resolveRequest('/workspace/Projeto2k26', '/.env'), null);
   assert.equal(resolveRequest('/workspace/Projeto2k26', '/node_modules/dep.js'), null);
+  assert.equal(resolveRequest('/workspace/Projeto2k26', '/server/ai/handler.mjs'), null);
+  assert.equal(resolveRequest('/workspace/Projeto2k26', '/api/ai/generate.js'), null);
+  assert.equal(resolveRequest('/workspace/Projeto2k26', '/package-lock.json'), null);
   assert.equal(
     resolveRequest('/workspace/Projeto2k26', '/Biblioteca/index.html'),
     '/workspace/Projeto2k26/Biblioteca/index.html'

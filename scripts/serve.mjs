@@ -1,6 +1,7 @@
 import http from 'node:http';
 import { readFile, stat } from 'node:fs/promises';
 import { resolve, extname, sep } from 'node:path';
+import { handleAIRequest } from '../server/ai/handler.mjs';
 
 export function resolveRequest(root, request) {
   let path;
@@ -13,6 +14,9 @@ export function resolveRequest(root, request) {
     path.includes('\0') ||
     path.split(/[\\/]/).some((part) => part.startsWith('.') || part === 'node_modules')
   )
+    return null;
+  // Expose public assets only; never serve backend source or repository configuration.
+  if (!['/', '/index.html', '/Biblioteca'].includes(path) && !path.startsWith('/Biblioteca/'))
     return null;
   const file = resolve(root, '.' + path);
   return file === root || file.startsWith(root + sep) ? file : null;
@@ -34,6 +38,7 @@ const mime = {
 };
 if (import.meta.url === new URL(process.argv[1], 'file:').href) {
   const server = http.createServer(async (request, response) => {
+    if (await handleAIRequest(request, response)) return;
     let file = resolveRequest(root, request.url || '/');
     if (!file) {
       response.writeHead(403);
@@ -55,6 +60,10 @@ if (import.meta.url === new URL(process.argv[1], 'file:').href) {
       response.end('Arquivo não encontrado.');
     }
   });
+  server.requestTimeout = 15000;
+  server.headersTimeout = 10000;
+  server.keepAliveTimeout = 5000;
+  server.maxHeadersCount = 100;
   server.listen(port, '0.0.0.0', () => console.log(`QVC: http://localhost:${port} · ${root}`));
   process.on('SIGTERM', () => server.close());
   process.on('SIGINT', () => server.close());
