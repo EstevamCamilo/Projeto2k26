@@ -1,4 +1,4 @@
-self.QVC_CACHE_VERSION="6dfbeb10b65c";
+self.QVC_CACHE_VERSION="8ec3e68d070c";
 self.QVC_OFFLINE_FILES=[
   "./Atividades/atividades.css",
   "./Atividades/atividades.js",
