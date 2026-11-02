@@ -611,7 +611,8 @@ $('#exam-print').addEventListener('click', () => {
   try {
     validateExam(state);
     persist();
-    window.print();
+    if (window.QVC?.print) window.QVC.print();
+    else window.print();
   } catch (error) {
     notice(error.message, 'error');
   }

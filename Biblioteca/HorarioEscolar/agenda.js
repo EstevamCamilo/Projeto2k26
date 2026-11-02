@@ -525,7 +525,8 @@ $('confirm-import').addEventListener('click', () => {
 $('print-schedule').addEventListener('click', () => {
   activateTab('week');
   renderHeader();
-  window.print();
+  if (window.QVC?.print) window.QVC.print();
+  else window.print();
 });
 render();
 resetLesson();

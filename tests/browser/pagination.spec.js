@@ -39,7 +39,8 @@ test('Prova longa: perguntas inteiras, gabarito separado e cabeçalhos em todas 
     fixture
   );
   await page.reload();
-  await page.evaluate(() => window.QVC.print());
+  await page.locator('#exam-print').click();
+  await expect(page.locator('#qvc-print-frame')).toHaveCount(1);
   const frame = page.frames().find((candidate) => candidate.parentFrame());
   await expect(page.frameLocator('#qvc-print-frame').locator('.exam-question')).toHaveCount(36);
   await expect(page.frameLocator('#qvc-print-frame').locator('.exam-key-item')).toHaveCount(36);
@@ -77,6 +78,16 @@ test('Prova longa: perguntas inteiras, gabarito separado e cabeçalhos em todas 
   const pdf = await pdfPage.pdf({ preferCSSPageSize: true, printBackground: true });
   expect((pdf.toString('latin1').match(/\/Type\s*\/Page\b/g) || []).length).toBe(pages);
   await pdfPage.close();
+});
+
+test('Botão interno do horário usa a mesma paginação A4 universal', async ({ page }) => {
+  await page.goto('/Biblioteca/HorarioEscolar/index.html');
+  await page.locator('#print-schedule').click();
+  const document = page.frameLocator('#qvc-print-frame');
+  await expect(document.locator('.qvc-a4-page')).toHaveCount(1);
+  await expect(document.locator('.qvc-a4-header [data-qvc-school-header]')).toHaveCount(1);
+  await expect(document.locator('#weekly-table')).toHaveCount(1);
+  await expect(document.locator('button,script')).toHaveCount(0);
 });
 
 test('Tabela com 100 linhas repete o thead e preserva cada linha uma única vez na prévia', async ({
