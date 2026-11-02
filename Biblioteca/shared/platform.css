@@ -249,6 +249,76 @@ body[data-qvc-legacy] :focus-visible {
   border: 0;
   pointer-events: none;
 }
+.qvc-preview-dialog {
+  width: min(1100px, calc(100% - 24px));
+  max-width: 1100px;
+  height: 94dvh;
+  max-height: 94dvh;
+  padding: 20px;
+  overflow: hidden;
+}
+.qvc-preview-dialog[open] {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+.qvc-preview-heading,
+.qvc-preview-controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.qvc-preview-heading h2,
+.qvc-preview-dialog > p {
+  margin: 0;
+}
+.qvc-preview-heading .qvc-button {
+  min-height: 38px;
+}
+.qvc-preview-dialog > p {
+  font-size: 13px;
+}
+.qvc-preview-indicator {
+  font-size: 13px;
+  min-width: 85px;
+  text-align: center;
+}
+.qvc-preview-next svg {
+  transform: rotate(180deg);
+}
+.qvc-preview-viewport {
+  flex: 1;
+  min-height: 120px;
+  background: var(--qvc-bg);
+  border: 1px solid var(--qvc-border);
+  border-radius: 12px;
+  overflow: hidden;
+}
+.qvc-preview-frame {
+  display: block;
+  width: 100%;
+  height: 100%;
+  min-height: 120px;
+  border: 0;
+  background: var(--qvc-bg);
+}
+@media (max-width: 600px) {
+  .qvc-preview-dialog {
+    padding: 12px;
+    width: calc(100% - 12px);
+  }
+  .qvc-preview-controls {
+    justify-content: center;
+  }
+  .qvc-preview-dialog .qvc-button {
+    padding: 8px 10px;
+  }
+  .qvc-preview-heading .qvc-toolbar-label {
+    display: none;
+  }
+}
 .qvc-school-header {
   border-bottom: 2px solid var(--qvc-primary);
   padding-bottom: 22px;

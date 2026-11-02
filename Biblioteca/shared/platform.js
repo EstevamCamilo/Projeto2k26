@@ -1,7 +1,11 @@
 /**
  * Recursos locais da Biblioteca QVC: navegação, cabeçalho e impressão A4.
- * Não envia dados, não depende de CDN e não executa HTML informado por usuários.
+ * Recursos locais não dependem de CDN; a IA opcional só envia o tema após a ação do professor.
+ * Conteúdo de usuários nunca é executado como HTML.
  */
+import { paginateA4, A4_STYLES } from './pagination.js';
+import { initAI } from './ai.js';
+
 const HUB_URL = new URL('../index.html', import.meta.url).href;
 const STYLE_URL = new URL('./platform.css', import.meta.url).href;
 const STORAGE_KEY = 'qvc:school-header:v1';
@@ -13,6 +17,7 @@ let closeTimer;
 
 const ICON_PATHS = {
   arrowLeft: ['M19 12H5', 'm12 19-7-7 7-7'],
+  preview: ['M2 12s3-7 10-7 10 7 10 7-3 7-10 7S2 12 2 12', 'M15 12a3 3 0 1 1-6 0 3 3 0 0 1 6 0'],
   printer: [
     'M6 9V3h12v6',
     'M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2',
@@ -328,35 +333,34 @@ nav,button,.qvc-platform-bar,.qvc-no-print,[data-qvc-no-print],.no-print,.toolba
 tr,.question,.exam-question,.qvc-school-header { break-inside:avoid; }
 thead { display:table-header-group; }
 .print-only { display:block!important; }
-@media screen { body { max-width:210mm; padding:12mm!important; } }
+
 `;
 
-export async function print(options = {}) {
-  if (printing) return;
-  printing = true;
-  document.querySelectorAll('button[data-qvc-print]').forEach((button) => {
-    button.disabled = true;
-  });
-  let frame;
+/** Build once, paginate once: preview and native PDF use this exact document path. */
+async function prepareDocument(options = {}, container = document.body, previewMode = false) {
+  const targets = options.target
+    ? [
+        typeof options.target === 'string'
+          ? document.querySelector(options.target)
+          : options.target,
+      ].filter(Boolean)
+    : printTargets();
+  if (!targets.length) throw new Error('O conteúdo da atividade ainda não está disponível.');
+  const frame = document.createElement('iframe');
+  frame.id = previewMode ? 'qvc-preview-frame' : 'qvc-print-frame';
+  frame.title = previewMode
+    ? 'Pré-visualização das páginas A4'
+    : 'Documento preparado para impressão';
+  frame.className = previewMode ? 'qvc-preview-frame' : 'qvc-print-frame qvc-no-print';
+  frame.setAttribute('sandbox', 'allow-same-origin allow-modals');
+  if (!previewMode) frame.setAttribute('aria-hidden', 'true');
+  container.append(frame);
   try {
-    const targets = options.target
-      ? [
-          typeof options.target === 'string'
-            ? document.querySelector(options.target)
-            : options.target,
-        ].filter(Boolean)
-      : printTargets();
-    if (!targets.length) throw new Error('O conteúdo da atividade ainda não está disponível.');
-    frame = document.createElement('iframe');
-    frame.id = 'qvc-print-frame';
-    frame.title = 'Documento preparado para impressão';
-    frame.className = 'qvc-print-frame qvc-no-print';
-    frame.setAttribute('aria-hidden', 'true');
-    document.body.append(frame);
     const doc = frame.contentDocument;
     doc.documentElement.lang = 'pt-BR';
     doc.head.replaceChildren();
     doc.body.replaceChildren();
+    if (previewMode) doc.body.dataset.qvcPreview = '';
     const base = doc.createElement('base');
     base.href = document.baseURI;
     doc.head.append(base, textElement('title', String(options.title || document.title).trim()));
@@ -366,70 +370,114 @@ export async function print(options = {}) {
       const copy = source.cloneNode(true);
       if (copy.tagName === 'LINK')
         loadStyles.push(
-          new Promise((resolve) => {
+          new Promise((resolve, reject) => {
             copy.addEventListener('load', resolve, { once: true });
-            copy.addEventListener('error', resolve, { once: true });
+            copy.addEventListener(
+              'error',
+              () =>
+                reject(
+                  new Error(
+                    'Não foi possível carregar os estilos da folha. Tente novamente com conexão.'
+                  )
+                ),
+              { once: true }
+            );
           })
         );
       doc.head.append(copy);
     }
-    const rules = doc.createElement('style');
-    rules.textContent = PRINT_RULES;
-    if (
+    const orientation =
       options.orientation === 'landscape' ||
       document.body.dataset.qvcPrintOrientation === 'landscape'
-    )
-      rules.textContent += '@page{size:A4 landscape}';
+        ? 'landscape'
+        : 'portrait';
+    const rules = doc.createElement('style');
+    rules.textContent =
+      PRINT_RULES +
+      A4_STYLES +
+      (orientation === 'landscape' ? '@page{size:A4 landscape;margin:0}' : '');
     doc.head.append(rules);
-    const root = doc.createElement('main');
-    root.className = 'qvc-print-root';
+    const source = doc.createElement('main');
+    source.className = 'qvc-print-root';
     for (const target of targets) {
       const clone = printableClone(target);
       clone.classList.add('qvc-print-content');
-      root.append(doc.adoptNode(clone));
+      source.append(doc.adoptNode(clone));
     }
-    if (!root.querySelector('[data-qvc-school-header]'))
-      root.prepend(
-        doc.adoptNode(
-          createSchoolHeader(
-            options.title || document.querySelector('h1')?.textContent || document.title,
-            options.metadata || getSchoolMetadata()
-          )
-        )
-      );
-    doc.body.append(root);
-    await Promise.race([
-      Promise.all(loadStyles),
-      new Promise((resolve) => setTimeout(resolve, 2500)),
-    ]);
-    await Promise.race([doc.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1000))]);
+    doc.body.append(source);
+    let styleTimer;
+    try {
+      await Promise.race([
+        Promise.all(loadStyles),
+        new Promise((_, reject) => {
+          styleTimer = setTimeout(
+            () =>
+              reject(
+                new Error('Os estilos demoraram a carregar. Tente preparar a folha novamente.')
+              ),
+            8000
+          );
+        }),
+      ]);
+    } finally {
+      clearTimeout(styleTimer);
+    }
+    await Promise.race([doc.fonts.ready, new Promise((resolve) => setTimeout(resolve, 1500))]);
     await Promise.all(
-      [...doc.images].map((image) =>
-        image.complete
-          ? Promise.resolve()
-          : new Promise((resolve) => {
-              image.onload = resolve;
-              image.onerror = resolve;
-              setTimeout(resolve, 1000);
-            })
-      )
+      [...doc.images].map(async (image) => {
+        if (image.complete) return;
+        await new Promise((resolve) => {
+          const timer = setTimeout(resolve, 4000);
+          const complete = () => {
+            clearTimeout(timer);
+            resolve();
+          };
+          image.addEventListener('load', complete, { once: true });
+          image.addEventListener('error', complete, { once: true });
+        });
+      })
     );
-    doc.dispatchEvent(new CustomEvent('qvc:print-ready'));
-    document.dispatchEvent(
-      new CustomEvent('qvc:print-ready', { detail: { frame, document: doc } })
-    );
-    frame.contentWindow.focus();
-    frame.contentWindow.print();
-    announce(
-      'Documento preparado. Na janela de impressão, escolha sua impressora ou “Salvar como PDF”.'
-    );
-    // Keep the prepared document available for browser preview and smoke checks. Remove only our older frames.
-    document.querySelectorAll('#qvc-print-frame').forEach((old) => {
-      if (old !== frame) old.remove();
+    const result = paginateA4({
+      document: doc,
+      source,
+      orientation,
+      header: doc.adoptNode(
+        createSchoolHeader(
+          options.title || document.querySelector('h1')?.textContent || document.title,
+          options.metadata || getSchoolMetadata()
+        )
+      ),
     });
-    return frame;
+    const detail = { frame, document: doc, ...result };
+    doc.dispatchEvent(
+      new CustomEvent('qvc:print-ready', { detail: { pageCount: result.pageCount } })
+    );
+    document.dispatchEvent(new CustomEvent('qvc:print-ready', { detail }));
+    return detail;
   } catch (error) {
-    frame?.remove();
+    frame.remove();
+    throw error;
+  }
+}
+
+export async function print(options = {}) {
+  if (printing) return null;
+  printing = true;
+  document.querySelectorAll('button[data-qvc-print]').forEach((button) => {
+    button.disabled = true;
+  });
+  try {
+    const prepared = await prepareDocument(options);
+    document.querySelectorAll('#qvc-print-frame').forEach((old) => {
+      if (old !== prepared.frame) old.remove();
+    });
+    prepared.frame.contentWindow.focus();
+    prepared.frame.contentWindow.print();
+    announce(
+      `${prepared.pageCount} ${prepared.pageCount === 1 ? 'página A4 preparada' : 'páginas A4 preparadas'}. Escolha sua impressora ou “Salvar como PDF”.`
+    );
+    return prepared.frame;
+  } catch (error) {
     announce(
       error instanceof Error ? error.message : 'Não foi possível preparar a impressão.',
       'error'
@@ -440,6 +488,126 @@ export async function print(options = {}) {
     document.querySelectorAll('button[data-qvc-print]').forEach((button) => {
       button.disabled = false;
     });
+  }
+}
+
+let previewDialog;
+export async function preview(options = {}) {
+  if (previewDialog?.open) return previewDialog;
+  const previousFocus = document.activeElement;
+  previewDialog?.remove();
+  const dialog = document.createElement('dialog');
+  previewDialog = dialog;
+  dialog.className = 'qvc-dialog qvc-preview-dialog qvc-no-print';
+  dialog.setAttribute('aria-labelledby', 'qvc-preview-title');
+  dialog.setAttribute('aria-describedby', 'qvc-preview-summary');
+  const heading = document.createElement('div');
+  heading.className = 'qvc-preview-heading';
+  const title = textElement('h2', 'Pré-visualização A4', 'qvc-dialog-title');
+  title.id = 'qvc-preview-title';
+  const close = toolbarButton(
+    'Fechar pré-visualização',
+    'close',
+    () => dialog.close(),
+    'qvc-button-quiet'
+  );
+  heading.append(title, close);
+  const summary = textElement('p', 'Preparando as páginas…', 'qvc-muted');
+  summary.id = 'qvc-preview-summary';
+  summary.setAttribute('role', 'status');
+  const controls = document.createElement('div');
+  controls.className = 'qvc-preview-controls';
+  const navigation = document.createElement('div');
+  navigation.className = 'qvc-actions';
+  const indicator = textElement('span', 'Página 1', 'qvc-preview-indicator');
+  const previous = toolbarButton(
+    'Página anterior',
+    'arrowLeft',
+    () => navigate(-1),
+    'qvc-button-secondary'
+  );
+  const next = toolbarButton(
+    'Próxima página',
+    'arrowLeft',
+    () => navigate(1),
+    'qvc-button-secondary qvc-preview-next'
+  );
+  const printer = toolbarButton('Imprimir / Exportar PDF', 'printer', () => {
+    prepared?.frame.contentWindow.focus();
+    prepared?.frame.contentWindow.print();
+  });
+  printer.disabled = true;
+  previous.disabled = true;
+  next.disabled = true;
+  navigation.append(previous, indicator, next);
+  controls.append(navigation, printer);
+  const viewport = document.createElement('div');
+  viewport.className = 'qvc-preview-viewport';
+  dialog.append(heading, summary, controls, viewport);
+  document.body.append(dialog);
+  let prepared;
+  let currentPage = 0;
+  let resizeObserver;
+  const updateIndicator = () => {
+    indicator.textContent = `Página ${currentPage + 1} de ${prepared.pageCount}`;
+    previous.disabled = currentPage === 0;
+    next.disabled = currentPage >= prepared.pageCount - 1;
+  };
+  function navigate(direction) {
+    if (!prepared) return;
+    currentPage = Math.max(0, Math.min(prepared.pageCount - 1, currentPage + direction));
+    prepared.document
+      .querySelectorAll('.qvc-a4-page')
+      [currentPage].scrollIntoView({ block: 'start', behavior: 'instant' });
+    updateIndicator();
+  }
+  dialog.addEventListener(
+    'close',
+    () => {
+      resizeObserver?.disconnect();
+      previousFocus?.focus();
+      dialog.remove();
+    },
+    { once: true }
+  );
+  dialog.showModal();
+  try {
+    prepared = await prepareDocument(options, viewport, true);
+    if (!dialog.open) {
+      prepared.frame.remove();
+      return null;
+    }
+    const scale = () => {
+      const width =
+        options.orientation === 'landscape' ||
+        document.body.dataset.qvcPrintOrientation === 'landscape'
+          ? 1122.52
+          : 793.7;
+      const ratio = Math.min(1, Math.max(0.15, (prepared.frame.clientWidth - 36) / width));
+      prepared.document.documentElement.style.setProperty('--qvc-preview-scale', ratio);
+    };
+    scale();
+    resizeObserver = new ResizeObserver(scale);
+    resizeObserver.observe(viewport);
+    prepared.frame.contentWindow.addEventListener(
+      'scroll',
+      () => {
+        const nodes = [...prepared.document.querySelectorAll('.qvc-a4-page')];
+        const nextIndex = nodes.findIndex((node) => node.getBoundingClientRect().bottom > 30);
+        currentPage = Math.max(0, nextIndex);
+        updateIndicator();
+      },
+      { passive: true }
+    );
+    summary.textContent = `${prepared.pageCount} ${prepared.pageCount === 1 ? 'folha A4' : 'folhas A4'} · 210 × 297 mm · margens de 12 mm${prepared.scaledBlocks ? ' · Um bloco grande foi ajustado proporcionalmente para caber.' : ''}`;
+    printer.disabled = false;
+    updateIndicator();
+    return dialog;
+  } catch (error) {
+    summary.textContent =
+      error instanceof Error ? error.message : 'Não foi possível gerar a prévia.';
+    announce(summary.textContent, 'error');
+    return null;
   }
 }
 
@@ -487,7 +655,13 @@ function mount() {
     );
     const printer = toolbarButton('Imprimir / Exportar PDF', 'printer', () => print());
     printer.dataset.qvcPrint = '';
-    actions.append(metadata, printer);
+    const previewButton = toolbarButton(
+      'Pré-visualizar A4',
+      'preview',
+      () => preview(),
+      'qvc-button-secondary'
+    );
+    actions.append(metadata, previewButton, printer);
     content.append(back, actions);
     bar.append(content);
     document.body.prepend(bar);
@@ -515,6 +689,7 @@ function mount() {
   );
   document.dispatchEvent(new CustomEvent('qvc:ready'));
   updateLegacyHeaders();
+  initAI();
 }
 
 function updateLegacyHeaders() {
@@ -536,6 +711,7 @@ document.addEventListener('qvc:school-header', updateLegacyHeaders);
 window.QVC = Object.freeze({
   ...(window.QVC || {}),
   print,
+  preview,
   announce,
   getSchoolMetadata,
   setSchoolMetadata,
